@@ -59,12 +59,12 @@ npm run lint
 npx expo export --platform all
 ```
 
-Tests cover parsing, capacity restrictions, booking windows, date rollover, pagination, cache expiry, filters, booking links and score validation. GitHub Actions is configured to run checks and export all platforms on pushes and pull requests; no hosted run is claimed until the repository is published. See [validation evidence and remaining device checks](docs/VALIDATION.md).
+Tests cover parsing, capacity restrictions, booking windows, date rollover, pagination, cache expiry, filters, booking links and score validation. GitHub Actions is configured to run checks and export all platforms on pushes and pull requests; the first hosted run passed on October 18, 2026. See [validation evidence and remaining device checks](docs/VALIDATION.md).
 
 ## Security and Deployment
 Keep provider credentials server-side. `.env` files and signing credentials are ignored; `.env.example` contains placeholders only. `EXPO_PUBLIC_*` values are bundled into clients and must never contain secrets. Native map keys require platform restrictions even when supplied through environment configuration.
 
-A temporary desktop tunnel is a development preview, not the final deployment. Production needs an always-on backend, HTTPS, monitoring, restricted keys and a stable app URL. Public GitHub and permanent deployment links are pending.
+A temporary desktop tunnel is a development preview, not the final deployment. Production needs an always-on backend, HTTPS, monitoring, restricted keys and a stable app URL. Source: https://github.com/Buchanz/fairway. Permanent deployment is pending.
 
 ## Future Improvements
 - Verified course geometry, green distances and on-course accuracy validation.

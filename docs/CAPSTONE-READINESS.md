@@ -17,14 +17,14 @@ This records evidence, not a claim that the project has been submitted or all ch
 - Tee flip is implemented: linked accounts, opt-in foreground GPS, all players within 200 m, fresh presence, one shared server result. Two-device acceptance is still pending.
 - Completed rounds copy each joined friend’s personal scorecard to their account. Local database tests pass; hosted multi-account acceptance is pending.
 - No disposable test accounts have been created yet. Static offline accounts cannot exercise the active-location tee flip.
-- No Git remote is configured in this checkout; public repository delivery is unverified.
+- Public repository published: https://github.com/Buchanz/fairway. First hosted CI run passed install, typecheck, lint, tests and all-platform exports.
 - 11 of 12 audited rangefinder listings have numbered geometry; Cordova Bay Ridge lacks a complete layout. Geometry checks do not establish real-world tee accuracy.
 
 ## Earlier hosted account audit (October 17; recheck outstanding items)
 - Email signup enabled; email confirmation required; secure email change enabled.
 - Password settings changed from 6 characters/no required characters to 12 and uppercase/lowercase/digit/symbol. Client validation aligned.
 - Anonymous reads of all four account tables denied (live API check).
-- Username search RPC is missing remotely (`PGRST202`). Apply pending `202610160003_player_search.sql` only; do not rerun the full new-project bundle.
+- Username search was missing on October 17; applied successfully October 18 with trigger hardening and private username-login resolution.
 - Trigger helper `create_player_profile` is unnecessarily executable through public roles. Prepared `202610160004_trigger_permissions.sql` to revoke direct calls; authenticated user-facing RPCs remain intentionally callable and enforce identity internally.
 - Custom SMTP is OFF. Public signup email delivery is not production-ready.
 - Dashboard showed Site URL `http://localhost:3000` and no allowed redirects. Attempts to update were interrupted by browser use; do not assume saved.
@@ -46,7 +46,7 @@ Use exact allowed URLs rather than a broad wildcard. Replace temporary hosts wit
 - [x] Architecture and proposal database descriptions corrected; Docker deployment package and health check prepared.
 - [x] Critical shell-quote advisory fixed by compatible dependency update.
 - [ ] Review remaining 21 high and 10 moderate dependency advisories; suggested forced downgrades of Expo/React Native are not acceptable without compatibility work.
-- [ ] Apply pending search, trigger-permission and username-login migrations; deploy username-login Edge Function.
+- [x] Applied search, trigger-permission and username-login migrations; deployed username-login Edge Function October 18. Invalid/nonexistent login attempts return 401; successful real-user acceptance pending.
 - [ ] Configure SMTP, stable callback URLs and verify real signup, confirmation, reset, username/email sign-in and sign-out.
 - [ ] Verify two-user RLS, profile photo ownership, friends, shared rounds, account switching and deletion with disposable test accounts.
 - [ ] Publish public GitHub repository and permanent HTTPS deployment; Docker image has not yet been built/tested.
