@@ -349,3 +349,9 @@ Removed the scorecard's Finish Round action. A glass Finish Hole pill validates 
 Added the friends migration and UI: private friend codes, accepted connections, linked player selection, completed-scorecard invitations, recipient acceptance into separate history, and opt-in performance summaries. SQL restricts ownership/status updates and uses scoped server-side functions; default table grants are revoked. Shared scorecards contain only the recipient's player card. UI code is implemented but the migration is NOT applied or runtime-verified: no Supabase development project settings are configured. Signup/login scaffolding already existed; added basic form validation and persistent web sessions. Live auth, RLS, sharing and cross-device tests remain required.
 
 Added photo headers with course names over a blurred dark strip for four courses, using attributed official-site image references for development. Missing/failed photos retain the original header. These are not claimed as licensed production assets; obtain approved hosted images before release. Typecheck, lint, 66 tests and iOS/web export passed; inspected the web photo layout.
+
+### 2026-10-18 — Free hosting and Games cards
+- Selected Render Free ($0), with no disk/add-ons, and started deployment.
+- Replaced active group pills with course-photo cards; completed cards show a larger photograph, scores and player names. Suppressed the completed-games empty state while active groups exist.
+- Added per-friend score-sharing switches and applied migration 202610180002. Access still requires an accepted friendship, and removing the friendship removes its sharing preference. Existing all-friends opt-ins are preserved only for already accepted friends.
+- Validation: TypeScript and lint passed; 83 tests passed. A local PostgreSQL-compatible check verified default denial, explicit opt-in, unrelated-user denial and revocation. All-platform export passed before the final sharing UI change.
