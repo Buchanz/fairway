@@ -1,9 +1,9 @@
-# Prepared deployment; creating this paid service requires owner billing approval.
+# Free deployment only; no paid disk or add-ons.
 services:
   - type: web
     name: fairway
     runtime: docker
-    plan: starter
+    plan: free
     region: oregon
     healthCheckPath: /api/health
     envVars:

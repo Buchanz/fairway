@@ -1,6 +1,6 @@
 import {avatarUrl} from '../lib/avatar-cache';
 import {useCallback,useEffect,useState} from 'react';
-import {Image,Text,View,StyleSheet} from 'react-native';
+import {Image,Text,View,StyleSheet,Switch} from 'react-native';
 import {useFocusEffect,router} from 'expo-router';
 import {GlassPanel,GlassPressable,GlassInput} from './Glass';
 import {useAuth} from '../auth/AuthProvider';
@@ -36,8 +36,7 @@ export function FriendsPanel({onRoundsChanged}:{onRoundsChanged:()=>void}){
    {results.map(person=><View key={person.user_id} style={{flexDirection:'row',alignItems:'center',gap:12}}>{person.photo?<Image source={{uri:person.photo}} style={{width:44,height:44,borderRadius:22}}/>:<View style={{width:44,height:44,borderRadius:22,backgroundColor:'#d5dfd6',alignItems:'center',justifyContent:'center'}}><Text style={s.title}>{person.username[0].toUpperCase()}</Text></View>}<Text style={[s.title,{flex:1}]}>@{person.username}</Text>{button(friends.some(f=>f.id===person.user_id)?'Connected':'Add friend',async()=>{await requestFriend(person.username);setCode('');setMessage('Request sent.');})}</View>)}
    {!!searchMessage&&<Text style={s.text}>{searchMessage}</Text>}
    {friends.map(f=><View key={f.connectionId} style={{gap:6}}><Text style={s.title}>{f.name}</Text>{f.accepted?button('View rounds',async()=>{const result=await authClient!.rpc('friend_performances',{friend:f.id});if(result.error)throw result.error;setPerformance({name:f.name,rows:result.data});}):f.incoming?button('Accept request',()=>acceptFriend(f.connectionId)):<Text style={s.text}>Request sent</Text>}{button(f.accepted?'Remove friend':'Dismiss request',async()=>{const {error}=await authClient!.from('friendships').delete().eq('id',f.connectionId);if(error)throw error;setPerformance(null);})}</View>)}
-   {button(sharing?'Round sharing: On':'Round sharing: Off',async()=>{const {error}=await authClient!.from('player_profiles').update({share_performance:!sharing}).eq('user_id',id);if(error)throw error;})}
-   <Text style={s.text}>When on, accepted friends can see your completed scores.</Text>
+   {!!code.trim()&&<View style={{flexDirection:'row',alignItems:'center',gap:12}}><View style={{flex:1}}><Text style={s.title}>@{session?.user.user_metadata?.username||'You'}</Text><Text style={s.text}>Share my scores with accepted friends</Text></View><Switch accessibilityLabel="Share my completed scores with all accepted friends" disabled={busy} value={sharing} trackColor={{true:'#175D3D'}} onValueChange={value=>void act(async()=>{const {error}=await authClient!.from('player_profiles').update({share_performance:value}).eq('user_id',id);if(error)throw error;})}/></View>}
    {invites.map(invite=><View key={invite.id}><Text style={s.text}>Completed scorecard from {friends.find(f=>f.id===invite.owner_id)?.name||'a golfer'}</Text>{button('Add my scorecard to history',async()=>{const {error}=await authClient!.rpc('accept_round_invitation',{invitation:invite.id});if(error)throw error;setMessage('Added to your history.');onRoundsChanged();})}</View>)}
    {performance&&<View style={{gap:8}}><Text style={s.title}>{performance.name}’s rounds</Text>{!performance.rows.length&&<Text style={s.text}>No shared completed rounds.</Text>}{performance.rows.map((r,i)=><Text key={i} style={s.text}>{courses.find(c=>c.id===r.course_id)?.name||r.course_id} · {new Date(r.played_at).toLocaleDateString()} · {r.total} strokes / {r.holes} holes</Text>)}</View>}
   </>}{!!message&&<Text accessibilityRole="alert" style={s.text}>{message}</Text>}
