@@ -4,6 +4,7 @@ import * as Location from 'expo-location';
 import {authClient} from '../auth/client';
 import {useAuth} from '../auth/AuthProvider';
 import {GlassPanel,GlassPressable} from './Glass';
+import {scoreTotal,type Round} from '../lib/rounds';
 import {CoursePhoto} from './CoursePhoto';
 import {courses} from '../data/courses';
 type Group={owner_id:string;round_id:string;course_id:string;names:string[]};
@@ -47,10 +48,10 @@ export function RoundGroup({ownerId,roundId}:{ownerId:string;roundId:string}){
  {session?.user.id===ownerId?<GlassPressable style={button} disabled={busy} onPress={()=>void flip()}><Text>{busy?'Flipping…':'Flip a tee'}</Text></GlassPressable>:<Text>The scorekeeper flips; the same result appears here.</Text>}
  </>}{!!message&&<Text accessibilityRole="alert">{message}</Text>}</GlassPanel>;
 }
-export function ActiveRoundGroups({onCompleted,onCount}:{onCompleted?:()=>void;onCount?:(count:number)=>void}){
+export function ActiveRoundGroups({onCompleted,onCount,rounds=[]}:{onCompleted?:()=>void;onCount?:(count:number)=>void;rounds?:Round[]}){
  const known=useRef<string[]>([]);
  const {session}=useAuth();const [groups,setGroups]=useState<Group[]>([]),[open,setOpen]=useState<string|null>(null);
  useEffect(()=>{if(!session||!authClient)return;let alive=true;const load=async()=>{if(AppState.currentState!=='active')return;const {data,error}=await authClient!.rpc('my_active_groups');if(alive&&!error){const next=(data||[]) as Group[];if(known.current.some(id=>!next.some(g=>`${g.owner_id}:${g.round_id}`===id)))onCompleted?.();known.current=next.map(g=>`${g.owner_id}:${g.round_id}`);setGroups(next);onCount?.(next.length);}};void load();const timer=setInterval(()=>void load(),15000);return()=>{alive=false;clearInterval(timer);};},[session,onCompleted,onCount]);
  if(!groups.length)return null;
- return <View style={{gap:8}}>{groups.map(g=><View key={`${g.owner_id}:${g.round_id}`} style={{gap:8}}><GlassPanel style={{borderRadius:24,overflow:'hidden',backgroundColor:'#E8EEDD'}}><GlassPressable onPress={()=>setOpen(open===g.round_id?null:g.round_id)} accessibilityLabel="Open group round"><CoursePhoto courseId={g.course_id} style={{width:'100%',height:150}}/><View style={{padding:16,gap:6}}><Text style={{fontSize:18,fontWeight:'600',color:'#183C32'}}>{courses.find(c=>c.id===g.course_id)?.name||g.course_id}</Text><Text style={{color:'#52675C'}}>Active round</Text><Text style={{color:'#183C32'}}>{g.names.join(' · ')}</Text><Text style={{color:'#52675C'}}>Open group and tee flip</Text></View></GlassPressable></GlassPanel>{open===g.round_id&&<RoundGroup ownerId={g.owner_id} roundId={g.round_id}/>}</View>)}</View>;
+ return <View style={{gap:8}}>{groups.map(g=><View key={`${g.owner_id}:${g.round_id}`} style={{gap:8}}><GlassPanel style={{borderRadius:24,overflow:'hidden',backgroundColor:'#E8EEDD'}}><GlassPressable onPress={()=>setOpen(open===g.round_id?null:g.round_id)} accessibilityLabel="Open group round"><CoursePhoto courseId={g.course_id} style={{width:'100%',height:150}}/><View style={{padding:16,gap:6}}><Text style={{fontSize:18,fontWeight:'600',color:'#183C32'}}>{courses.find(c=>c.id===g.course_id)?.name||g.course_id}</Text><Text style={{color:'#52675C'}}>Active round</Text><Text style={{color:'#183C32'}}>{g.names.map((name,i)=>{const round=g.owner_id===session?.user.id?rounds.find(r=>r.id===g.round_id):undefined;const score=round?.scores[i]?scoreTotal(round.scores[i]):null;return `${name}${score?` · ${score.total} strokes (${score.played} holes)`:''}`;}).join('\n')}</Text><Text style={{color:'#52675C'}}>Open group and tee flip</Text></View></GlassPressable></GlassPanel>{open===g.round_id&&<RoundGroup ownerId={g.owner_id} roundId={g.round_id}/>}</View>)}</View>;
 }
