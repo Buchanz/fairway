@@ -72,13 +72,17 @@ export default function AccountScreen({embedded=false,onClose}:{embedded?:boolea
  return <SafeAreaView edges={['top','left','right']} style={[s.page,embedded&&{height:620,backgroundColor:'transparent'}]}>
   {Platform.OS==='web'&&!embedded&&<Link href="/" style={{padding:20,color:colors.green,fontWeight:'600'}}>← Home</Link>}
   <KeyboardAvoidingView style={{flex:1}} behavior={Platform.OS==='ios'?'padding':undefined}>
-   <ScrollView keyboardShouldPersistTaps="handled" keyboardDismissMode="on-drag" contentContainerStyle={[s.content,!session&&s.authContent]}>
-    {!ready?<View style={s.loading}><ActivityIndicator color={colors.green}/><Text style={s.subtitle}>Opening your account…</Text></View>:session&&mode!=='password'?<>
-     <Text style={s.pageTitle}>Account</Text>
-     <ProfileDashboard key={session.user.id}/>
+   {ready&&session&&mode!=='password'?<View style={s.signedIn}>
+    <Text style={s.pageTitle}>Account</Text>
+    <ProfileDashboard key={session.user.id}/>
+    <View style={s.accountActions}>
      <Pressable accessibilityRole="button" disabled={busy} onPress={()=>void signOut()} style={s.secondary}><Text style={s.link}>Sign out</Text></Pressable>
      {confirmDelete?<GlassPanel style={s.card}><Text style={s.label}>Delete your account and all cloud-saved rounds permanently?</Text><Pressable disabled={busy} onPress={()=>void removeAccount()} style={s.secondary}><Text style={s.danger}>Delete my account</Text></Pressable><Pressable disabled={busy} onPress={()=>setConfirmDelete(false)} style={s.textButton}><Text style={s.link}>Cancel</Text></Pressable></GlassPanel>:<Pressable disabled={busy} onPress={()=>setConfirmDelete(true)} style={s.textButton}><Text style={s.danger}>Delete account</Text></Pressable>}
-    </>:<>
+     {!!(message||sessionError)&&<Text accessibilityRole="alert" style={s.notice}>{message||sessionError}</Text>}
+    </View>
+   </View>:
+   <ScrollView keyboardShouldPersistTaps="handled" keyboardDismissMode="on-drag" contentContainerStyle={[s.content,!session&&s.authContent]}>
+    {!ready?<View style={s.loading}><ActivityIndicator color={colors.green}/><Text style={s.subtitle}>Opening your account…</Text></View>:<>
      <View style={s.brand}><Text style={s.logo}>fairway</Text><Text style={s.tagline}>More golf. Less searching.</Text></View>
      <GlassPanel style={s.card}>
       {(mode==='login'||mode==='signup')&&<GlassPanel interactive style={s.tabs} onLayout={event=>setTabsWidth(event.nativeEvent.layout.width)}><Animated.View pointerEvents="none" style={[s.activeTab,{width:Math.max(0,(tabsWidth-12)/2),transform:[{translateX:slider.interpolate({inputRange:[0,1],outputRange:[0,(tabsWidth-4)/2]})}]}]}><GlassPanel interactive style={{flex:1,borderRadius:22,backgroundColor:Platform.OS==='web'?colors.green:'#C5EB65'}}/></Animated.View>{(['login','signup'] as const).map(next=><PlainPressable key={next} accessibilityRole="button" accessibilityState={{selected:mode===next}} disabled={busy} onPress={()=>switchMode(next)} style={s.tab}><Text style={[s.tabText,mode===next&&{color:Platform.OS==='web'?'white':colors.ink}]}>{next==='login'?'Sign in':'Create account'}</Text></PlainPressable>)}</GlassPanel>}
@@ -101,11 +105,12 @@ export default function AccountScreen({embedded=false,onClose}:{embedded?:boolea
      <Link href="/" onPress={onClose} style={s.guest}>Continue browsing tee times</Link>
     </>}
     {!!(message||sessionError)&&<Text accessibilityRole="alert" style={s.notice}>{message||sessionError}</Text>}
-   </ScrollView>
+   </ScrollView>}
   </KeyboardAvoidingView>
  </SafeAreaView>;
 }
 const s=StyleSheet.create({
+ signedIn:{flex:1,minHeight:0,width:'100%',maxWidth:480,alignSelf:'center',paddingHorizontal:20,paddingTop:16,gap:12},accountActions:{flexShrink:0,gap:4,paddingTop:8,paddingBottom:8},
  page:{flex:1,backgroundColor:colors.paper},content:{paddingHorizontal:20,paddingTop:24,paddingBottom:40,flexGrow:1,gap:20,width:'100%',maxWidth:480,alignSelf:'center'},authContent:{justifyContent:'flex-start',paddingTop:48},
  loading:{alignItems:'center',gap:16},pageTitle:{fontSize:16,fontWeight:'600',textAlign:'center',color:colors.ink},brand:{alignItems:'center',gap:4,marginBottom:8},logo:{fontSize:44,lineHeight:56,paddingHorizontal:5,paddingTop:2,fontWeight:'800',letterSpacing:-2,color:colors.ink},tagline:{fontSize:13,color:colors.muted},
  card:{padding:24,borderRadius:28,backgroundColor:'#ffffff',gap:20,boxShadow:'0 8px 30px rgba(24,60,50,0.07)'},title:{fontSize:26,fontWeight:'700',letterSpacing:-0.6,color:colors.ink},subtitle:{fontSize:14,lineHeight:21,color:colors.muted},

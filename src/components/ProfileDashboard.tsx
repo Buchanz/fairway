@@ -1,7 +1,7 @@
 import {avatarUrl,cachedAvatar,invalidateAvatar} from '../lib/avatar-cache';
 import {normalizeUsername,usernamePattern} from '../auth/validation';
 import {useCallback,useState} from 'react';
-import {Image,Text,View,StyleSheet} from 'react-native';
+import {Image,Text,View,StyleSheet,ScrollView} from 'react-native';
 import {useFocusEffect} from 'expo-router';
 import {SymbolView} from 'expo-symbols';
 import * as ImagePicker from 'expo-image-picker';
@@ -45,7 +45,7 @@ export function ProfileDashboard(){
   invalidateAvatar(path);setPhoto(await avatarUrl(path));setMessage('Profile photo updated.');
  }catch(e){setMessage(e instanceof Error?e.message:'Could not upload photo.');}finally{setBusy(false);}}
  async function changeEmail(){if(!authClient||busy)return;setBusy(true);try{const {error}=await authClient.auth.updateUser({email:email.trim().toLowerCase()});if(error)throw error;setMessage('Follow the confirmation instructions sent to your current and new email addresses.');setEditEmail(false);setEmail('');}catch(e){setMessage(e instanceof Error?e.message:'Could not change email.');}finally{setBusy(false);}}
- return <View style={{gap:18}}>
+ return <View style={{flex:1,minHeight:0,gap:12}}>
   <View style={s.profile}>
    <View style={{width:92,height:92,marginBottom:4}}>
     <GlassPressable accessibilityRole="button" accessibilityLabel="Upload profile photo" disabled={busy} onPress={()=>void uploadPhoto()} style={s.avatar}>{photo?<Image source={{uri:photo}} style={s.photo}/>:<SymbolView name="person.crop.circle.fill" size={72} tintColor="#557568"/>}</GlassPressable>
@@ -53,6 +53,7 @@ export function ProfileDashboard(){
    </View>
    <View style={s.identity}><Text style={[s.title,{textAlign:'center'}]}>{displayName||'Your Profile'}</Text><Text style={[s.muted,{textAlign:'center'}]}>{user?.email||'Guest golfer'}</Text></View>
   </View>
+  <ScrollView style={{flex:1,minHeight:0}} contentContainerStyle={{gap:18,paddingHorizontal:4,paddingBottom:16}} keyboardShouldPersistTaps="handled" keyboardDismissMode="on-drag" showsVerticalScrollIndicator={false}>
   {editProfile&&<GlassPanel style={s.card}><Text style={s.heading}>Edit Profile</Text><GlassPressable accessibilityRole="button" disabled={busy} onPress={()=>void uploadPhoto()} style={s.button}><Text style={s.white}>Change profile photo</Text></GlassPressable>{user&&<GlassInput accessibilityLabel="Username" placeholder="Username" value={username} onChangeText={setUsername} autoCapitalize="none" autoCorrect={false} maxLength={24} style={s.input}/>}<GlassInput accessibilityLabel="Display name" placeholder="Display name" value={displayName} onChangeText={setDisplayName} maxLength={80} style={s.input}/><GlassPressable disabled={busy} onPress={()=>void saveProfile()} style={s.button}><Text style={s.white}>Save Profile</Text></GlassPressable>
    {user&&<GlassPressable accessibilityRole="button" onPress={()=>setEditEmail(v=>!v)}><Text style={s.link}>Edit email address</Text></GlassPressable>}
    {editEmail&&<><GlassInput accessibilityLabel="New email address" placeholder="New email address" value={email} onChangeText={setEmail} autoCapitalize="none" keyboardType="email-address" style={s.input}/><GlassPressable disabled={busy} onPress={()=>void changeEmail()} style={s.button}><Text style={s.white}>Send confirmation</Text></GlassPressable></>}
@@ -63,6 +64,7 @@ export function ProfileDashboard(){
    {!!favoriteQuery.trim()&&!courses.some(c=>`${c.name} ${c.municipality}`.toLowerCase().includes(favoriteQuery.trim().toLowerCase()))&&<Text style={s.muted}>No matching courses.</Text>}
   </View>
   {!!message&&<Text accessibilityRole="alert" style={s.muted}>{message}</Text>}
+  </ScrollView>
  </View>;
 }
 const s=StyleSheet.create({identity:{width:'100%',alignItems:'center',gap:4},editCircle:{width:28,height:28,borderRadius:14,alignItems:'center',justifyContent:'center',backgroundColor:'#C5EB65'},profile:{alignItems:'center',gap:8,paddingVertical:8},avatar:{width:92,height:92,borderRadius:46,backgroundColor:'#e8eedd',alignItems:'center',justifyContent:'center'},photo:{width:92,height:92,borderRadius:46},title:{fontSize:24,fontWeight:'700',color:'#183C32'},heading:{fontSize:16,fontWeight:'600',color:'#183C32'},muted:{fontSize:13,color:'#65766D',lineHeight:19},card:{backgroundColor:'#E8EEDD',borderRadius:26,padding:18,gap:12},row:{flexDirection:'row',alignItems:'center',justifyContent:'space-between',gap:10},link:{color:'#1F503F',fontWeight:'600'},input:{backgroundColor:'#E8EEDD',borderRadius:24,padding:14,fontSize:16},button:{backgroundColor:'#C5EB65',borderRadius:24,padding:14,alignItems:'center'},white:{color:'#183C32',fontWeight:'600'},favorite:{flexDirection:'row',alignItems:'center',gap:12,paddingVertical:12}});
