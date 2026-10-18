@@ -1,5 +1,7 @@
 # Fairway: two-week mobile milestone
 
+> Historical planning document. Use [current capstone readiness](CAPSTONE-READINESS.md) for verified status and remaining acceptance work; items below reflect the original plan.
+
 Target: October 19, 2026. A tested, installable beta and capstone-ready submission package; public store approval depends on external review and account requirements.
 
 ## Release scope

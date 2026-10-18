@@ -3,7 +3,7 @@
 ## Project Overview
 Fairway helps golfers compare live tee times across supported BC courses and track a round on their phone. It is a software capstone built with Expo, React Native, React, TypeScript, Node.js and Express.
 
-**Release status:** development prototype. Signed iPhone internal preview builds are available; permanent public deployment and store releases are still pending. Native map screens compile but still require device and on-course testing. See [architecture](docs/ARCHITECTURE.md) and [development log](docs/DEVLOG.md).
+**Release status:** development prototype. Signed iPhone internal preview builds are available; the web app is live at https://fairway-bcsq.onrender.com on Render Free. Store releases are still pending. Free hosting sleeps when idle and can take 50+ seconds to wake. Native map screens compile but still require device and on-course testing. See [architecture](docs/ARCHITECTURE.md) and [development log](docs/DEVLOG.md).
 
 ## Features
 - Live tee-time rows for Ardmore, Cedar Hill, Olympic View, Mount Douglas, Langley Golf Centre and Royalwood, subject to provider availability.

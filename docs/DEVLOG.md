@@ -355,3 +355,9 @@ Added photo headers with course names over a blurred dark strip for four courses
 - Replaced active group pills with course-photo cards; completed cards show a larger photograph, scores and player names. Suppressed the completed-games empty state while active groups exist.
 - Added per-friend score-sharing switches and applied migration 202610180002. Access still requires an accepted friendship, and removing the friendship removes its sharing preference. Existing all-friends opt-ins are preserved only for already accepted friends.
 - Validation: TypeScript and lint passed; 83 tests passed. A local PostgreSQL-compatible check verified default denial, explicit opt-in, unrelated-user denial and revocation. All-platform export passed before the final sharing UI change.
+
+### October 18 acceptance review
+- Re-ran typecheck, lint, 83 tests and all-platform export successfully. Verified live site search, booking review and registration UI in Safari without submitting a booking or creating an account.
+- Confirmed public Auth restrictions. Full authenticated two-user acceptance remains pending.
+- Found Olympic View HTTP 502, missing production EAS configuration, 31 dependency advisories and the existing Ridge mapping gap. Updated CAPSTONE-READINESS.md with honest gates and device tests.
+- Submitted current iOS preview 30874353-24e6-4f19-84eb-366e7bc082e8 so the latest layout changes can be tested.

@@ -1,56 +1,46 @@
-# Capstone readiness — reviewed October 18, 2026
+# Capstone readiness — October 18, 2026
 
-This records evidence, not a claim that the project has been submitted or all checks pass.
+This checklist distinguishes tested behaviour from implementation and outstanding acceptance. No grade or store approval is implied.
 
-| Rubric criterion (10 points each) | Implemented evidence | Remaining acceptance work |
+| Rubric criterion (10 points each) | Evidence | Still needed |
 | --- | --- | --- |
-| Architecture | Expo Router screens; reusable UI components; separate Auth/data services; Express provider adapters; PostgreSQL migrations and RLS | Keep architecture document current; explain PostgreSQL choice to assessor |
-| Code quality/documentation | TypeScript, lint, modular adapters, README, setup instructions, source attribution | Final review and public repository publication |
-| Framework/library usage | React/React Native, Expo, Node/Express, Supabase Auth/PostgreSQL, native maps | Brief names MongoDB; instructor must confirm PostgreSQL substitution is acceptable |
-| Testing/debugging | 83 automated tests at last pass, TypeScript and ESLint, exported web/iOS bundles; public Auth access checks | Two-user RLS/account switching, actual signup/recovery emails, avatar ownership, friend invitations, physical-device and browser acceptance |
-| Devlog | Weekly log in docs/DEVLOG.md, detailed implementation log in DEVLOG.md, screenshots and test/source examples | Student should add personal learnings and final milestone evidence; do not invent retrospective progress |
-| Deployment | Running local Express/Metro plus temporary HTTPS previews | Always-on production host, stable callback URLs, monitoring, public GitHub URL, final live link |
+| Architecture | Separate screens, reusable components, Auth/data services, Express provider adapters, PostgreSQL migrations and RLS | Instructor confirmation that Supabase/PostgreSQL satisfies the brief's MongoDB requirement |
+| Code quality/documentation | TypeScript and lint pass; public repository, README, architecture and proposal documents | Review dependency advisories and final documentation accuracy |
+| Framework/library usage | React, React Native, Expo, Node/Express, Supabase, native maps | Standalone Android Maps configuration and real-device verification |
+| Testing/debugging | 83/83 tests; web/iOS/Android exports pass; live web search and booking review checked | Full two-account and physical-device acceptance below |
+| Devlog | Weekly entries, screenshots and implementation evidence | Student's personal learning reflections and final demo evidence |
+| Deployment | https://fairway-bcsq.onrender.com; https://github.com/Buchanz/fairway; signed iOS beta builds | Stable auth callbacks/email delivery, production mobile environment, release checks |
 
-## October 18 verified progress
-- Signed iPhone internal previews successfully built; Android preview runs on the Mac emulator. These do not replace a stable backend.
-- Group-round migration applied to hosted Supabase. Direct reads of presence/flip tables denied; membership-checked functions provide access.
-- Tee flip is implemented: linked accounts, opt-in foreground GPS, all players within 200 m, fresh presence, one shared server result. Two-device acceptance is still pending.
-- Completed rounds copy each joined friend’s personal scorecard to their account. Local database tests pass; hosted multi-account acceptance is pending.
-- No disposable test accounts have been created yet. Static offline accounts cannot exercise the active-location tee flip.
-- Public repository published: https://github.com/Buchanz/fairway. First hosted CI run passed install, typecheck, lint, tests and all-platform exports.
-- 11 of 12 audited rangefinder listings have numbered geometry; Cordova Bay Ridge lacks a complete layout. Geometry checks do not establish real-world tee accuracy.
+## Verified this session
+- TypeScript, ESLint and all 83 automated tests passed.
+- Web, iOS and Android bundles exported successfully. Exporting does not prove native runtime behaviour.
+- Live website and API health returned HTTP 200. Five providers supplied inventory: Cedar Hill, Mount Douglas, Ardmore, Langley Golf Centre and Royalwood.
+- Safari: searching Ardmore narrowed results to one course; tee-time selection opened the correct course/date/time, four players, 18 holes and price review. No booking or payment was submitted.
+- Account overlay opens, changes between sign-in and registration, shows username/email/password fields and password requirements, and closes.
+- Hosted Supabase public checks: signup enabled, confirmation required, anonymous reads denied for rounds, player profiles, friendships and round invitations.
+- Per-friend sharing migration was applied in the prior session; local database tests covered opt-in, unrelated-user denial and revocation. Hosted two-user tests remain outstanding.
+- iOS build 4d81405d-5a1b-401d-a483-80c4a65b6ab0 succeeded. It predates the latest pinned-account and Android interaction changes. Current-source build 30874353-24e6-4f19-84eb-366e7bc082e8 was submitted for testing; completion not yet verified.
 
-## Earlier hosted account audit (October 17; recheck outstanding items)
-- Email signup enabled; email confirmation required; secure email change enabled.
-- Password settings changed from 6 characters/no required characters to 12 and uppercase/lowercase/digit/symbol. Client validation aligned.
-- Anonymous reads of all four account tables denied (live API check).
-- Username search was missing on October 17; applied successfully October 18 with trigger hardening and private username-login resolution.
-- Trigger helper `create_player_profile` is unnecessarily executable through public roles. Prepared `202610160004_trigger_permissions.sql` to revoke direct calls; authenticated user-facing RPCs remain intentionally callable and enforce identity internally.
-- Custom SMTP is OFF. Public signup email delivery is not production-ready.
-- Dashboard showed Site URL `http://localhost:3000` and no allowed redirects. Attempts to update were interrupted by browser use; do not assume saved.
-- No two-user test credentials were supplied; authenticated isolation is not yet verified.
+## Failed / incomplete checks, in priority order
+1. **Accounts:** verify SMTP sender and exact callback URLs, then exercise signup, confirmation, username/email sign-in, reset, profile edits/photo, sign-out and account switching with disposable users. Anonymous denial is not a substitute for authenticated isolation tests.
+2. **Live data:** Olympic View returned HTTP 502 for October 19 and had an empty snapshot. Investigate the provider failure; do not represent this as sold out.
+3. **Mobile release configuration:** Expo production environment currently lists none of the required API/Supabase variables or Android Maps key. Preview settings are separate. Android standalone maps and store packages need configuration and testing.
+4. **Security/dependencies:** npm audit reports 21 high and 10 moderate advisories (zero critical). Review reachability and compatible fixes; do not force incompatible Expo/React Native downgrades. Abandoned group-presence retention still needs review/cleanup.
+5. **Course accuracy:** 11/12 listings pass geometry checks. Cordova Bay Ridge has no complete hole mapping. Geometry checks do not establish real-world tee, green, routing or tee-colour accuracy.
+6. **Submission materials:** instructor approval of proposal/database choice, personal devlog reflections, final screenshots and demo; complete privacy/support/deletion pages before store submissions.
 
-## Preview callback values to configure
-Temporary values change when tunnels restart:
-- Site URL: `https://thread-abstract-arg-studies.trycloudflare.com`
-- Web callback: `https://thread-abstract-arg-studies.trycloudflare.com/account`
-- Expo Go callback: `exps://clan-blake-lexmark-lamp.trycloudflare.com/--/account`
-- Installed-app callback: `fairway://account`
-- Local web callback, for development only: `http://127.0.0.1:8788/account`
+## On-device acceptance still required
+Use two disposable accounts, with two phones for GPS tee flip. Do not delete a real account to test deletion.
+- Register and confirm each account; sign in by username and email; reset a password and sign out/in.
+- Upload/change photo; edit profile; favourite/unfavourite a course; restart and confirm persistence.
+- Add/accept a friend; enable sharing for one friend and disable it; verify access from the other account.
+- Start a nine-hole round, add the other player, enter every score, finish, and verify each account's history and totals after restart.
+- Quit a partial round and verify it does not enter completed history; test offline save/reconnect without duplicate rounds.
+- With both phones together and foreground GPS enabled, join the round and flip a tee; verify both see the same result. Test permission denial and stale/off-course GPS.
+- Check rangefinder framing, hole navigation, selected tees and measured distances on the course. Test iOS and Android separately.
+- Confirm pinned profile/footer, scrolling favourites, Games image cards, Android press feedback and keyboard dismissal on the current build.
 
-Use exact allowed URLs rather than a broad wildcard. Replace temporary hosts with stable production destinations before submission.
+## Deployment limitations
+Render Free is active with no paid plan/add-ons; requests after inactivity can take 50+ seconds. Production mobile environment, email delivery, callbacks and full device acceptance are not yet signed off. App-store publication is separate from the rubric's live-application deliverable.
 
-## October 17 release gate
-- [x] 81 automated tests, typecheck, lint and all-platform exports pass before the dependency patch; rerun recorded in DEVLOG.
-- [x] Public Auth check confirms signup/confirmation enabled and anonymous reads denied for four account tables.
-- [x] Architecture and proposal database descriptions corrected; Docker deployment package and health check prepared.
-- [x] Critical shell-quote advisory fixed by compatible dependency update.
-- [ ] Review remaining 21 high and 10 moderate dependency advisories; suggested forced downgrades of Expo/React Native are not acceptable without compatibility work.
-- [x] Applied search, trigger-permission and username-login migrations; deployed username-login Edge Function October 18. Invalid/nonexistent login attempts return 401; successful real-user acceptance pending.
-- [ ] Configure SMTP, stable callback URLs and verify real signup, confirmation, reset, username/email sign-in and sign-out.
-- [ ] Verify two-user RLS, profile photo ownership, friends, shared rounds, account switching and deletion with disposable test accounts.
-- [ ] Publish public GitHub repository and permanent HTTPS deployment; Docker image has not yet been built/tested.
-- [ ] Verify iOS and Android maps, offline recovery and permissions on devices. Configure Android production Maps key and release identifiers if distributing standalone apps.
-- [ ] Complete final browser/device acceptance, demo screenshots, personal devlog reflections, and instructor approval of proposal/PostgreSQL substitution.
-
-Do not claim that courses and rangefinder styling are the only remaining work until these release gates pass. App-store publication is separate from the rubric's live-application requirement.
+Callback targets to verify in Supabase: `https://fairway-bcsq.onrender.com/account` and `fairway://account`. Remove obsolete tunnel callbacks after verifying the stable routes. This review did not change callback settings.
