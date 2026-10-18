@@ -1,0 +1,186 @@
+import {BottomFade} from '../components/BottomFade';
+import {WebAccountMenu} from '../components/WebAccountMenu';
+import {readAvailabilityCache,restoreAvailabilityCache,saveAvailabilityCache} from '../lib/availability-cache';
+import {SearchField} from '../components/SearchField';
+import {SymbolView} from 'expo-symbols';
+import {GlassPressable as Pressable,GlassPanel} from '../components/Glass';
+import {Link} from 'expo-router';
+import {Brand} from '../components/Brand';
+import {useCallback,useEffect,useMemo,useRef,useState} from 'react';
+import {Animated,Easing,Platform,StyleSheet,Text,useWindowDimensions,View,ScrollView,AccessibilityInfo} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import * as Location from 'expo-location';
+import {Chip,colors} from '../components/ui';
+import {CourseCarousel,labelDate} from '../components/CourseCarousel';
+import {MenuOverlay,type MenuAnchor} from '../components/MenuOverlay';
+import {BookingSheet,type Selection} from '../components/BookingSheet';
+import {cities,courses,type Point} from '../data/courses';
+import {isFresh} from '../lib/availability';
+import {nearbyCourses} from '../lib/geo';
+import {decodeInventory,filterCourse,type Inventory,type SearchFilters} from '../lib/search';
+
+type Panel='players'|'holes'|'calendar'|'filters'|'coverage'|null;
+export default function Explore(){
+ const courseScroll=useRef<ScrollView>(null);
+ const coursePositions=useRef<Record<string,number>>({});
+ const courseGroupTop=useRef(0),scrollY=useRef(0);
+ const [scrollSize,setScrollSize]=useState({viewport:0,content:0});
+ const [atBottom,setAtBottom]=useState(false);
+
+ const [players,setPlayers]=useState(4),[holes,setHoles]=useState<SearchFilters['holes']>('any');
+ const [chosenDate,setChosenDate]=useState<string|null>(null);
+ const [time,setTime]=useState<SearchFilters['time']>('any'),[maxPrice,setMaxPrice]=useState<number|null>(null);
+ const [sort,setSort]=useState<'name'|'distance'>('distance'),[radius,setRadius]=useState<number|null>(null);
+ const [query,setQuery]=useState('');
+ const [origin,setOrigin]=useState<Point>(cities[0]),[originName,setOriginName]=useState('Victoria');
+ const [panel,setPanel]=useState<Panel>(null),[selection,setSelection]=useState<Selection|null>(null);
+ const [clock,setClock]=useState(()=>Date.now()),[error,setError]=useState('');
+ const [locationMessage,setLocationMessage]=useState(''),[locating,setLocating]=useState(false);
+ const locationRequest=useRef(0);
+ // Ask on mobile for nearest-first results; web can enable location through Filters.
+ useEffect(()=>{
+  let alive=true;const token=locationRequest.current;
+  void (async()=>{
+   try{
+    let permission=await Location.getForegroundPermissionsAsync();
+    if(!permission.granted&&permission.canAskAgain&&Platform.OS!=='web')permission=await Location.requestForegroundPermissionsAsync();
+    if(!permission.granted)return;
+    const position=await Promise.race([Location.getCurrentPositionAsync({accuracy:Location.Accuracy.Balanced}),new Promise<never>((_,reject)=>setTimeout(()=>reject(new Error()),10000))]);
+    if(alive&&token===locationRequest.current){setOrigin(position.coords);setOriginName('your location');}
+   }catch{/* Keep city-based ordering when a location fix is unavailable. */}
+  })();
+  return()=>{alive=false;};
+ },[]);
+ const {width:screenWidth}=useWindowDimensions();
+ const menuButtons=useRef<Partial<Record<NonNullable<Panel>,View|null>>>({});
+ const [menuOpen,setMenuOpen]=useState(false);
+ const [menuAnchor,setMenuAnchor]=useState<MenuAnchor>({x:20,y:110,width:100,height:46});
+ const menuLabel=panel==='players'?`${players} players ▾`:panel==='holes'?`${holes==='any'?'Any':holes} holes ▾`:panel==='calendar'?`▦ ${chosenDate?labelDate(chosenDate):(screenWidth<500?'Next':'Next available')} ▾`:panel==='filters'?`☷ Filters${time!=='any'||maxPrice!==null?' •':''}`:'Course coverage';
+ const closeMenu=useCallback(()=>setMenuOpen(false),[]);
+ const exitMenu=useCallback(()=>setPanel(null),[]);
+ const [inventory,setInventory]=useState<Inventory>(()=>{
+  const cached=readAvailabilityCache();
+  if(Object.keys(cached).length||Platform.OS!=='web'||typeof document==='undefined')return cached;
+  try{return decodeInventory(JSON.parse(document.getElementById('fairway-availability')?.textContent||'{}'));}catch{return {};}
+ });
+ useEffect(()=>{let active=true;void restoreAvailabilityCache().then(cached=>{if(active)setInventory(current=>Object.keys(current).length?current:cached);});return()=>{active=false;};},[]);
+ const [refreshing,setRefreshing]=useState(false);
+ const [spin]=useState(()=>new Animated.Value(0));
+ const [fade]=useState(()=>new Animated.Value(1));
+ async function manualRefresh(){
+  if(refreshing)return;
+  setRefreshing(true);
+  let fetched=false;
+  const request=refresh().finally(()=>{fetched=true;});
+  Animated.timing(fade,{toValue:.35,duration:180,useNativeDriver:true}).start();
+  try{
+   // Finish every revolution, even when the cached response returns immediately.
+   do {spin.setValue(0);await new Promise<void>(resolve=>Animated.timing(spin,{toValue:1,duration:700,easing:Easing.linear,useNativeDriver:true}).start(()=>resolve()));} while(!fetched);
+   await request;
+  } finally {setRefreshing(false);Animated.timing(fade,{toValue:1,duration:300,useNativeDriver:true}).start();}
+ }
+
+ const refresh=useCallback(async(signal?:AbortSignal)=>{
+  try{
+   const base=Platform.OS==='web'?'':process.env.EXPO_PUBLIC_API_URL||null;
+   if(base===null)throw new Error();
+   const response=await fetch(`${base}/api/availability-snapshot`,{signal:signal?AbortSignal.any([signal,AbortSignal.timeout(10000)]):AbortSignal.timeout(10000)});
+   if(!response.ok)throw new Error();
+   const next=decodeInventory(await response.json());
+   if(!signal?.aborted){setInventory(next);saveAvailabilityCache(next);setClock(Date.now());setError('');}
+  }catch{if(!signal?.aborted)setError('Live updates are unavailable. Recent confirmed times remain visible briefly.');}
+ },[]);
+ useEffect(()=>{const controller=new AbortController();const start=setTimeout(()=>void refresh(controller.signal),0);const timer=setInterval(()=>void refresh(controller.signal),30000);return()=>{controller.abort();clearTimeout(start);clearInterval(timer);};},[refresh]);
+ useEffect(()=>{const timer=setInterval(()=>setClock(Date.now()),15000);return()=>clearInterval(timer);},[]);
+ const filters=useMemo<SearchFilters>(()=>({players,holes,date:chosenDate,time,maxPrice}),[players,holes,chosenDate,time,maxPrice]);
+ const nearby=useMemo(()=>nearbyCourses(courses.filter(c=>c.availability==='live'),origin,radius??20040,query),[origin,radius,query]);
+ const rows=useMemo(()=>nearby.map(course=>({...course,slots:filterCourse(inventory[course.id]||{},filters,clock)})).filter(c=>c.slots.length).sort((a,b)=>sort==='name'?a.name.localeCompare(b.name):a.distance-b.distance),[nearby,inventory,filters,clock,sort]);
+ const calendarDates=useMemo(()=>[...new Set(nearby.flatMap(course=>filterCourse(inventory[course.id]||{},{...filters,date:null},clock).map(s=>s.date)))].sort(),[nearby,inventory,filters,clock]);
+ const olympicRestricted=players===1&&nearby.some(c=>c.id==='olympic-view')&&filterCourse(inventory['olympic-view']||{},{...filters,players:2},clock).length>0&&!rows.some(c=>c.id==='olympic-view');
+ const total=rows.reduce((n,c)=>n+c.slots.length,0);
+ async function nextCourse(){
+  const positions=rows.map(course=>coursePositions.current[course.id]).filter((y):y is number=>typeof y==='number').map(y=>y+courseGroupTop.current);
+  let current=0;
+  positions.forEach((y,index)=>{if(y<=scrollY.current+16)current=index;});
+  const reduceMotion=await AccessibilityInfo.isReduceMotionEnabled();
+  if(current+1<positions.length)courseScroll.current?.scrollTo({y:positions[current+1],animated:!reduceMotion});
+  else courseScroll.current?.scrollToEnd({animated:!reduceMotion});
+ }
+ const hasFreshData=nearby.some(c=>Object.values(inventory[c.id]||{}).some(r=>isFresh(r,clock)));
+ const selectionValid=!!selection&&filterCourse(inventory[selection.course.id]||{},{players:selection.players,holes:selection.slot.holes as 9|18,date:selection.slot.date,time:'any',maxPrice:null},clock).some(s=>s.id===selection.slot.id&&s.holes===selection.slot.holes);
+ function toggle(next:Panel){
+  if(!next)return;
+  if(panel===next){closeMenu();return;}
+  menuButtons.current[next]?.measureInWindow((x,y,width,height)=>{
+   setMenuAnchor({x,y,width,height});setPanel(next);setMenuOpen(true);
+  });
+ }
+ async function locate(){
+  const token=++locationRequest.current;setLocating(true);setLocationMessage('');
+  try{
+   if(!(await Location.requestForegroundPermissionsAsync()).granted)throw new Error();
+   const position=await Promise.race([Location.getCurrentPositionAsync({accuracy:Location.Accuracy.Balanced}),new Promise<never>((_,reject)=>setTimeout(()=>reject(new Error()),15000))]);
+   if(token!==locationRequest.current)return;setOrigin(position.coords);setOriginName('your location');setSort('distance');
+  }catch{if(token===locationRequest.current)setLocationMessage('Location unavailable. Choose a town below.');}
+  finally{if(token===locationRequest.current)setLocating(false);}
+ }
+ const filterFace=(kind:Panel)=>{
+  const textStyle={fontSize:12,fontWeight:'600' as const,color:colors.ink};
+  return <View style={{flexDirection:'row',gap:4,alignItems:'center',justifyContent:'center'}}>
+   {kind==='players'?<><Text style={textStyle}>{players}</Text><SymbolView name={{ios:'person.2.fill',android:'group',web:'group'}} size={22} tintColor={colors.ink}/></>:kind==='holes'?<><Text style={textStyle}>{holes==='any'?'Any':holes}</Text><SymbolView name={{ios:'flag.fill',android:'flag',web:'flag'}} size={22} tintColor={colors.ink}/></>:kind==='calendar'?<><SymbolView name={{ios:'calendar',android:'calendar_month',web:'calendar_month'}} size={21} tintColor={colors.ink}/><Text numberOfLines={1} style={textStyle}>{chosenDate?labelDate(chosenDate):(screenWidth<500?'Next':'Next available')} ▾</Text></>:<><SymbolView name={{ios:'line.3.horizontal.decrease',android:'tune',web:'tune'}} size={21} tintColor={colors.ink}/><Text style={textStyle}>Filters{time!=='any'||maxPrice!==null?' •':''}</Text></>}
+  </View>;
+ };
+ const renderControls=(small:boolean)=>(
+   <View style={{gap:10,width:'100%',maxWidth:560,alignSelf:'center'}}>
+   <SearchField value={query} onChangeText={setQuery} autoCorrect={false} returnKeyType="search"/>
+   <View style={[s.toolbar,small&&s.compactToolbar,screenWidth<500&&{gap:5}]}>
+    <Pressable accessibilityRole="button" ref={node=>{menuButtons.current.players=node;}} accessibilityLabel="Number of players" accessibilityState={{expanded:panel==='players'}} onPress={()=>toggle('players')} style={[s.control,small&&s.compactControl,screenWidth<500&&{paddingHorizontal:7,flexShrink:1},panel==='players'&&{opacity:Platform.OS==='ios'?0.01:0}]}>{filterFace('players')}</Pressable>
+    <Pressable accessibilityRole="button" ref={node=>{menuButtons.current.holes=node;}} accessibilityLabel="Number of holes" accessibilityState={{expanded:panel==='holes'}} onPress={()=>toggle('holes')} style={[s.control,small&&s.compactControl,screenWidth<500&&{paddingHorizontal:7,flexShrink:1},panel==='holes'&&{opacity:Platform.OS==='ios'?0.01:0}]}>{filterFace('holes')}</Pressable>
+    <Pressable accessibilityRole="button" accessibilityLabel="Choose a date" ref={node=>{menuButtons.current.calendar=node;}} accessibilityState={{expanded:panel==='calendar'}} onPress={()=>toggle('calendar')} style={[s.control,small&&s.compactControl,screenWidth<500&&{paddingHorizontal:7,flexShrink:1},panel==='calendar'&&{opacity:Platform.OS==='ios'?0.01:0}]}>{filterFace('calendar')}</Pressable>
+    <Pressable accessibilityRole="button" accessibilityLabel="Filter and sort" ref={node=>{menuButtons.current.filters=node;}} accessibilityState={{expanded:panel==='filters'}} onPress={()=>toggle('filters')} style={[s.control,s.filterButton,small&&s.compactControl,screenWidth<500&&{paddingHorizontal:7,flexShrink:1},panel==='filters'&&{opacity:Platform.OS==='ios'?0.01:0}]}>{filterFace('filters')}</Pressable>
+
+   </View>
+   </View>
+ );
+ return <SafeAreaView edges={['top','left','right']} style={s.safe}>
+  <View style={s.fixedHeader}>
+   {Platform.OS==='web'?<View style={{flexDirection:'row',flexWrap:'wrap',alignItems:'flex-start',gap:24,paddingVertical:12}}>
+    <View style={{flexShrink:0}}><Brand/></View>
+    {screenWidth>=850&&<View style={{flex:1,minWidth:0}}>{renderControls(false)}</View>}
+    <WebAccountMenu/>
+    {screenWidth<850&&<View style={{width:'100%'}}>{renderControls(false)}</View>}
+   </View>:<View style={{gap:8,backgroundColor:'#F5F6F2',paddingBottom:12,zIndex:20}}>
+    <View style={s.nav}><Brand small/></View>
+    <View style={{width:'100%',maxWidth:560,flexShrink:1}}>{renderControls(false)}</View>
+   </View>}
+  </View>
+  <Animated.ScrollView ref={courseScroll} style={{flex:1}} onLayout={event=>{const viewport=event.nativeEvent.layout.height;setScrollSize(size=>({...size,viewport}));}} onContentSizeChange={(_width,content)=>{setScrollSize(size=>({...size,content}));setAtBottom(scrollY.current+scrollSize.viewport>=content-8);}} scrollEventThrottle={32} onScroll={event=>{const {contentOffset,layoutMeasurement,contentSize}=event.nativeEvent;scrollY.current=contentOffset.y;setAtBottom(contentOffset.y+layoutMeasurement.height>=contentSize.height-8);}} keyboardShouldPersistTaps="handled" keyboardDismissMode="on-drag" contentContainerStyle={s.page}>
+   <View style={s.resultsBar}><View><Text style={s.results}>{total} tee times<Text style={s.resultLight}> · {rows.length} {rows.length===1?'course':'courses'}</Text></Text><Text style={s.hint}>{sort==='distance'?`Nearest to ${originName} first`:'Courses A–Z'}{radius===null?' · All distances':` · Within ${radius} km`}</Text></View><Pressable accessibilityRole="button" accessibilityLabel="Refresh availability" disabled={refreshing} onPress={()=>void manualRefresh()} style={{width:46,height:46,borderRadius:23,backgroundColor:Platform.OS==='web'?'#ffffff':'#E8EEDD',boxShadow:Platform.OS==='web'?'0 3px 12px rgba(24,60,50,0.12)':'none',alignItems:'center',justifyContent:'center'}}><Animated.View style={{transform:[{rotate:spin.interpolate({inputRange:[0,1],outputRange:['0deg','360deg']})}]}}><SymbolView name={{ios:'arrow.clockwise',android:'refresh',web:'refresh'}} size={23} tintColor={colors.ink}/></Animated.View></Pressable></View>
+   {olympicRestricted&&<Text style={s.notice}>Olympic View has times for larger groups, but its booking page currently does not offer those times for one player.</Text>}
+   {!!error&&<Text accessibilityLiveRegion="polite" style={s.notice}>{error}</Text>}
+   <Animated.View onLayout={event=>{courseGroupTop.current=event.nativeEvent.layout.y;}} style={{opacity:fade,gap:26,paddingHorizontal:8,marginHorizontal:-8,paddingVertical:8}}>{rows.map(course=><View key={course.id} onLayout={event=>{coursePositions.current[course.id]=event.nativeEvent.layout.y;}}><CourseCarousel key={`${course.id}-${players}-${holes}-${chosenDate}-${time}-${maxPrice}`} course={course} slots={course.slots} players={players} now={clock} onSelect={slot=>setSelection({course,slot,players})}/></View>)}</Animated.View>
+   {!rows.length&&<GlassPanel style={s.empty}><Text style={s.emptyTitle}>{hasFreshData?'No rounds match just yet.':'Availability is temporarily unavailable.'}</Text><Text style={s.emptyText}>{hasFreshData?'Try fewer players, a different round length or broader filters.':'Please try again shortly. We only show recently confirmed times.'}</Text><Pressable accessibilityRole="button" onPress={()=>{setChosenDate(null);setTime('any');setMaxPrice(null);setRadius(null);setQuery('');toggle('players');}} style={s.smallButton}><Text style={s.link}>Adjust your search →</Text></Pressable></GlassPanel>}
+   <View style={s.footer}><Link href="/account?view=profile" style={s.link}>Your account</Link><Pressable accessibilityRole="button" ref={node=>{menuButtons.current.coverage=node;}} accessibilityLabel="View course coverage" onPress={()=>toggle('coverage')} style={s.coverage}><View style={s.dot}/><Text style={s.coverageText}>Course coverage</Text></Pressable><Text style={s.fine}>Availability updates automatically. Final price and reservation are confirmed on the booking website.</Text></View>
+  </Animated.ScrollView>
+  <BottomFade/>
+  {rows.length>0&&scrollSize.content>scrollSize.viewport+8&&!atBottom&&<View pointerEvents="box-none" style={{position:'absolute',bottom:Platform.OS==='web'?16:16,left:0,right:0,alignItems:'center',zIndex:25}}><Pressable accessibilityRole="button" accessibilityLabel="Scroll to next course" onPress={()=>void nextCourse()} style={{width:Platform.OS==='web'?48:36,height:Platform.OS==='web'?48:36,borderRadius:24,backgroundColor:'#175D3D',alignItems:'center',justifyContent:'center',boxShadow:'0 3px 10px rgba(24,60,50,0.24)'}}><SymbolView name={{ios:'arrow.down',android:'arrow_downward',web:'arrow_downward'}} size={Platform.OS==='web'?24:19} tintColor="white"/></Pressable></View>}
+  {panel!==null&&<MenuOverlay open={menuOpen} anchor={menuAnchor} onClose={closeMenu} onExited={exitMenu} label={menuLabel} headerContent={panel==='coverage'?undefined:filterFace(panel)} preferredWidth={panel==='players'?248:panel==='holes'?232:panel==='calendar'?320:360} tinted={panel==='filters'} footer={panel==='filters'?<Pressable accessibilityRole="button" onPress={closeMenu} style={s.apply}><Text style={s.applyText}>Show {total} tee times</Text></Pressable>:undefined}>
+   {panel==='players'&&<View style={s.panel}><Text style={s.label}>YOUR GROUP</Text><View style={s.options}>{[1,2,3,4].map(n=><Chip key={n} label={`${n} ${n===1?'player':'players'}`} selected={n===players} onPress={()=>{setPlayers(n);setChosenDate(null);closeMenu();}}/>)}</View></View>}
+   {panel==='holes'&&<View style={s.panel}><Text style={s.label}>LENGTH OF ROUND</Text><View style={s.options}>{(['any',9,18] as const).map(n=><Chip key={n} label={n==='any'?'Any holes':`${n} holes`} selected={n===holes} onPress={()=>{setHoles(n);setChosenDate(null);closeMenu();}}/>)}</View></View>}
+   {panel==='calendar'&&<View style={s.panel}><View style={s.between}><Text style={s.label}>AVAILABLE DATES</Text><Pressable accessibilityRole="button" onPress={()=>{setChosenDate(null);closeMenu();}} style={s.smallButton}><Text style={s.link}>All upcoming</Text></Pressable></View><View style={s.options}>{calendarDates.map(date=><Pressable accessibilityRole="button" accessibilityLabel={`Show tee times on ${labelDate(date)}`} accessibilityState={{selected:chosenDate===date}} key={date} onPress={()=>{setChosenDate(date);closeMenu();}} style={[s.dateCell,chosenDate===date&&s.selectedDate]}><Text style={[s.dateText,chosenDate===date&&{color:'#183C32'}]}>{labelDate(date)}</Text></Pressable>)}</View>{!calendarDates.length&&<Text style={s.hint}>No dates match these filters. Try another group size or round length.</Text>}</View>}
+   {panel==='filters'&&<View style={s.panel}>
+    <View style={s.between}><Text style={s.label}>REFINE YOUR ROUND</Text><Pressable accessibilityRole="button" style={s.smallButton} onPress={()=>{setTime('any');setMaxPrice(null);setRadius(null);setQuery('');setSort('name');}}><Text style={s.link}>Reset filters</Text></Pressable></View>
+    <Text style={s.hint}>Tee-off time</Text><View style={s.options}>{([['any','Any time'],['morning','Before noon'],['afternoon','Noon–4 pm'],['evening','After 4 pm']] as const).map(([value,label])=><Chip key={value} label={label} selected={time===value} onPress={()=>setTime(value)}/>)}</View>
+    <Text style={s.hint}>Price per player</Text><View style={s.options}>{([null,50,100] as const).map(value=><Chip key={String(value)} label={value===null?'Any price':`Up to $${value}`} selected={maxPrice===value} onPress={()=>setMaxPrice(value)}/>)}</View>{maxPrice!==null&&<Text style={s.hint}>Times without a published price are excluded.</Text>}
+    <Text style={s.hint}>Distance from {originName}</Text><View style={s.options}>{cities.map(city=><Chip key={city.name} label={city.name} selected={originName===city.name} onPress={()=>{locationRequest.current++;setLocating(false);setOrigin(city);setOriginName(city.name);setLocationMessage('');}}/>)}</View>
+    <Pressable accessibilityRole="button" disabled={locating} onPress={locate} style={s.smallButton}><Text style={s.link}>{locating?'Finding your location…':'Use my location ↗'}</Text></Pressable>{!!locationMessage&&<Text style={s.hint}>{locationMessage}</Text>}
+    <View style={s.options}><Chip label="All distances" selected={radius===null} onPress={()=>setRadius(null)}/>{[10,25,50,100].map(n=><Chip key={n} label={`${n} km`} selected={radius===n} onPress={()=>setRadius(n)}/>)}</View>
+    <Text style={s.hint}>Course order</Text><View style={s.options}><Chip label="Name A–Z" selected={sort==='name'} onPress={()=>setSort('name')}/><Chip label="Nearest first" selected={sort==='distance'} onPress={()=>setSort('distance')}/></View>
+   </View>}
+   {panel==='coverage'&&<View style={s.panel}><Text style={s.label}>GROWING ACROSS BC</Text><Text style={s.coverageBody}>Royalwood · Public tee times and prices across its booking window.</Text><Text style={s.coverageBody}>Langley Golf Centre · Public 9 &amp; 18-hole times. Prices confirmed by the course.</Text><Text style={s.coverageBody}>Ardmore · Public 9 &amp; 18-hole rounds across its booking window.</Text><Text style={s.coverageBody}>Cedar Hill · Upcoming public 9 & 18-hole rounds.</Text><Text style={s.coverageBody}>Olympic View · Upcoming dates from its public booking calendar.</Text><Text style={s.coverageBody}>Mount Douglas · Public 9 &amp; 18-hole rounds across its booking window.</Text><Text style={s.coverageBody}>Duncan Meadows · Connection under development; automated live requests are blocked.</Text><Text style={s.hint}>Cordova Bay, Highland Pacific and Bear Mountain need supported feed access. Metchosin is being evaluated. They aren’t connected yet. Courses appear below only when matching times are available.</Text></View>}
+  </MenuOverlay>}
+  <BookingSheet selection={selection} valid={selectionValid} onClose={()=>setSelection(null)} onError={setError}/>
+ 
+ </SafeAreaView>;
+}
+const s=StyleSheet.create({fixedHeader:{flexShrink:0,zIndex:30,backgroundColor:'#F5F6F2',width:'100%',maxWidth:1000,alignSelf:'center',paddingHorizontal:20,paddingTop:8},sticky:{borderRadius:24,position:'absolute',left:0,right:0,zIndex:20,backgroundColor:'#F5F6F2',borderBottomWidth:1,borderBottomColor:'#E0E7E2',boxShadow:'0 4px 18px rgba(24,60,50,.06)'},stickyInner:{width:'100%',maxWidth:1200,alignSelf:'center',minHeight:80,paddingHorizontal:20,paddingVertical:12,justifyContent:'center',alignItems:'center'},stickyNarrow:{alignItems:'stretch',gap:12},compactBrandBlock:{alignItems:'flex-start'},desktopBrand:{position:'absolute',left:24},compactBrand:{fontSize:25,fontWeight:'800',letterSpacing:-1,color:colors.ink},compactTagline:{fontSize:10,color:colors.muted,marginTop:2},compactToolbar:{justifyContent:'center',gap:6},compactControl:{paddingHorizontal:14,paddingVertical:13,minHeight:46},safe:{flex:1,backgroundColor:'#F5F6F2'},nav:{height:44,width:'100%',alignItems:'center',justifyContent:'center'},brand:{fontSize:36,fontWeight:'800',letterSpacing:-1.6,color:colors.ink},brandDot:{color:'#799544'},tagline:{fontSize:12,fontWeight:'400',color:colors.muted,letterSpacing:.15},coverage:{flexDirection:'row',gap:7,alignItems:'center',paddingVertical:12},dot:{width:6,height:6,borderRadius:3,backgroundColor:'#799544'},coverageText:{fontSize:11,color:colors.muted},page:{width:'100%',maxWidth:1000,alignSelf:'center',paddingHorizontal:20,paddingTop:8,paddingBottom:40,gap:18},intro:{gap:7,marginBottom:4},title:{fontSize:27,fontWeight:'700',letterSpacing:-.9,color:colors.ink},subtitle:{fontSize:13,color:colors.muted},toolbar:{flexDirection:'row',flexWrap:'nowrap',gap:8},control:{flexDirection:'row',gap:4,flex:1,minWidth:0,alignItems:'center',minHeight:46,paddingHorizontal:14,paddingVertical:13,backgroundColor:Platform.OS==='web'?'#ffffff':'#E8EEDD',borderWidth:0,boxShadow:Platform.OS==='web'?'0 3px 12px rgba(24,60,50,0.12)':'none',borderRadius:28,justifyContent:'center'},filterButton:{backgroundColor:Platform.OS==='web'?'#ffffff':'#E8EEDD'},controlText:{fontSize:12,fontWeight:'600',color:colors.ink},panel:{padding:14,paddingTop:8,gap:13},label:{fontSize:10,fontWeight:'700',letterSpacing:1.2,color:colors.muted},options:{flexDirection:'row',flexWrap:'wrap',gap:8},hint:{fontSize:11,color:colors.muted,lineHeight:17},between:{flexDirection:'row',alignItems:'center',justifyContent:'space-between',gap:10},smallButton:{minHeight:42,paddingHorizontal:6,justifyContent:'center'},link:{fontSize:12,fontWeight:'600',color:colors.green},dateCell:{borderWidth:1,borderColor:'#DCE3D9',borderRadius:10,paddingVertical:15,paddingHorizontal:16},selectedDate:{backgroundColor:'#C5EB65',borderColor:'#8EBA36'},dateText:{fontSize:13,fontWeight:'600',color:colors.ink},apply:{borderRadius:12,padding:16,backgroundColor:colors.lime,alignItems:'center'},applyText:{fontSize:13,fontWeight:'700',color:colors.ink},coverageBody:{fontSize:13,lineHeight:21,color:colors.ink},resultsBar:{flexDirection:'row',justifyContent:'space-between',alignItems:'center',gap:12,marginTop:6},results:{fontSize:14,fontWeight:'700',color:colors.ink,marginBottom:5},resultLight:{fontWeight:'400',color:colors.muted},refresh:{fontSize:25,color:colors.green},notice:{fontSize:12,color:'#8B552D',lineHeight:18},empty:{backgroundColor:'#fff',borderRadius:20,padding:25,gap:12},emptyTitle:{fontSize:20,fontWeight:'600',color:colors.ink},emptyText:{fontSize:13,lineHeight:21,color:colors.muted},footer:{alignItems:'center',gap:7,paddingTop:14},footerText:{fontSize:12,fontWeight:'600',color:colors.green},fine:{fontSize:10,lineHeight:16,textAlign:'center',color:colors.muted,maxWidth:420}});

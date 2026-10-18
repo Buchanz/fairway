@@ -1,0 +1,180 @@
+{
+  "courseId": "mount-douglas",
+  "status": "image-reviewed-pilot-not-field-verified",
+  "image": {
+    "width": 1900,
+    "height": 1200,
+    "extent": {
+      "xmin": -123.355,
+      "ymin": 48.4797,
+      "xmax": -123.3455,
+      "ymax": 48.4837
+    },
+    "sourceUrl": "https://map.saanich.ca/server/rest/services/RASTERS/Orthophoto2025/ImageServer"
+  },
+  "routingSource": "https://mountdouggolf.ca/wp-content/uploads/2025/05/5x7-Scorecard-Front-Final-V2.png",
+  "scorecardSource": "https://mountdouggolf.ca/wp-content/uploads/2025/05/5x7-Scorecard-Inside-Final-V4.png",
+  "holes": [
+    {
+      "number": 1,
+      "par": 4,
+      "yards": 217,
+      "pixels": [
+        [
+          489,
+          892
+        ],
+        [
+          760,
+          915
+        ],
+        [
+          1040,
+          900
+        ]
+      ],
+      "reviewNote": "Corrected to visible rectangular mat beside clubhouse path after user review, October 10. Field verification pending."
+    },
+    {
+      "number": 2,
+      "par": 3,
+      "yards": 85,
+      "pixels": [
+        [
+          1092,
+          943
+        ],
+        [
+          1302,
+          845
+        ]
+      ],
+      "reviewNote": "Corrected from path/fence feature to teeing pad beside creek crossing using higher resolution aerial. Field verification pending."
+    },
+    {
+      "number": 3,
+      "par": 4,
+      "yards": 272,
+      "pixels": [
+        [
+          1395,
+          875
+        ],
+        [
+          1300,
+          555
+        ],
+        [
+          1300,
+          232
+        ]
+      ]
+    },
+    {
+      "number": 4,
+      "par": 4,
+      "yards": 265,
+      "pixels": [
+        [
+          1225,
+          220
+        ],
+        [
+          905,
+          300
+        ],
+        [
+          616,
+          390
+        ]
+      ]
+    },
+    {
+      "number": 5,
+      "par": 3,
+      "yards": 165,
+      "pixels": [
+        [
+          628,
+          485
+        ],
+        [
+          1032,
+          607
+        ]
+      ]
+    },
+    {
+      "number": 6,
+      "par": 3,
+      "yards": 175,
+      "pixels": [
+        [
+          1148,
+          378
+        ],
+        [
+          1160,
+          590
+        ],
+        [
+          1175,
+          815
+        ]
+      ]
+    },
+    {
+      "number": 7,
+      "par": 4,
+      "yards": 195,
+      "pixels": [
+        [
+          1060,
+          775
+        ],
+        [
+          820,
+          748
+        ],
+        [
+          595,
+          650
+        ]
+      ]
+    },
+    {
+      "number": 8,
+      "par": 3,
+      "yards": 75,
+      "pixels": [
+        [
+          585,
+          560
+        ],
+        [
+          485,
+          390
+        ]
+      ]
+    },
+    {
+      "number": 9,
+      "par": 3,
+      "yards": 70,
+      "pixels": [
+        [
+          417,
+          617
+        ],
+        [
+          475,
+          692
+        ],
+        [
+          505,
+          785
+        ]
+      ]
+    }
+  ]
+}

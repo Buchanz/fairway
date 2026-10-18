@@ -39,3 +39,16 @@ yarn-error.*
 # generated native folders
 /ios
 /android
+
+# Never commit credentials
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Reproducible database setup bundle
+supabase/generated/
+
+# Local dashboard audit evidence; not part of the public app source
+/docs/images/supabase-password-settings.png

@@ -1,0 +1,188 @@
+[
+  {
+    "number": 1,
+    "par": 4,
+    "path": [
+      {
+        "latitude": 48.4807267,
+        "longitude": -123.352555
+      },
+      {
+        "latitude": 48.48065,
+        "longitude": -123.3512
+      },
+      {
+        "latitude": 48.4807,
+        "longitude": -123.3498
+      }
+    ],
+    "sourceUrl": "https://map.saanich.ca/server/rest/services/RASTERS/Orthophoto2025/ImageServer",
+    "sourceLabel": "Saanich aerial · Mt Doug routing · Pilot",
+    "pilot": true,
+    "scorecardYards": 217
+  },
+  {
+    "number": 2,
+    "par": 3,
+    "path": [
+      {
+        "latitude": 48.4805567,
+        "longitude": -123.34954
+      },
+      {
+        "latitude": 48.4808833,
+        "longitude": -123.34849
+      }
+    ],
+    "sourceUrl": "https://map.saanich.ca/server/rest/services/RASTERS/Orthophoto2025/ImageServer",
+    "sourceLabel": "Saanich aerial · Mt Doug routing · Pilot",
+    "pilot": true,
+    "scorecardYards": 85
+  },
+  {
+    "number": 3,
+    "par": 4,
+    "path": [
+      {
+        "latitude": 48.4807833,
+        "longitude": -123.348025
+      },
+      {
+        "latitude": 48.48185,
+        "longitude": -123.3485
+      },
+      {
+        "latitude": 48.4829267,
+        "longitude": -123.3485
+      }
+    ],
+    "sourceUrl": "https://map.saanich.ca/server/rest/services/RASTERS/Orthophoto2025/ImageServer",
+    "sourceLabel": "Saanich aerial · Mt Doug routing · Pilot",
+    "pilot": true,
+    "scorecardYards": 272
+  },
+  {
+    "number": 4,
+    "par": 4,
+    "path": [
+      {
+        "latitude": 48.4829667,
+        "longitude": -123.348875
+      },
+      {
+        "latitude": 48.4827,
+        "longitude": -123.350475
+      },
+      {
+        "latitude": 48.4824,
+        "longitude": -123.35192
+      }
+    ],
+    "sourceUrl": "https://map.saanich.ca/server/rest/services/RASTERS/Orthophoto2025/ImageServer",
+    "sourceLabel": "Saanich aerial · Mt Doug routing · Pilot",
+    "pilot": true,
+    "scorecardYards": 265
+  },
+  {
+    "number": 5,
+    "par": 3,
+    "path": [
+      {
+        "latitude": 48.4820833,
+        "longitude": -123.35186
+      },
+      {
+        "latitude": 48.4816767,
+        "longitude": -123.34984
+      }
+    ],
+    "sourceUrl": "https://map.saanich.ca/server/rest/services/RASTERS/Orthophoto2025/ImageServer",
+    "sourceLabel": "Saanich aerial · Mt Doug routing · Pilot",
+    "pilot": true,
+    "scorecardYards": 165
+  },
+  {
+    "number": 6,
+    "par": 3,
+    "path": [
+      {
+        "latitude": 48.48244,
+        "longitude": -123.34926
+      },
+      {
+        "latitude": 48.4817333,
+        "longitude": -123.3492
+      },
+      {
+        "latitude": 48.4809833,
+        "longitude": -123.349125
+      }
+    ],
+    "sourceUrl": "https://map.saanich.ca/server/rest/services/RASTERS/Orthophoto2025/ImageServer",
+    "sourceLabel": "Saanich aerial · Mt Doug routing · Pilot",
+    "pilot": true,
+    "scorecardYards": 175
+  },
+  {
+    "number": 7,
+    "par": 4,
+    "path": [
+      {
+        "latitude": 48.4811167,
+        "longitude": -123.3497
+      },
+      {
+        "latitude": 48.4812067,
+        "longitude": -123.3509
+      },
+      {
+        "latitude": 48.4815333,
+        "longitude": -123.352025
+      }
+    ],
+    "sourceUrl": "https://map.saanich.ca/server/rest/services/RASTERS/Orthophoto2025/ImageServer",
+    "sourceLabel": "Saanich aerial · Mt Doug routing · Pilot",
+    "pilot": true,
+    "scorecardYards": 195
+  },
+  {
+    "number": 8,
+    "par": 3,
+    "path": [
+      {
+        "latitude": 48.4818333,
+        "longitude": -123.352075
+      },
+      {
+        "latitude": 48.4824,
+        "longitude": -123.352575
+      }
+    ],
+    "sourceUrl": "https://map.saanich.ca/server/rest/services/RASTERS/Orthophoto2025/ImageServer",
+    "sourceLabel": "Saanich aerial · Mt Doug routing · Pilot",
+    "pilot": true,
+    "scorecardYards": 75
+  },
+  {
+    "number": 9,
+    "par": 3,
+    "path": [
+      {
+        "latitude": 48.4816433,
+        "longitude": -123.352915
+      },
+      {
+        "latitude": 48.4813933,
+        "longitude": -123.352625
+      },
+      {
+        "latitude": 48.4810833,
+        "longitude": -123.352475
+      }
+    ],
+    "sourceUrl": "https://map.saanich.ca/server/rest/services/RASTERS/Orthophoto2025/ImageServer",
+    "sourceLabel": "Saanich aerial · Mt Doug routing · Pilot",
+    "pilot": true,
+    "scorecardYards": 70
+  }
+]

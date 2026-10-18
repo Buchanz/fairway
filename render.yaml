@@ -1,0 +1,19 @@
+# Prepared deployment; creating this paid service requires owner billing approval.
+services:
+  - type: web
+    name: fairway
+    runtime: docker
+    plan: starter
+    region: oregon
+    healthCheckPath: /api/health
+    envVars:
+      - key: HOST
+        value: 0.0.0.0
+      - key: PORT
+        value: 8788
+      - key: EXPO_PUBLIC_SUPABASE_URL
+        sync: false
+      - key: EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY
+        sync: false
+      - key: EXPO_PUBLIC_AUTH_REDIRECT_URL
+        sync: false

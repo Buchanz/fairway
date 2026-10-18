@@ -1,0 +1,308 @@
+[
+  {
+    "number": 1,
+    "par": null,
+    "path": [
+      {
+        "latitude": 49.081875,
+        "longitude": -122.62675
+      },
+      {
+        "latitude": 49.0819,
+        "longitude": -122.628275
+      }
+    ],
+    "pilot": true,
+    "sourceUrl": "https://www.langleygolfcentre.com/golf-rates-and-online-bookings",
+    "sourceLabel": "Langley routing / City imagery \u00b7 Pilot"
+  },
+  {
+    "number": 2,
+    "par": null,
+    "path": [
+      {
+        "latitude": 49.081825,
+        "longitude": -122.62895
+      },
+      {
+        "latitude": 49.0812,
+        "longitude": -122.6288
+      }
+    ],
+    "pilot": true,
+    "sourceUrl": "https://www.langleygolfcentre.com/golf-rates-and-online-bookings",
+    "sourceLabel": "Langley routing / City imagery \u00b7 Pilot"
+  },
+  {
+    "number": 3,
+    "par": null,
+    "path": [
+      {
+        "latitude": 49.08105,
+        "longitude": -122.62945
+      },
+      {
+        "latitude": 49.08015,
+        "longitude": -122.6295
+      }
+    ],
+    "pilot": true,
+    "sourceUrl": "https://www.langleygolfcentre.com/golf-rates-and-online-bookings",
+    "sourceLabel": "Langley routing / City imagery \u00b7 Pilot"
+  },
+  {
+    "number": 4,
+    "par": null,
+    "path": [
+      {
+        "latitude": 49.0801,
+        "longitude": -122.628525
+      },
+      {
+        "latitude": 49.07915,
+        "longitude": -122.6285
+      }
+    ],
+    "pilot": true,
+    "sourceUrl": "https://www.langleygolfcentre.com/golf-rates-and-online-bookings",
+    "sourceLabel": "Langley routing / City imagery \u00b7 Pilot"
+  },
+  {
+    "number": 5,
+    "par": null,
+    "path": [
+      {
+        "latitude": 49.0789,
+        "longitude": -122.628275
+      },
+      {
+        "latitude": 49.0786,
+        "longitude": -122.629275
+      }
+    ],
+    "pilot": true,
+    "sourceUrl": "https://www.langleygolfcentre.com/golf-rates-and-online-bookings",
+    "sourceLabel": "Langley routing / City imagery \u00b7 Pilot"
+  },
+  {
+    "number": 6,
+    "par": null,
+    "path": [
+      {
+        "latitude": 49.078225,
+        "longitude": -122.629525
+      },
+      {
+        "latitude": 49.07815,
+        "longitude": -122.62835
+      }
+    ],
+    "pilot": true,
+    "sourceUrl": "https://www.langleygolfcentre.com/golf-rates-and-online-bookings",
+    "sourceLabel": "Langley routing / City imagery \u00b7 Pilot"
+  },
+  {
+    "number": 7,
+    "par": null,
+    "path": [
+      {
+        "latitude": 49.077615,
+        "longitude": -122.62755
+      },
+      {
+        "latitude": 49.07853,
+        "longitude": -122.6276
+      }
+    ],
+    "pilot": true,
+    "sourceUrl": "https://www.langleygolfcentre.com/golf-rates-and-online-bookings",
+    "sourceLabel": "Langley routing / City imagery \u00b7 Pilot"
+  },
+  {
+    "number": 8,
+    "par": null,
+    "path": [
+      {
+        "latitude": 49.078775,
+        "longitude": -122.627025
+      },
+      {
+        "latitude": 49.079275,
+        "longitude": -122.6258
+      }
+    ],
+    "pilot": true,
+    "sourceUrl": "https://www.langleygolfcentre.com/golf-rates-and-online-bookings",
+    "sourceLabel": "Langley routing / City imagery \u00b7 Pilot"
+  },
+  {
+    "number": 9,
+    "par": null,
+    "path": [
+      {
+        "latitude": 49.079745,
+        "longitude": -122.62579
+      },
+      {
+        "latitude": 49.080675,
+        "longitude": -122.6256
+      }
+    ],
+    "pilot": true,
+    "sourceUrl": "https://www.langleygolfcentre.com/golf-rates-and-online-bookings",
+    "sourceLabel": "Langley routing / City imagery \u00b7 Pilot"
+  },
+  {
+    "number": 10,
+    "par": null,
+    "path": [
+      {
+        "latitude": 49.080675,
+        "longitude": -122.625075
+      },
+      {
+        "latitude": 49.07967,
+        "longitude": -122.62535
+      }
+    ],
+    "pilot": true,
+    "sourceUrl": "https://www.langleygolfcentre.com/golf-rates-and-online-bookings",
+    "sourceLabel": "Langley routing / City imagery \u00b7 Pilot"
+  },
+  {
+    "number": 11,
+    "par": null,
+    "path": [
+      {
+        "latitude": 49.0793,
+        "longitude": -122.625
+      },
+      {
+        "latitude": 49.0779,
+        "longitude": -122.6254
+      }
+    ],
+    "pilot": true,
+    "sourceUrl": "https://www.langleygolfcentre.com/golf-rates-and-online-bookings",
+    "sourceLabel": "Langley routing / City imagery \u00b7 Pilot"
+  },
+  {
+    "number": 12,
+    "par": null,
+    "path": [
+      {
+        "latitude": 49.077575,
+        "longitude": -122.62515
+      },
+      {
+        "latitude": 49.077585,
+        "longitude": -122.626775
+      }
+    ],
+    "pilot": true,
+    "sourceUrl": "https://www.langleygolfcentre.com/golf-rates-and-online-bookings",
+    "sourceLabel": "Langley routing / City imagery \u00b7 Pilot"
+  },
+  {
+    "number": 13,
+    "par": null,
+    "path": [
+      {
+        "latitude": 49.077835,
+        "longitude": -122.625875
+      },
+      {
+        "latitude": 49.07885,
+        "longitude": -122.6258
+      }
+    ],
+    "pilot": true,
+    "sourceUrl": "https://www.langleygolfcentre.com/golf-rates-and-online-bookings",
+    "sourceLabel": "Langley routing / City imagery \u00b7 Pilot"
+  },
+  {
+    "number": 14,
+    "par": null,
+    "path": [
+      {
+        "latitude": 49.0787,
+        "longitude": -122.62645
+      },
+      {
+        "latitude": 49.078035,
+        "longitude": -122.62713
+      }
+    ],
+    "pilot": true,
+    "sourceUrl": "https://www.langleygolfcentre.com/golf-rates-and-online-bookings",
+    "sourceLabel": "Langley routing / City imagery \u00b7 Pilot"
+  },
+  {
+    "number": 15,
+    "par": null,
+    "path": [
+      {
+        "latitude": 49.077635,
+        "longitude": -122.62781
+      },
+      {
+        "latitude": 49.07792,
+        "longitude": -122.62935
+      }
+    ],
+    "pilot": true,
+    "sourceUrl": "https://www.langleygolfcentre.com/golf-rates-and-online-bookings",
+    "sourceLabel": "Langley routing / City imagery \u00b7 Pilot"
+  },
+  {
+    "number": 16,
+    "par": null,
+    "path": [
+      {
+        "latitude": 49.0781,
+        "longitude": -122.629675
+      },
+      {
+        "latitude": 49.07952,
+        "longitude": -122.62955
+      }
+    ],
+    "pilot": true,
+    "sourceUrl": "https://www.langleygolfcentre.com/golf-rates-and-online-bookings",
+    "sourceLabel": "Langley routing / City imagery \u00b7 Pilot"
+  },
+  {
+    "number": 17,
+    "par": null,
+    "path": [
+      {
+        "latitude": 49.080225,
+        "longitude": -122.628275
+      },
+      {
+        "latitude": 49.081045,
+        "longitude": -122.627925
+      }
+    ],
+    "pilot": true,
+    "sourceUrl": "https://www.langleygolfcentre.com/golf-rates-and-online-bookings",
+    "sourceLabel": "Langley routing / City imagery \u00b7 Pilot"
+  },
+  {
+    "number": 18,
+    "par": null,
+    "path": [
+      {
+        "latitude": 49.081545,
+        "longitude": -122.62855
+      },
+      {
+        "latitude": 49.08155,
+        "longitude": -122.6271
+      }
+    ],
+    "pilot": true,
+    "sourceUrl": "https://www.langleygolfcentre.com/golf-rates-and-online-bookings",
+    "sourceLabel": "Langley routing / City imagery \u00b7 Pilot"
+  }
+]

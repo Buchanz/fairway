@@ -1,0 +1,2156 @@
+[
+  {
+    "number": 1,
+    "par": 5,
+    "path": [
+      {
+        "latitude": 48.80896566363636,
+        "longitude": -123.75133071818182
+      },
+      {
+        "latitude": 48.81209799285715,
+        "longitude": -123.74762086428572
+      }
+    ],
+    "greenBoundary": [
+      {
+        "longitude": -123.7476654,
+        "latitude": 48.8119473
+      },
+      {
+        "longitude": -123.7476955,
+        "latitude": 48.8119459
+      },
+      {
+        "longitude": -123.7477418,
+        "latitude": 48.8119662
+      },
+      {
+        "longitude": -123.7477552,
+        "latitude": 48.8119905
+      },
+      {
+        "longitude": -123.7477512,
+        "latitude": 48.8120223
+      },
+      {
+        "longitude": -123.7477646,
+        "latitude": 48.8120537
+      },
+      {
+        "longitude": -123.7477794,
+        "latitude": 48.8120877
+      },
+      {
+        "longitude": -123.7477787,
+        "latitude": 48.8121261
+      },
+      {
+        "longitude": -123.7477633,
+        "latitude": 48.8121455
+      },
+      {
+        "longitude": -123.7477317,
+        "latitude": 48.8121672
+      },
+      {
+        "longitude": -123.7477049,
+        "latitude": 48.8121963
+      },
+      {
+        "longitude": -123.7476774,
+        "latitude": 48.8122299
+      },
+      {
+        "longitude": -123.7476305,
+        "latitude": 48.8122502
+      },
+      {
+        "longitude": -123.7475815,
+        "latitude": 48.812255
+      },
+      {
+        "longitude": -123.7475326,
+        "latitude": 48.8122422
+      },
+      {
+        "longitude": -123.7475044,
+        "latitude": 48.8122224
+      },
+      {
+        "longitude": -123.7474897,
+        "latitude": 48.8121994
+      },
+      {
+        "longitude": -123.7474836,
+        "latitude": 48.8121685
+      },
+      {
+        "longitude": -123.7475004,
+        "latitude": 48.8121429
+      },
+      {
+        "longitude": -123.7475172,
+        "latitude": 48.812123
+      },
+      {
+        "longitude": -123.7475125,
+        "latitude": 48.8120996
+      },
+      {
+        "longitude": -123.7474997,
+        "latitude": 48.812074
+      },
+      {
+        "longitude": -123.7474984,
+        "latitude": 48.8120568
+      },
+      {
+        "longitude": -123.7475044,
+        "latitude": 48.8120422
+      },
+      {
+        "longitude": -123.7475219,
+        "latitude": 48.8120285
+      },
+      {
+        "longitude": -123.7475608,
+        "latitude": 48.8120117
+      },
+      {
+        "longitude": -123.747599,
+        "latitude": 48.8119923
+      },
+      {
+        "longitude": -123.7476385,
+        "latitude": 48.8119565
+      },
+      {
+        "longitude": -123.7476654,
+        "latitude": 48.8119473
+      }
+    ],
+    "greenOsmWayId": "1431546611",
+    "teeOsmWayId": "1431546601",
+    "pilot": true,
+    "sourceUrl": "https://www.duncanmeadows.com/the-course",
+    "sourceLabel": "Duncan Meadows routing / OpenStreetMap reference geometry",
+    "teePositions": {
+      "blue": {
+        "latitude": 48.80896566363636,
+        "longitude": -123.75133071818182
+      },
+      "white": {
+        "latitude": 48.80929771538461,
+        "longitude": -123.75092413076922
+      },
+      "green": {
+        "latitude": 48.80946501818182,
+        "longitude": -123.7503672090909
+      }
+    }
+  },
+  {
+    "number": 2,
+    "par": 4,
+    "path": [
+      {
+        "latitude": 48.8123795090909,
+        "longitude": -123.7464183
+      },
+      {
+        "latitude": 48.809565244,
+        "longitude": -123.749441812
+      }
+    ],
+    "greenBoundary": [
+      {
+        "longitude": -123.7493038,
+        "latitude": 48.8096759
+      },
+      {
+        "longitude": -123.7493516,
+        "latitude": 48.8097054
+      },
+      {
+        "longitude": -123.7493963,
+        "latitude": 48.8097165
+      },
+      {
+        "longitude": -123.7494533,
+        "latitude": 48.8097104
+      },
+      {
+        "longitude": -123.7495211,
+        "latitude": 48.809681
+      },
+      {
+        "longitude": -123.7495657,
+        "latitude": 48.8096425
+      },
+      {
+        "longitude": -123.7495873,
+        "latitude": 48.8096019
+      },
+      {
+        "longitude": -123.7496027,
+        "latitude": 48.8095522
+      },
+      {
+        "longitude": -123.7496027,
+        "latitude": 48.8095045
+      },
+      {
+        "longitude": -123.7495858,
+        "latitude": 48.8094751
+      },
+      {
+        "longitude": -123.7495611,
+        "latitude": 48.8094548
+      },
+      {
+        "longitude": -123.749538,
+        "latitude": 48.8094416
+      },
+      {
+        "longitude": -123.7494995,
+        "latitude": 48.8094375
+      },
+      {
+        "longitude": -123.7494625,
+        "latitude": 48.8094396
+      },
+      {
+        "longitude": -123.7494286,
+        "latitude": 48.8094558
+      },
+      {
+        "longitude": -123.7494101,
+        "latitude": 48.8094761
+      },
+      {
+        "longitude": -123.7494024,
+        "latitude": 48.8094913
+      },
+      {
+        "longitude": -123.7494009,
+        "latitude": 48.8095075
+      },
+      {
+        "longitude": -123.7494055,
+        "latitude": 48.8095268
+      },
+      {
+        "longitude": -123.749404,
+        "latitude": 48.8095522
+      },
+      {
+        "longitude": -123.7493701,
+        "latitude": 48.8095725
+      },
+      {
+        "longitude": -123.7493239,
+        "latitude": 48.8095978
+      },
+      {
+        "longitude": -123.7492961,
+        "latitude": 48.8096191
+      },
+      {
+        "longitude": -123.7492869,
+        "latitude": 48.8096354
+      },
+      {
+        "longitude": -123.7492854,
+        "latitude": 48.8096577
+      },
+      {
+        "longitude": -123.7493038,
+        "latitude": 48.8096759
+      }
+    ],
+    "greenOsmWayId": "1431546618",
+    "teeOsmWayId": "1431546613",
+    "pilot": true,
+    "sourceUrl": "https://www.duncanmeadows.com/the-course",
+    "sourceLabel": "Duncan Meadows routing / OpenStreetMap reference geometry",
+    "teePositions": {
+      "blue": {
+        "latitude": 48.8123795090909,
+        "longitude": -123.7464183
+      },
+      "white": {
+        "latitude": 48.81214099333333,
+        "longitude": -123.74653326666666
+      },
+      "green": {
+        "latitude": 48.811594018181815,
+        "longitude": -123.74727118181818
+      }
+    }
+  },
+  {
+    "number": 3,
+    "par": 3,
+    "path": [
+      {
+        "latitude": 48.81020155454546,
+        "longitude": -123.74751823636365
+      },
+      {
+        "latitude": 48.81162583478261,
+        "longitude": -123.74622105217391
+      }
+    ],
+    "greenBoundary": [
+      {
+        "longitude": -123.7462213,
+        "latitude": 48.8115061
+      },
+      {
+        "longitude": -123.7461858,
+        "latitude": 48.8115183
+      },
+      {
+        "longitude": -123.7461211,
+        "latitude": 48.8115264
+      },
+      {
+        "longitude": -123.7460718,
+        "latitude": 48.8115528
+      },
+      {
+        "longitude": -123.746061,
+        "latitude": 48.8115873
+      },
+      {
+        "longitude": -123.7460903,
+        "latitude": 48.8116218
+      },
+      {
+        "longitude": -123.7460949,
+        "latitude": 48.8116502
+      },
+      {
+        "longitude": -123.7460919,
+        "latitude": 48.8116948
+      },
+      {
+        "longitude": -123.7461011,
+        "latitude": 48.8117364
+      },
+      {
+        "longitude": -123.7461319,
+        "latitude": 48.8117547
+      },
+      {
+        "longitude": -123.7461797,
+        "latitude": 48.8117577
+      },
+      {
+        "longitude": -123.7462166,
+        "latitude": 48.8117557
+      },
+      {
+        "longitude": -123.7462382,
+        "latitude": 48.8117303
+      },
+      {
+        "longitude": -123.7462598,
+        "latitude": 48.8116999
+      },
+      {
+        "longitude": -123.7463168,
+        "latitude": 48.8116786
+      },
+      {
+        "longitude": -123.7463661,
+        "latitude": 48.8116603
+      },
+      {
+        "longitude": -123.7463892,
+        "latitude": 48.8116451
+      },
+      {
+        "longitude": -123.7463953,
+        "latitude": 48.8116238
+      },
+      {
+        "longitude": -123.7463614,
+        "latitude": 48.8115924
+      },
+      {
+        "longitude": -123.7463337,
+        "latitude": 48.811565
+      },
+      {
+        "longitude": -123.7463214,
+        "latitude": 48.8115305
+      },
+      {
+        "longitude": -123.7462844,
+        "latitude": 48.8115071
+      },
+      {
+        "longitude": -123.7462505,
+        "latitude": 48.811499
+      },
+      {
+        "longitude": -123.7462213,
+        "latitude": 48.8115061
+      }
+    ],
+    "greenOsmWayId": "1431546623",
+    "teeOsmWayId": "1431546619",
+    "pilot": true,
+    "sourceUrl": "https://www.duncanmeadows.com/the-course",
+    "sourceLabel": "Duncan Meadows routing / OpenStreetMap reference geometry",
+    "teePositions": {
+      "blue": {
+        "latitude": 48.81020155454546,
+        "longitude": -123.74751823636365
+      },
+      "white": {
+        "latitude": 48.81034554210527,
+        "longitude": -123.74716915789475
+      },
+      "green": {
+        "latitude": 48.8104901,
+        "longitude": -123.74696288333332
+      }
+    }
+  },
+  {
+    "number": 4,
+    "par": 4,
+    "path": [
+      {
+        "latitude": 48.81199490769231,
+        "longitude": -123.74546992307693
+      },
+      {
+        "latitude": 48.80950286666666,
+        "longitude": -123.74737074285716
+      }
+    ],
+    "greenBoundary": [
+      {
+        "longitude": -123.7473636,
+        "latitude": 48.8094166
+      },
+      {
+        "longitude": -123.7472818,
+        "latitude": 48.8094245
+      },
+      {
+        "longitude": -123.7471919,
+        "latitude": 48.8094325
+      },
+      {
+        "longitude": -123.747149,
+        "latitude": 48.8094492
+      },
+      {
+        "longitude": -123.7471329,
+        "latitude": 48.8094916
+      },
+      {
+        "longitude": -123.7471423,
+        "latitude": 48.8095252
+      },
+      {
+        "longitude": -123.7471785,
+        "latitude": 48.8095526
+      },
+      {
+        "longitude": -123.7472254,
+        "latitude": 48.8095614
+      },
+      {
+        "longitude": -123.7472912,
+        "latitude": 48.8095579
+      },
+      {
+        "longitude": -123.7473569,
+        "latitude": 48.8095526
+      },
+      {
+        "longitude": -123.7474051,
+        "latitude": 48.8095773
+      },
+      {
+        "longitude": -123.7474668,
+        "latitude": 48.8095906
+      },
+      {
+        "longitude": -123.7475111,
+        "latitude": 48.809587
+      },
+      {
+        "longitude": -123.7475755,
+        "latitude": 48.8095729
+      },
+      {
+        "longitude": -123.7476009,
+        "latitude": 48.8095437
+      },
+      {
+        "longitude": -123.7475983,
+        "latitude": 48.8095058
+      },
+      {
+        "longitude": -123.7475584,
+        "latitude": 48.8094801
+      },
+      {
+        "longitude": -123.7474963,
+        "latitude": 48.8094634
+      },
+      {
+        "longitude": -123.7474427,
+        "latitude": 48.8094413
+      },
+      {
+        "longitude": -123.7474199,
+        "latitude": 48.8094174
+      },
+      {
+        "longitude": -123.7473971,
+        "latitude": 48.8094166
+      },
+      {
+        "longitude": -123.7473636,
+        "latitude": 48.8094166
+      }
+    ],
+    "greenOsmWayId": "1431546632",
+    "teeOsmWayId": "1431546626",
+    "pilot": true,
+    "sourceUrl": "https://www.duncanmeadows.com/the-course",
+    "sourceLabel": "Duncan Meadows routing / OpenStreetMap reference geometry",
+    "teePositions": {
+      "blue": {
+        "latitude": 48.81199490769231,
+        "longitude": -123.74546992307693
+      },
+      "white": {
+        "latitude": 48.81176416666667,
+        "longitude": -123.74553533333334
+      },
+      "green": {
+        "latitude": 48.81145195,
+        "longitude": -123.74562214999999
+      }
+    }
+  },
+  {
+    "number": 5,
+    "par": 5,
+    "path": [
+      {
+        "latitude": 48.809239446153846,
+        "longitude": -123.7451195153846
+      },
+      {
+        "latitude": 48.81336060833333,
+        "longitude": -123.74494385416666
+      }
+    ],
+    "greenBoundary": [
+      {
+        "longitude": -123.7448627,
+        "latitude": 48.8132176
+      },
+      {
+        "longitude": -123.7448211,
+        "latitude": 48.813244
+      },
+      {
+        "longitude": -123.7448195,
+        "latitude": 48.8132795
+      },
+      {
+        "longitude": -123.7448318,
+        "latitude": 48.8133191
+      },
+      {
+        "longitude": -123.7448134,
+        "latitude": 48.8133404
+      },
+      {
+        "longitude": -123.7447594,
+        "latitude": 48.8133809
+      },
+      {
+        "longitude": -123.7447502,
+        "latitude": 48.8134175
+      },
+      {
+        "longitude": -123.7447718,
+        "latitude": 48.8134479
+      },
+      {
+        "longitude": -123.7448241,
+        "latitude": 48.8134672
+      },
+      {
+        "longitude": -123.7448765,
+        "latitude": 48.8134804
+      },
+      {
+        "longitude": -123.7449274,
+        "latitude": 48.8134925
+      },
+      {
+        "longitude": -123.7449597,
+        "latitude": 48.8134895
+      },
+      {
+        "longitude": -123.7449905,
+        "latitude": 48.8134712
+      },
+      {
+        "longitude": -123.7450306,
+        "latitude": 48.8134428
+      },
+      {
+        "longitude": -123.7450845,
+        "latitude": 48.8134276
+      },
+      {
+        "longitude": -123.74514,
+        "latitude": 48.8134093
+      },
+      {
+        "longitude": -123.7451584,
+        "latitude": 48.813387
+      },
+      {
+        "longitude": -123.7451538,
+        "latitude": 48.8133546
+      },
+      {
+        "longitude": -123.7451384,
+        "latitude": 48.8133414
+      },
+      {
+        "longitude": -123.7450583,
+        "latitude": 48.813315
+      },
+      {
+        "longitude": -123.745026,
+        "latitude": 48.8132886
+      },
+      {
+        "longitude": -123.7449905,
+        "latitude": 48.8132389
+      },
+      {
+        "longitude": -123.7449612,
+        "latitude": 48.8132044
+      },
+      {
+        "longitude": -123.7449027,
+        "latitude": 48.8131973
+      },
+      {
+        "longitude": -123.7448627,
+        "latitude": 48.8132176
+      }
+    ],
+    "greenOsmWayId": "1431546645",
+    "teeOsmWayId": "1431546634",
+    "pilot": true,
+    "sourceUrl": "https://www.duncanmeadows.com/the-course",
+    "sourceLabel": "Duncan Meadows routing / OpenStreetMap reference geometry",
+    "teePositions": {
+      "blue": {
+        "latitude": 48.809239446153846,
+        "longitude": -123.7451195153846
+      },
+      "white": {
+        "latitude": 48.80973573333333,
+        "longitude": -123.7455361
+      },
+      "green": {
+        "latitude": 48.81001332727272,
+        "longitude": -123.74546453636363
+      }
+    }
+  },
+  {
+    "number": 6,
+    "par": 4,
+    "path": [
+      {
+        "latitude": 48.81348504615384,
+        "longitude": -123.74419460769231
+      },
+      {
+        "latitude": 48.81091797777778,
+        "longitude": -123.74126850555555
+      }
+    ],
+    "greenBoundary": [
+      {
+        "longitude": -123.7413578,
+        "latitude": 48.8109688
+      },
+      {
+        "longitude": -123.7413122,
+        "latitude": 48.8109723
+      },
+      {
+        "longitude": -123.7412625,
+        "latitude": 48.8109953
+      },
+      {
+        "longitude": -123.7411995,
+        "latitude": 48.811013
+      },
+      {
+        "longitude": -123.7411445,
+        "latitude": 48.8110147
+      },
+      {
+        "longitude": -123.7411003,
+        "latitude": 48.8109882
+      },
+      {
+        "longitude": -123.7410828,
+        "latitude": 48.8109662
+      },
+      {
+        "longitude": -123.7410828,
+        "latitude": 48.8109344
+      },
+      {
+        "longitude": -123.7410855,
+        "latitude": 48.8109061
+      },
+      {
+        "longitude": -123.7411392,
+        "latitude": 48.8108602
+      },
+      {
+        "longitude": -123.741225,
+        "latitude": 48.8108072
+      },
+      {
+        "longitude": -123.7412827,
+        "latitude": 48.8107904
+      },
+      {
+        "longitude": -123.7413672,
+        "latitude": 48.8108019
+      },
+      {
+        "longitude": -123.7414221,
+        "latitude": 48.8108337
+      },
+      {
+        "longitude": -123.741457,
+        "latitude": 48.8108734
+      },
+      {
+        "longitude": -123.7414597,
+        "latitude": 48.8109079
+      },
+      {
+        "longitude": -123.7414396,
+        "latitude": 48.8109352
+      },
+      {
+        "longitude": -123.7414127,
+        "latitude": 48.8109547
+      },
+      {
+        "longitude": -123.7413578,
+        "latitude": 48.8109688
+      }
+    ],
+    "greenOsmWayId": "1431548615",
+    "teeOsmWayId": "1431548610",
+    "pilot": true,
+    "sourceUrl": "https://www.duncanmeadows.com/the-course",
+    "sourceLabel": "Duncan Meadows routing / OpenStreetMap reference geometry",
+    "teePositions": {
+      "blue": {
+        "latitude": 48.81348504615384,
+        "longitude": -123.74419460769231
+      },
+      "white": {
+        "latitude": 48.81327560769231,
+        "longitude": -123.74355376923077
+      },
+      "green": {
+        "latitude": 48.81286919,
+        "longitude": -123.74354027
+      }
+    }
+  },
+  {
+    "number": 7,
+    "par": 3,
+    "path": [
+      {
+        "latitude": 48.81078850666667,
+        "longitude": -123.7418911
+      },
+      {
+        "latitude": 48.811437538095234,
+        "longitude": -123.74316136666667
+      }
+    ],
+    "greenBoundary": [
+      {
+        "longitude": -123.7430436,
+        "latitude": 48.8113315
+      },
+      {
+        "longitude": -123.7430027,
+        "latitude": 48.811373
+      },
+      {
+        "longitude": -123.7429957,
+        "latitude": 48.8114091
+      },
+      {
+        "longitude": -123.7430062,
+        "latitude": 48.8114314
+      },
+      {
+        "longitude": -123.7430272,
+        "latitude": 48.8114576
+      },
+      {
+        "longitude": -123.7430634,
+        "latitude": 48.8114806
+      },
+      {
+        "longitude": -123.7430891,
+        "latitude": 48.8115168
+      },
+      {
+        "longitude": -123.7431253,
+        "latitude": 48.8115521
+      },
+      {
+        "longitude": -123.7431988,
+        "latitude": 48.8115783
+      },
+      {
+        "longitude": -123.7432724,
+        "latitude": 48.8115714
+      },
+      {
+        "longitude": -123.7433168,
+        "latitude": 48.8115437
+      },
+      {
+        "longitude": -123.7433331,
+        "latitude": 48.8115029
+      },
+      {
+        "longitude": -123.7433179,
+        "latitude": 48.8114753
+      },
+      {
+        "longitude": -123.7432852,
+        "latitude": 48.8114583
+      },
+      {
+        "longitude": -123.7432572,
+        "latitude": 48.8114391
+      },
+      {
+        "longitude": -123.7432315,
+        "latitude": 48.8114091
+      },
+      {
+        "longitude": -123.7432199,
+        "latitude": 48.8113699
+      },
+      {
+        "longitude": -123.7432023,
+        "latitude": 48.8113361
+      },
+      {
+        "longitude": -123.7431778,
+        "latitude": 48.8113199
+      },
+      {
+        "longitude": -123.7431358,
+        "latitude": 48.8113138
+      },
+      {
+        "longitude": -123.7430868,
+        "latitude": 48.8113184
+      },
+      {
+        "longitude": -123.7430436,
+        "latitude": 48.8113315
+      }
+    ],
+    "greenOsmWayId": "1431548621",
+    "teeOsmWayId": "1431548619",
+    "pilot": true,
+    "sourceUrl": "https://www.duncanmeadows.com/the-course",
+    "sourceLabel": "Duncan Meadows routing / OpenStreetMap reference geometry"
+  },
+  {
+    "number": 8,
+    "par": 4,
+    "path": [
+      {
+        "latitude": 48.81160016363637,
+        "longitude": -123.7442562818182
+      },
+      {
+        "latitude": 48.80861833,
+        "longitude": -123.744894595
+      }
+    ],
+    "greenBoundary": [
+      {
+        "longitude": -123.7448803,
+        "latitude": 48.808752
+      },
+      {
+        "longitude": -123.7448316,
+        "latitude": 48.8087584
+      },
+      {
+        "longitude": -123.7447892,
+        "latitude": 48.8087514
+      },
+      {
+        "longitude": -123.744752,
+        "latitude": 48.8087258
+      },
+      {
+        "longitude": -123.7447361,
+        "latitude": 48.808692
+      },
+      {
+        "longitude": -123.7447485,
+        "latitude": 48.8086576
+      },
+      {
+        "longitude": -123.7447901,
+        "latitude": 48.8086151
+      },
+      {
+        "longitude": -123.7447971,
+        "latitude": 48.8085848
+      },
+      {
+        "longitude": -123.7448007,
+        "latitude": 48.8085515
+      },
+      {
+        "longitude": -123.744829,
+        "latitude": 48.8085189
+      },
+      {
+        "longitude": -123.7448759,
+        "latitude": 48.8084904
+      },
+      {
+        "longitude": -123.7449387,
+        "latitude": 48.8084758
+      },
+      {
+        "longitude": -123.7450095,
+        "latitude": 48.8084787
+      },
+      {
+        "longitude": -123.745044,
+        "latitude": 48.8084939
+      },
+      {
+        "longitude": -123.7450643,
+        "latitude": 48.8085125
+      },
+      {
+        "longitude": -123.7450714,
+        "latitude": 48.8085574
+      },
+      {
+        "longitude": -123.7450449,
+        "latitude": 48.8086424
+      },
+      {
+        "longitude": -123.7450121,
+        "latitude": 48.808671
+      },
+      {
+        "longitude": -123.7449546,
+        "latitude": 48.8087007
+      },
+      {
+        "longitude": -123.7449219,
+        "latitude": 48.8087363
+      },
+      {
+        "longitude": -123.7448803,
+        "latitude": 48.808752
+      }
+    ],
+    "greenOsmWayId": "1431548629",
+    "teeOsmWayId": "1431548624",
+    "pilot": true,
+    "sourceUrl": "https://www.duncanmeadows.com/the-course",
+    "sourceLabel": "Duncan Meadows routing / OpenStreetMap reference geometry"
+  },
+  {
+    "number": 9,
+    "par": 4,
+    "path": [
+      {
+        "latitude": 48.80917230833333,
+        "longitude": -123.74537999166667
+      },
+      {
+        "latitude": 48.808735188,
+        "longitude": -123.75042766799999
+      }
+    ],
+    "greenBoundary": [
+      {
+        "longitude": -123.7503551,
+        "latitude": 48.8088472
+      },
+      {
+        "longitude": -123.7503096,
+        "latitude": 48.8088534
+      },
+      {
+        "longitude": -123.7502757,
+        "latitude": 48.8088488
+      },
+      {
+        "longitude": -123.7502431,
+        "latitude": 48.808828
+      },
+      {
+        "longitude": -123.7502314,
+        "latitude": 48.8087957
+      },
+      {
+        "longitude": -123.7502466,
+        "latitude": 48.8087696
+      },
+      {
+        "longitude": -123.7502933,
+        "latitude": 48.808735
+      },
+      {
+        "longitude": -123.7503248,
+        "latitude": 48.8087011
+      },
+      {
+        "longitude": -123.7503528,
+        "latitude": 48.8086558
+      },
+      {
+        "longitude": -123.7503575,
+        "latitude": 48.8086158
+      },
+      {
+        "longitude": -123.7503808,
+        "latitude": 48.8085843
+      },
+      {
+        "longitude": -123.7504182,
+        "latitude": 48.8085735
+      },
+      {
+        "longitude": -123.7504637,
+        "latitude": 48.8085758
+      },
+      {
+        "longitude": -123.7505268,
+        "latitude": 48.8086081
+      },
+      {
+        "longitude": -123.7505431,
+        "latitude": 48.8086327
+      },
+      {
+        "longitude": -123.7505501,
+        "latitude": 48.8086804
+      },
+      {
+        "longitude": -123.7505676,
+        "latitude": 48.8087042
+      },
+      {
+        "longitude": -123.7506015,
+        "latitude": 48.8087265
+      },
+      {
+        "longitude": -123.7506097,
+        "latitude": 48.8087504
+      },
+      {
+        "longitude": -123.7506062,
+        "latitude": 48.8087765
+      },
+      {
+        "longitude": -123.7505746,
+        "latitude": 48.8088049
+      },
+      {
+        "longitude": -123.7505489,
+        "latitude": 48.8088242
+      },
+      {
+        "longitude": -123.7504952,
+        "latitude": 48.8088272
+      },
+      {
+        "longitude": -123.7504322,
+        "latitude": 48.8088257
+      },
+      {
+        "longitude": -123.7503832,
+        "latitude": 48.8088349
+      },
+      {
+        "longitude": -123.7503551,
+        "latitude": 48.8088472
+      }
+    ],
+    "greenOsmWayId": "1431548635",
+    "teeOsmWayId": "1431548632",
+    "pilot": true,
+    "sourceUrl": "https://www.duncanmeadows.com/the-course",
+    "sourceLabel": "Duncan Meadows routing / OpenStreetMap reference geometry"
+  },
+  {
+    "number": 10,
+    "par": 4,
+    "path": [
+      {
+        "latitude": 48.80827347272727,
+        "longitude": -123.75046157272727
+      },
+      {
+        "latitude": 48.808748888,
+        "longitude": -123.74593061600001
+      }
+    ],
+    "greenBoundary": [
+      {
+        "longitude": -123.7459981,
+        "latitude": 48.8086911
+      },
+      {
+        "longitude": -123.7459572,
+        "latitude": 48.8086588
+      },
+      {
+        "longitude": -123.7459122,
+        "latitude": 48.8086359
+      },
+      {
+        "longitude": -123.7458626,
+        "latitude": 48.8086239
+      },
+      {
+        "longitude": -123.7457949,
+        "latitude": 48.8086297
+      },
+      {
+        "longitude": -123.7457513,
+        "latitude": 48.8086491
+      },
+      {
+        "longitude": -123.7457339,
+        "latitude": 48.8086708
+      },
+      {
+        "longitude": -123.7457433,
+        "latitude": 48.8087149
+      },
+      {
+        "longitude": -123.7457312,
+        "latitude": 48.808741
+      },
+      {
+        "longitude": -123.7457272,
+        "latitude": 48.8087653
+      },
+      {
+        "longitude": -123.7457453,
+        "latitude": 48.8087913
+      },
+      {
+        "longitude": -123.7457654,
+        "latitude": 48.8088099
+      },
+      {
+        "longitude": -123.745819,
+        "latitude": 48.8088319
+      },
+      {
+        "longitude": -123.7458827,
+        "latitude": 48.8088448
+      },
+      {
+        "longitude": -123.745923,
+        "latitude": 48.8088377
+      },
+      {
+        "longitude": -123.7459706,
+        "latitude": 48.8088275
+      },
+      {
+        "longitude": -123.7460282,
+        "latitude": 48.8088315
+      },
+      {
+        "longitude": -123.7460705,
+        "latitude": 48.8088372
+      },
+      {
+        "longitude": -123.7461074,
+        "latitude": 48.8088377
+      },
+      {
+        "longitude": -123.746153,
+        "latitude": 48.8088112
+      },
+      {
+        "longitude": -123.7461664,
+        "latitude": 48.808782
+      },
+      {
+        "longitude": -123.7461623,
+        "latitude": 48.8087454
+      },
+      {
+        "longitude": -123.7461382,
+        "latitude": 48.8087255
+      },
+      {
+        "longitude": -123.7460926,
+        "latitude": 48.8087198
+      },
+      {
+        "longitude": -123.7460289,
+        "latitude": 48.8087083
+      },
+      {
+        "longitude": -123.7459981,
+        "latitude": 48.8086911
+      }
+    ],
+    "greenOsmWayId": "1431550929",
+    "teeOsmWayId": "1431550925",
+    "pilot": true,
+    "sourceUrl": "https://www.duncanmeadows.com/the-course",
+    "sourceLabel": "Duncan Meadows routing / OpenStreetMap reference geometry"
+  },
+  {
+    "number": 11,
+    "par": 4,
+    "path": [
+      {
+        "latitude": 48.808271761538464,
+        "longitude": -123.7457139
+      },
+      {
+        "latitude": 48.80708302962963,
+        "longitude": -123.74115165925926
+      }
+    ],
+    "greenBoundary": [
+      {
+        "longitude": -123.741367,
+        "latitude": 48.8071264
+      },
+      {
+        "longitude": -123.7413289,
+        "latitude": 48.8071509
+      },
+      {
+        "longitude": -123.741267,
+        "latitude": 48.807152
+      },
+      {
+        "longitude": -123.7412281,
+        "latitude": 48.8071567
+      },
+      {
+        "longitude": -123.7411838,
+        "latitude": 48.8071765
+      },
+      {
+        "longitude": -123.7411184,
+        "latitude": 48.8071911
+      },
+      {
+        "longitude": -123.7410821,
+        "latitude": 48.8071917
+      },
+      {
+        "longitude": -123.7410361,
+        "latitude": 48.8071835
+      },
+      {
+        "longitude": -123.7410051,
+        "latitude": 48.807166
+      },
+      {
+        "longitude": -123.7409927,
+        "latitude": 48.8071468
+      },
+      {
+        "longitude": -123.7409865,
+        "latitude": 48.8071252
+      },
+      {
+        "longitude": -123.7409936,
+        "latitude": 48.8071013
+      },
+      {
+        "longitude": -123.7409945,
+        "latitude": 48.8070798
+      },
+      {
+        "longitude": -123.7409901,
+        "latitude": 48.8070571
+      },
+      {
+        "longitude": -123.7409918,
+        "latitude": 48.8070303
+      },
+      {
+        "longitude": -123.7410042,
+        "latitude": 48.8070087
+      },
+      {
+        "longitude": -123.7410343,
+        "latitude": 48.8069889
+      },
+      {
+        "longitude": -123.7410609,
+        "latitude": 48.8069749
+      },
+      {
+        "longitude": -123.7410909,
+        "latitude": 48.8069697
+      },
+      {
+        "longitude": -123.7411458,
+        "latitude": 48.8069831
+      },
+      {
+        "longitude": -123.7411883,
+        "latitude": 48.8069895
+      },
+      {
+        "longitude": -123.7412387,
+        "latitude": 48.8069959
+      },
+      {
+        "longitude": -123.7412909,
+        "latitude": 48.8070122
+      },
+      {
+        "longitude": -123.7413369,
+        "latitude": 48.8070361
+      },
+      {
+        "longitude": -123.7413688,
+        "latitude": 48.8070611
+      },
+      {
+        "longitude": -123.7413829,
+        "latitude": 48.8070862
+      },
+      {
+        "longitude": -123.7413865,
+        "latitude": 48.8071002
+      },
+      {
+        "longitude": -123.741367,
+        "latitude": 48.8071264
+      }
+    ],
+    "greenOsmWayId": "1431550937",
+    "teeOsmWayId": "1431550932",
+    "pilot": true,
+    "sourceUrl": "https://www.duncanmeadows.com/the-course",
+    "sourceLabel": "Duncan Meadows routing / OpenStreetMap reference geometry"
+  },
+  {
+    "number": 12,
+    "par": 5,
+    "path": [
+      {
+        "latitude": 48.80651525625,
+        "longitude": -123.74188966875
+      },
+      {
+        "latitude": 48.80809913809524,
+        "longitude": -123.74721198571429
+      }
+    ],
+    "greenBoundary": [
+      {
+        "longitude": -123.7473813,
+        "latitude": 48.8080855
+      },
+      {
+        "longitude": -123.7473404,
+        "latitude": 48.8081154
+      },
+      {
+        "longitude": -123.7473127,
+        "latitude": 48.8081453
+      },
+      {
+        "longitude": -123.7472811,
+        "latitude": 48.808191
+      },
+      {
+        "longitude": -123.7472519,
+        "latitude": 48.8082042
+      },
+      {
+        "longitude": -123.7472141,
+        "latitude": 48.8082113
+      },
+      {
+        "longitude": -123.7471702,
+        "latitude": 48.8082052
+      },
+      {
+        "longitude": -123.7470893,
+        "latitude": 48.8081976
+      },
+      {
+        "longitude": -123.74705,
+        "latitude": 48.8081925
+      },
+      {
+        "longitude": -123.74701,
+        "latitude": 48.808159
+      },
+      {
+        "longitude": -123.7469969,
+        "latitude": 48.808121
+      },
+      {
+        "longitude": -123.7470154,
+        "latitude": 48.8080773
+      },
+      {
+        "longitude": -123.7470493,
+        "latitude": 48.8080444
+      },
+      {
+        "longitude": -123.7470963,
+        "latitude": 48.8080215
+      },
+      {
+        "longitude": -123.7471694,
+        "latitude": 48.8080063
+      },
+      {
+        "longitude": -123.747218,
+        "latitude": 48.8080028
+      },
+      {
+        "longitude": -123.747268,
+        "latitude": 48.8079916
+      },
+      {
+        "longitude": -123.7473389,
+        "latitude": 48.8080033
+      },
+      {
+        "longitude": -123.7473843,
+        "latitude": 48.8080149
+      },
+      {
+        "longitude": -123.7474044,
+        "latitude": 48.8080332
+      },
+      {
+        "longitude": -123.7474098,
+        "latitude": 48.8080586
+      },
+      {
+        "longitude": -123.7473813,
+        "latitude": 48.8080855
+      }
+    ],
+    "greenOsmWayId": "1431550939",
+    "teeOsmWayId": "1431550938",
+    "pilot": true,
+    "sourceUrl": "https://www.duncanmeadows.com/the-course",
+    "sourceLabel": "Duncan Meadows routing / OpenStreetMap reference geometry"
+  },
+  {
+    "number": 13,
+    "par": 4,
+    "path": [
+      {
+        "latitude": 48.80762936,
+        "longitude": -123.74751891999999
+      },
+      {
+        "latitude": 48.80615988095238,
+        "longitude": -123.74271617142858
+      }
+    ],
+    "greenBoundary": [
+      {
+        "longitude": -123.7428537,
+        "latitude": 48.8062479
+      },
+      {
+        "longitude": -123.7427971,
+        "latitude": 48.8062654
+      },
+      {
+        "longitude": -123.7427493,
+        "latitude": 48.8062642
+      },
+      {
+        "longitude": -123.7427174,
+        "latitude": 48.8062508
+      },
+      {
+        "longitude": -123.7426732,
+        "latitude": 48.8062374
+      },
+      {
+        "longitude": -123.7426254,
+        "latitude": 48.8062263
+      },
+      {
+        "longitude": -123.7425847,
+        "latitude": 48.8062251
+      },
+      {
+        "longitude": -123.7425458,
+        "latitude": 48.8062042
+      },
+      {
+        "longitude": -123.7425051,
+        "latitude": 48.8061599
+      },
+      {
+        "longitude": -123.7425033,
+        "latitude": 48.8061267
+      },
+      {
+        "longitude": -123.7425183,
+        "latitude": 48.8060911
+      },
+      {
+        "longitude": -123.7425608,
+        "latitude": 48.806069
+      },
+      {
+        "longitude": -123.7426449,
+        "latitude": 48.8060503
+      },
+      {
+        "longitude": -123.7427387,
+        "latitude": 48.8060358
+      },
+      {
+        "longitude": -123.7428218,
+        "latitude": 48.8060503
+      },
+      {
+        "longitude": -123.7428431,
+        "latitude": 48.8060701
+      },
+      {
+        "longitude": -123.7428634,
+        "latitude": 48.8060987
+      },
+      {
+        "longitude": -123.742867,
+        "latitude": 48.8061278
+      },
+      {
+        "longitude": -123.7428661,
+        "latitude": 48.8061517
+      },
+      {
+        "longitude": -123.7428767,
+        "latitude": 48.8061814
+      },
+      {
+        "longitude": -123.7428838,
+        "latitude": 48.8062234
+      },
+      {
+        "longitude": -123.7428537,
+        "latitude": 48.8062479
+      }
+    ],
+    "greenOsmWayId": "1431550947",
+    "teeOsmWayId": "1431550944",
+    "pilot": true,
+    "sourceUrl": "https://www.duncanmeadows.com/the-course",
+    "sourceLabel": "Duncan Meadows routing / OpenStreetMap reference geometry"
+  },
+  {
+    "number": 14,
+    "par": 3,
+    "path": [
+      {
+        "latitude": 48.80578023333333,
+        "longitude": -123.74314382666667
+      },
+      {
+        "latitude": 48.80603461875,
+        "longitude": -123.74555465
+      }
+    ],
+    "greenBoundary": [
+      {
+        "longitude": -123.7454208,
+        "latitude": 48.8059528
+      },
+      {
+        "longitude": -123.7454033,
+        "latitude": 48.805982
+      },
+      {
+        "longitude": -123.7454313,
+        "latitude": 48.806015
+      },
+      {
+        "longitude": -123.7454617,
+        "latitude": 48.8060596
+      },
+      {
+        "longitude": -123.7454664,
+        "latitude": 48.8061073
+      },
+      {
+        "longitude": -123.7454874,
+        "latitude": 48.8061442
+      },
+      {
+        "longitude": -123.7455306,
+        "latitude": 48.8061542
+      },
+      {
+        "longitude": -123.7455901,
+        "latitude": 48.8061542
+      },
+      {
+        "longitude": -123.7456497,
+        "latitude": 48.8061227
+      },
+      {
+        "longitude": -123.7456999,
+        "latitude": 48.8060643
+      },
+      {
+        "longitude": -123.7457381,
+        "latitude": 48.8060306
+      },
+      {
+        "longitude": -123.7457302,
+        "latitude": 48.8059912
+      },
+      {
+        "longitude": -123.7456532,
+        "latitude": 48.8059728
+      },
+      {
+        "longitude": -123.7456065,
+        "latitude": 48.8059351
+      },
+      {
+        "longitude": -123.7455423,
+        "latitude": 48.8059305
+      },
+      {
+        "longitude": -123.7454629,
+        "latitude": 48.8059374
+      },
+      {
+        "longitude": -123.7454208,
+        "latitude": 48.8059528
+      }
+    ],
+    "greenOsmWayId": "1431550951",
+    "teeOsmWayId": "1431550953",
+    "pilot": true,
+    "sourceUrl": "https://www.duncanmeadows.com/the-course",
+    "sourceLabel": "Duncan Meadows routing / OpenStreetMap reference geometry"
+  },
+  {
+    "number": 15,
+    "par": 4,
+    "path": [
+      {
+        "latitude": 48.8057317625,
+        "longitude": -123.747434225
+      },
+      {
+        "latitude": 48.80588365,
+        "longitude": -123.75170264
+      }
+    ],
+    "greenBoundary": [
+      {
+        "longitude": -123.7515366,
+        "latitude": 48.8058066
+      },
+      {
+        "longitude": -123.7515063,
+        "latitude": 48.8058559
+      },
+      {
+        "longitude": -123.7515133,
+        "latitude": 48.8058874
+      },
+      {
+        "longitude": -123.751546,
+        "latitude": 48.8059058
+      },
+      {
+        "longitude": -123.7515997,
+        "latitude": 48.8059166
+      },
+      {
+        "longitude": -123.7516545,
+        "latitude": 48.8059274
+      },
+      {
+        "longitude": -123.7516907,
+        "latitude": 48.8059412
+      },
+      {
+        "longitude": -123.7517316,
+        "latitude": 48.805975
+      },
+      {
+        "longitude": -123.7517526,
+        "latitude": 48.8059927
+      },
+      {
+        "longitude": -123.7517911,
+        "latitude": 48.8059989
+      },
+      {
+        "longitude": -123.7518332,
+        "latitude": 48.8059927
+      },
+      {
+        "longitude": -123.751867,
+        "latitude": 48.8059643
+      },
+      {
+        "longitude": -123.7518787,
+        "latitude": 48.8059104
+      },
+      {
+        "longitude": -123.751874,
+        "latitude": 48.8058382
+      },
+      {
+        "longitude": -123.7518495,
+        "latitude": 48.8058036
+      },
+      {
+        "longitude": -123.7518075,
+        "latitude": 48.8057951
+      },
+      {
+        "longitude": -123.7517328,
+        "latitude": 48.8058028
+      },
+      {
+        "longitude": -123.7516872,
+        "latitude": 48.805792
+      },
+      {
+        "longitude": -123.7516242,
+        "latitude": 48.8057813
+      },
+      {
+        "longitude": -123.7515763,
+        "latitude": 48.8057851
+      },
+      {
+        "longitude": -123.7515366,
+        "latitude": 48.8058066
+      }
+    ],
+    "greenOsmWayId": "1431551808",
+    "teeOsmWayId": "909799540",
+    "pilot": true,
+    "sourceUrl": "https://www.duncanmeadows.com/the-course",
+    "sourceLabel": "Duncan Meadows routing / OpenStreetMap reference geometry"
+  },
+  {
+    "number": 16,
+    "par": 3,
+    "path": [
+      {
+        "latitude": 48.80634438888889,
+        "longitude": -123.75222807777777
+      },
+      {
+        "latitude": 48.80647996086957,
+        "longitude": -123.74997840434783
+      }
+    ],
+    "greenBoundary": [
+      {
+        "longitude": -123.7501818,
+        "latitude": 48.8064435
+      },
+      {
+        "longitude": -123.7501509,
+        "latitude": 48.8064161
+      },
+      {
+        "longitude": -123.7501208,
+        "latitude": 48.8064027
+      },
+      {
+        "longitude": -123.7500925,
+        "latitude": 48.8063957
+      },
+      {
+        "longitude": -123.7500535,
+        "latitude": 48.8064027
+      },
+      {
+        "longitude": -123.7500199,
+        "latitude": 48.8064207
+      },
+      {
+        "longitude": -123.7499642,
+        "latitude": 48.8064318
+      },
+      {
+        "longitude": -123.7499164,
+        "latitude": 48.8064359
+      },
+      {
+        "longitude": -123.7498624,
+        "latitude": 48.8064341
+      },
+      {
+        "longitude": -123.7498005,
+        "latitude": 48.8064452
+      },
+      {
+        "longitude": -123.7497792,
+        "latitude": 48.8064639
+      },
+      {
+        "longitude": -123.7497739,
+        "latitude": 48.8064924
+      },
+      {
+        "longitude": -123.7497757,
+        "latitude": 48.806521
+      },
+      {
+        "longitude": -123.7497881,
+        "latitude": 48.8065408
+      },
+      {
+        "longitude": -123.7498155,
+        "latitude": 48.8065565
+      },
+      {
+        "longitude": -123.7498509,
+        "latitude": 48.8065583
+      },
+      {
+        "longitude": -123.7499235,
+        "latitude": 48.8065571
+      },
+      {
+        "longitude": -123.7499934,
+        "latitude": 48.8065577
+      },
+      {
+        "longitude": -123.7500288,
+        "latitude": 48.8065577
+      },
+      {
+        "longitude": -123.7500871,
+        "latitude": 48.8065414
+      },
+      {
+        "longitude": -123.7501562,
+        "latitude": 48.806507
+      },
+      {
+        "longitude": -123.7501801,
+        "latitude": 48.8064872
+      },
+      {
+        "longitude": -123.750188,
+        "latitude": 48.8064697
+      },
+      {
+        "longitude": -123.7501818,
+        "latitude": 48.8064435
+      }
+    ],
+    "greenOsmWayId": "1431551819",
+    "teeOsmWayId": "1431551816",
+    "pilot": true,
+    "sourceUrl": "https://www.duncanmeadows.com/the-course",
+    "sourceLabel": "Duncan Meadows routing / OpenStreetMap reference geometry"
+  },
+  {
+    "number": 17,
+    "par": 5,
+    "path": [
+      {
+        "latitude": 48.807209925,
+        "longitude": -123.7521555875
+      },
+      {
+        "latitude": 48.805821545,
+        "longitude": -123.746420235
+      }
+    ],
+    "greenBoundary": [
+      {
+        "longitude": -123.7463654,
+        "latitude": 48.8059179
+      },
+      {
+        "longitude": -123.7464129,
+        "latitude": 48.8059357
+      },
+      {
+        "longitude": -123.746453,
+        "latitude": 48.8059437
+      },
+      {
+        "longitude": -123.7465593,
+        "latitude": 48.8059148
+      },
+      {
+        "longitude": -123.7465845,
+        "latitude": 48.8059019
+      },
+      {
+        "longitude": -123.7466022,
+        "latitude": 48.8058866
+      },
+      {
+        "longitude": -123.7465966,
+        "latitude": 48.8058473
+      },
+      {
+        "longitude": -123.7465798,
+        "latitude": 48.8058037
+      },
+      {
+        "longitude": -123.746549,
+        "latitude": 48.8057619
+      },
+      {
+        "longitude": -123.7465192,
+        "latitude": 48.8057361
+      },
+      {
+        "longitude": -123.7464502,
+        "latitude": 48.8057165
+      },
+      {
+        "longitude": -123.7463905,
+        "latitude": 48.8057122
+      },
+      {
+        "longitude": -123.7463421,
+        "latitude": 48.8057208
+      },
+      {
+        "longitude": -123.746302,
+        "latitude": 48.8057282
+      },
+      {
+        "longitude": -123.7462777,
+        "latitude": 48.8057539
+      },
+      {
+        "longitude": -123.7462684,
+        "latitude": 48.8057717
+      },
+      {
+        "longitude": -123.7462647,
+        "latitude": 48.8058012
+      },
+      {
+        "longitude": -123.7462656,
+        "latitude": 48.8058239
+      },
+      {
+        "longitude": -123.7462945,
+        "latitude": 48.8058626
+      },
+      {
+        "longitude": -123.7463271,
+        "latitude": 48.8058903
+      },
+      {
+        "longitude": -123.7463654,
+        "latitude": 48.8059179
+      }
+    ],
+    "greenOsmWayId": "909799538",
+    "teeOsmWayId": "1431551822",
+    "pilot": true,
+    "sourceUrl": "https://www.duncanmeadows.com/the-course",
+    "sourceLabel": "Duncan Meadows routing / OpenStreetMap reference geometry"
+  },
+  {
+    "number": 18,
+    "par": 4,
+    "path": [
+      {
+        "latitude": 48.806386880000005,
+        "longitude": -123.74607470999999
+      },
+      {
+        "latitude": 48.80771165185185,
+        "longitude": -123.75086872222222
+      }
+    ],
+    "greenBoundary": [
+      {
+        "longitude": -123.7507242,
+        "latitude": 48.8077016
+      },
+      {
+        "longitude": -123.7507288,
+        "latitude": 48.8077268
+      },
+      {
+        "longitude": -123.7507223,
+        "latitude": 48.8077508
+      },
+      {
+        "longitude": -123.7507121,
+        "latitude": 48.8077735
+      },
+      {
+        "longitude": -123.7507354,
+        "latitude": 48.8077974
+      },
+      {
+        "longitude": -123.7507708,
+        "latitude": 48.8078171
+      },
+      {
+        "longitude": -123.7508267,
+        "latitude": 48.8078263
+      },
+      {
+        "longitude": -123.7508911,
+        "latitude": 48.80783
+      },
+      {
+        "longitude": -123.7509526,
+        "latitude": 48.8078257
+      },
+      {
+        "longitude": -123.7510048,
+        "latitude": 48.8078165
+      },
+      {
+        "longitude": -123.751043,
+        "latitude": 48.8078079
+      },
+      {
+        "longitude": -123.7510766,
+        "latitude": 48.8077894
+      },
+      {
+        "longitude": -123.7510924,
+        "latitude": 48.8077735
+      },
+      {
+        "longitude": -123.7510887,
+        "latitude": 48.8077409
+      },
+      {
+        "longitude": -123.7510691,
+        "latitude": 48.8076955
+      },
+      {
+        "longitude": -123.7510235,
+        "latitude": 48.8076501
+      },
+      {
+        "longitude": -123.7509927,
+        "latitude": 48.8076359
+      },
+      {
+        "longitude": -123.7509433,
+        "latitude": 48.8076255
+      },
+      {
+        "longitude": -123.7509013,
+        "latitude": 48.8076261
+      },
+      {
+        "longitude": -123.7508762,
+        "latitude": 48.8076224
+      },
+      {
+        "longitude": -123.7508547,
+        "latitude": 48.8075991
+      },
+      {
+        "longitude": -123.7508118,
+        "latitude": 48.8075911
+      },
+      {
+        "longitude": -123.7507559,
+        "latitude": 48.8075966
+      },
+      {
+        "longitude": -123.7507316,
+        "latitude": 48.8076145
+      },
+      {
+        "longitude": -123.7507018,
+        "latitude": 48.8076366
+      },
+      {
+        "longitude": -123.7507018,
+        "latitude": 48.8076587
+      },
+      {
+        "longitude": -123.7507223,
+        "latitude": 48.8076851
+      },
+      {
+        "longitude": -123.7507242,
+        "latitude": 48.8077016
+      }
+    ],
+    "greenOsmWayId": "909799534",
+    "teeOsmWayId": "1431551823",
+    "pilot": true,
+    "sourceUrl": "https://www.duncanmeadows.com/the-course",
+    "sourceLabel": "Duncan Meadows routing / OpenStreetMap reference geometry"
+  }
+]

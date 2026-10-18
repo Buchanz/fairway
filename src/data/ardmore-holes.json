@@ -1,0 +1,167 @@
+[
+  {
+    "number": 1,
+    "par": null,
+    "path": [
+      {
+        "latitude": 48.6347125,
+        "longitude": -123.4617125
+      },
+      {
+        "latitude": 48.636775,
+        "longitude": -123.4625
+      }
+    ],
+    "pilot": true,
+    "sourceUrl": "https://www.ardmoregolfcourse.com/our-course.html",
+    "sourceLabel": "Ardmore routing / CRD imagery \u00b7 Pilot"
+  },
+  {
+    "number": 2,
+    "par": null,
+    "path": [
+      {
+        "latitude": 48.6371275,
+        "longitude": -123.4627625
+      },
+      {
+        "latitude": 48.6367375,
+        "longitude": -123.461375
+      },
+      {
+        "latitude": 48.6363625,
+        "longitude": -123.460925
+      },
+      {
+        "latitude": 48.634525,
+        "longitude": -123.46145
+      }
+    ],
+    "pilot": true,
+    "sourceUrl": "https://www.ardmoregolfcourse.com/our-course.html",
+    "sourceLabel": "Ardmore routing / CRD imagery \u00b7 Pilot"
+  },
+  {
+    "number": 3,
+    "par": null,
+    "path": [
+      {
+        "latitude": 48.6346375,
+        "longitude": -123.4597475
+      },
+      {
+        "latitude": 48.637,
+        "longitude": -123.4593125
+      }
+    ],
+    "pilot": true,
+    "sourceUrl": "https://www.ardmoregolfcourse.com/our-course.html",
+    "sourceLabel": "Ardmore routing / CRD imagery \u00b7 Pilot"
+  },
+  {
+    "number": 4,
+    "par": null,
+    "path": [
+      {
+        "latitude": 48.6370375,
+        "longitude": -123.45875
+      },
+      {
+        "latitude": 48.6340375,
+        "longitude": -123.4586
+      }
+    ],
+    "pilot": true,
+    "sourceUrl": "https://www.ardmoregolfcourse.com/our-course.html",
+    "sourceLabel": "Ardmore routing / CRD imagery \u00b7 Pilot"
+  },
+  {
+    "number": 5,
+    "par": null,
+    "path": [
+      {
+        "latitude": 48.6338875,
+        "longitude": -123.459245
+      },
+      {
+        "latitude": 48.634435,
+        "longitude": -123.4603625
+      }
+    ],
+    "pilot": true,
+    "sourceUrl": "https://www.ardmoregolfcourse.com/our-course.html",
+    "sourceLabel": "Ardmore routing / CRD imagery \u00b7 Pilot"
+  },
+  {
+    "number": 6,
+    "par": null,
+    "path": [
+      {
+        "latitude": 48.634375,
+        "longitude": -123.463025
+      },
+      {
+        "latitude": 48.6336625,
+        "longitude": -123.4654625
+      }
+    ],
+    "pilot": true,
+    "sourceUrl": "https://www.ardmoregolfcourse.com/our-course.html",
+    "sourceLabel": "Ardmore routing / CRD imagery \u00b7 Pilot"
+  },
+  {
+    "number": 7,
+    "par": null,
+    "path": [
+      {
+        "latitude": 48.63385,
+        "longitude": -123.46565
+      },
+      {
+        "latitude": 48.6348625,
+        "longitude": -123.4646
+      },
+      {
+        "latitude": 48.635785,
+        "longitude": -123.4647875
+      }
+    ],
+    "pilot": true,
+    "sourceUrl": "https://www.ardmoregolfcourse.com/our-course.html",
+    "sourceLabel": "Ardmore routing / CRD imagery \u00b7 Pilot"
+  },
+  {
+    "number": 8,
+    "par": null,
+    "path": [
+      {
+        "latitude": 48.6360025,
+        "longitude": -123.4648625
+      },
+      {
+        "latitude": 48.6361975,
+        "longitude": -123.4635125
+      }
+    ],
+    "pilot": true,
+    "sourceUrl": "https://www.ardmoregolfcourse.com/our-course.html",
+    "sourceLabel": "Ardmore routing / CRD imagery \u00b7 Pilot"
+  },
+  {
+    "number": 9,
+    "par": null,
+    "path": [
+      {
+        "latitude": 48.63706,
+        "longitude": -123.463175
+      },
+      {
+        "latitude": 48.6340225,
+        "longitude": -123.462155
+      }
+    ],
+    "pilot": true,
+    "sourceUrl": "https://www.ardmoregolfcourse.com/our-course.html",
+    "sourceLabel": "Ardmore routing / CRD imagery \u00b7 Pilot"
+  }
+]

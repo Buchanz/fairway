@@ -1,0 +1,9 @@
+node_modules
+.git
+.env
+.env.*
+dist
+.expo
+*.log
+supabase/generated
+docs/images
