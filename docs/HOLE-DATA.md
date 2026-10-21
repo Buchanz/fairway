@@ -7,6 +7,12 @@ The bundled `src/data/cedar-holes.json` contains 18 numbered `golf=hole` ways, t
 
 OpenStreetMap's hole-path convention runs from tee to green: https://wiki.openstreetmap.org/wiki/Tag:golf=hole . We interpret the first and last path nodes as reference tee/green positions, not a selected tee colour, surveyed green centre or current flag location. Straight-line measurements are approximate horizontal yardages. Mapped green boundaries are bundled where the hole endpoint falls inside exactly one source green polygon; coverage is described below. The numbered paths, regional bounds and plausible lengths are validated by tests; on-course accuracy and native camera framing still require physical-device verification.
 
+## Olympic View and Cordova Bay Ridge — October 21, 2026
+
+Olympic View retains its 18-hole OSM reference paths and green boundaries. Its Gold, Silver, Bronze and Black tee-card distances are sourced from the club's official hole-by-hole guide and scorecard. Because those sources publish distances rather than surveyed colour-tee coordinates, the map uses the OSM path's first node as a reference tee and does not imply that it is the exact daily marker for every tee colour.
+
+Cordova Bay Ridge has published Back and Front distances in `src/data/tees.ts`, but the inspected OSM extract contains only the Ridge boundary and no complete numbered routing. The Ridge entry therefore remains a manual-map option; no Bay-course hole geometry is substituted and no GPS routing is invented. A numbered course map from the club or another reliable source is still needed before Ridge can support hole-by-hole framing.
+
 Camera bearing points toward the mapped green and its bounds include intermediate path vertices for doglegs. Apple camera altitude and Google zoom are calculated from available viewport size. Manual gestures remain available; the recenter control restores hole framing. Other courses retain the manual-target map until their hole data is connected.
 
 ## October 9 additions
