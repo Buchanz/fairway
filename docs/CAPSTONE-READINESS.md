@@ -9,7 +9,7 @@ This checklist distinguishes tested behaviour from implementation and outstandin
 | Framework/library usage | React, React Native, Expo, Node/Express, Supabase, native maps | Standalone Android Maps configuration and real-device verification |
 | Testing/debugging | 83/83 tests; web/iOS/Android exports pass; live web search and booking review checked | Full two-account and physical-device acceptance below |
 | Devlog | Weekly entries, screenshots and implementation evidence | Student's personal learning reflections and final demo evidence |
-| Deployment | https://fairway-bcsq.onrender.com; https://github.com/Buchanz/fairway; signed iOS beta builds | Stable auth callbacks/email delivery, production mobile environment, release checks |
+| Deployment | https://fairwaygps.com; https://github.com/Buchanz/fairway; signed iOS beta builds | Stable auth callbacks/email delivery, production mobile environment, release checks |
 
 ## Verified this session
 - TypeScript, ESLint and all 83 automated tests passed.
@@ -43,13 +43,13 @@ Use two disposable accounts, with two phones for GPS tee flip. Do not delete a r
 ## Deployment limitations
 Render Free is active with no paid plan/add-ons; requests after inactivity can take 50+ seconds. Production mobile environment, email delivery, callbacks and full device acceptance are not yet signed off. App-store publication is separate from the rubric's live-application deliverable.
 
-Callback targets to verify in Supabase: `https://fairway-bcsq.onrender.com/account` and `fairway://account`. Remove obsolete tunnel callbacks after verifying the stable routes. This review did not change callback settings.
+Callback targets to verify in Supabase: `https://fairwaygps.com/account`, `https://www.fairwaygps.com/account`, `https://fairway-bcsq.onrender.com/account` and `fairway://account`. Remove obsolete tunnel callbacks after verifying the stable routes.
 
 ## Release audit update — October 21
 
 - `npm run typecheck`, `npm run lint` and all 83 automated tests pass after enabling per-device session persistence. Native sessions use SecureStore; browser sessions use Supabase's local storage. A fresh installation has no session, while closing and reopening an already signed-in installation restores the session until the user signs out.
 - Public privacy, support and account-deletion pages are now implemented as Expo routes and are included in the web export. They still need to be linked in the final store records and reviewed for course-specific legal wording. Public contact is `info@fairwaygps.com`; the domain mailbox and transactional sender still need verification.
-- GitHub `master` is at `4ae27b0`. Render remains the live web/API deployment at `https://fairway-bcsq.onrender.com` on the free plan. Its cold-start delay remains a release limitation.
+- GitHub `master` is at the current release commit. Render remains the live web/API deployment at `https://fairwaygps.com` on the free plan. Its cold-start delay remains a release limitation.
 - Android build `918c5e86-290d-40a2-926c-d987cfb494f6` is queued from the session-persistence commit. The corrected iOS build is blocked by the Expo free-plan iOS quota until November 1; the existing TestFlight build does not include this latest session change.
 
 ## Release audit update — October 18, evening

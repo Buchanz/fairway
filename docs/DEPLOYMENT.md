@@ -1,6 +1,6 @@
 # Production deployment
 
-The included Dockerfile serves the exported website and Express API together on PORT (8788 by default). This removes the requirement for a running laptop and avoids cross-origin API configuration for the web client. Fairway is currently deployed on Render Free at `https://fairway-bcsq.onrender.com`; the service may sleep when idle and can take 50+ seconds to wake.
+The included Dockerfile serves the exported website and Express API together on PORT (8788 by default). This removes the requirement for a running laptop and avoids cross-origin API configuration for the web client. Fairway is currently deployed on Render Free at `https://fairwaygps.com`; the service may sleep when idle and can take 50+ seconds to wake.
 
 Build arguments (public client configuration only):
 - EXPO_PUBLIC_SUPABASE_URL
