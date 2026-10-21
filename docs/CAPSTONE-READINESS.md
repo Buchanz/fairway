@@ -48,7 +48,7 @@ Callback targets to verify in Supabase: `https://fairwaygps.com/account`, `https
 ## Release audit update — October 21
 
 - `npm run typecheck`, `npm run lint` and all 83 automated tests pass after enabling per-device session persistence. Native sessions use SecureStore; browser sessions use Supabase's local storage. A fresh installation has no session, while closing and reopening an already signed-in installation restores the session until the user signs out.
-- Public privacy, support and account-deletion pages are now implemented as Expo routes and are included in the web export. They still need to be linked in the final store records and reviewed for course-specific legal wording. Public contact is `info@fairwaygps.com`; the domain mailbox and transactional sender still need verification.
+- Public privacy, support and account-deletion pages are now implemented as Expo routes and are included in the web export. They still need to be linked in the final store records, reviewed for course-specific legal wording and given a verified business contact.
 - GitHub `master` is at the current release commit. Render remains the live web/API deployment at `https://fairwaygps.com` on the free plan. Its cold-start delay remains a release limitation.
 - Android build `918c5e86-290d-40a2-926c-d987cfb494f6` is queued from the session-persistence commit. The corrected iOS build is blocked by the Expo free-plan iOS quota until November 1; the existing TestFlight build does not include this latest session change.
 
@@ -70,4 +70,4 @@ Callback targets to verify in Supabase: `https://fairwaygps.com/account`, `https
 
 For new personal Google Play accounts created after November 13, 2023, Google requires at least 12 closed-test participants continuously opted in for 14 days before applying for production access. See https://support.google.com/googleplay/android-developer/answer/14151465 . This timing is separate from course submission.
 
-Owner selected public support/privacy email: info@fairwaygps.com. The domain mailbox and transactional sender still need verification. Google Play Console account not yet created (October 18).
+No public support/privacy email is published yet. Google Play Console account not yet created (October 18).

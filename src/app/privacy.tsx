@@ -20,7 +20,7 @@ export default function Privacy(){
       <Text style={s.heading}>Sharing and retention</Text>
       <Text style={s.body}>Your profile and rounds are protected by account-scoped database policies. Friends only receive completed scorecards when you explicitly enable sharing with that friend. Deleting your account removes your cloud profile, friendships, favourites, avatar and account-owned rounds.</Text>
       <Text style={s.heading}>Contact</Text>
-      <Text style={s.body}>Questions or privacy requests: info@fairwaygps.com</Text>
+      <Text style={s.body}>Questions or privacy requests can be submitted through the Fairway account tools.</Text>
     </GlassPanel>
     <View style={s.links}><Link href="/delete-account" style={s.link}>Account deletion</Link><Link href="/support" style={s.link}>Support</Link><Link href="/" style={s.link}>Back to Fairway</Link></View>
   </ScrollView>;

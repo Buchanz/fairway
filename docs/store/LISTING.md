@@ -26,7 +26,7 @@ Course availability and mapped-hole coverage vary. Fairway currently focuses on 
 - Fairway app icons are now included in `assets/icon.png` and the Android adaptive icon files; capture the final store screenshots using the current build.
 - Capture current iPhone and Android screenshots; capture iPad screenshots if tablet support remains enabled.
 - Stable support URL, privacy-policy URL and external account-deletion page: `https://fairwaygps.com/support`, `/privacy` and `/delete-account`.
-- Public support/privacy email: info@fairwaygps.com (domain mailbox and sender verification required before launch).
+- Public support/privacy email: not published yet. Add a verified business contact before public release.
 - Actual data-safety answers after auditing SDK/network behavior and provider retention.
 - Stable backend, email delivery and all account acceptance checks must pass before submission.
 
