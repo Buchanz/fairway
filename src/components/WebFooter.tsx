@@ -27,10 +27,10 @@ export function WebFooter(){
 }
 
 const s=StyleSheet.create({
-  footer:{width:'100%',borderTopWidth:1,borderTopColor:'#dfe7df',backgroundColor:'#edf2ea',marginTop:'auto'},
-  inner:{width:'100%',maxWidth:1000,alignSelf:'center',paddingHorizontal:24,paddingVertical:26,gap:8},
-  brand:{fontSize:22,fontWeight:'800',letterSpacing:-.8,color:'#183c32'},dot:{color:'#799544'},tagline:{fontSize:11,color:'#708078'},
-  links:{flexDirection:'row',flexWrap:'wrap',gap:18,marginTop:10},link:{fontSize:12,fontWeight:'600',color:'#276447',textDecorationLine:'none'},
-  downloads:{marginTop:8,alignItems:'flex-start'},storeButton:{minWidth:158,minHeight:42,paddingHorizontal:16,paddingVertical:8,borderRadius:22,backgroundColor:'#d9e3d7',opacity:.76},storeTitle:{fontSize:12,fontWeight:'700',color:'#183c32'},storeNote:{fontSize:10,color:'#708078',marginTop:2},
-  fine:{fontSize:10,color:'#708078',marginTop:8},
+  footer:{width:'100%',borderTopWidth:1,borderTopColor:'#dfe7df',backgroundColor:'#edf2ea'},
+  inner:{width:'100%',maxWidth:1000,alignSelf:'center',paddingHorizontal:20,paddingVertical:14,gap:4},
+  brand:{fontSize:18,fontWeight:'800',letterSpacing:-.6,color:'#183c32'},dot:{color:'#799544'},tagline:{fontSize:10,color:'#708078'},
+  links:{flexDirection:'row',flexWrap:'wrap',gap:14,marginTop:4},link:{fontSize:11,fontWeight:'600',color:'#276447',textDecorationLine:'none'},
+  downloads:{marginTop:4,alignItems:'flex-start'},storeButton:{minWidth:140,minHeight:34,paddingHorizontal:13,paddingVertical:5,borderRadius:18,backgroundColor:'#d9e3d7',opacity:.76},storeTitle:{fontSize:11,fontWeight:'700',color:'#183c32'},storeNote:{fontSize:9,color:'#708078',marginTop:1},
+  fine:{fontSize:9,color:'#708078',marginTop:4},
 });

@@ -18,6 +18,7 @@ import {cities,courses,type Point} from '../data/courses';
 import {isFresh} from '../lib/availability';
 import {nearbyCourses} from '../lib/geo';
 import {decodeInventory,filterCourse,type Inventory,type SearchFilters} from '../lib/search';
+import {WebFooter} from '../components/WebFooter';
 
 type Panel='players'|'holes'|'calendar'|'filters'|'coverage'|null;
 export default function Explore(){
@@ -167,6 +168,7 @@ export default function Explore(){
    <Animated.View onLayout={event=>{courseGroupTop.current=event.nativeEvent.layout.y;}} style={{opacity:fade,gap:26,paddingHorizontal:8,marginHorizontal:-8,paddingVertical:8}}>{rows.map(course=><View key={course.id} onLayout={event=>{coursePositions.current[course.id]=event.nativeEvent.layout.y;}}><CourseCarousel key={`${course.id}-${players}-${holes}-${chosenDate}-${time}-${maxPrice}`} course={course} slots={course.slots} players={players} now={clock} onSelect={slot=>setSelection({course,slot,players})}/></View>)}</Animated.View>
    {!rows.length&&<GlassPanel style={s.empty}><Text style={s.emptyTitle}>{!availabilityReady?'Loading tee times…':hasFreshData?'No rounds match just yet.':'Tee times are being refreshed.'}</Text><Text style={s.emptyText}>{!availabilityReady?'Checking connected courses now.':hasFreshData?'Try fewer players, a different round length or broader filters.':'Tap reload to check the connected courses again.'}</Text><Pressable accessibilityRole="button" onPress={()=>{if(!availabilityReady)return;setChosenDate(null);setTime('any');setMaxPrice(null);setRadius(null);setQuery('');toggle('players');}} style={[s.smallButton,!availabilityReady&&{opacity:.45}]}><Text style={s.link}>{hasFreshData?'Adjust your search →':'Reload tee times →'}</Text></Pressable></GlassPanel>}
    <View style={s.footer}><Link href="/account?view=profile" style={s.link}>Your account</Link><Pressable accessibilityRole="button" ref={node=>{menuButtons.current.coverage=node;}} accessibilityLabel="View course coverage" onPress={()=>toggle('coverage')} style={s.coverage}><View style={s.dot}/><Text style={s.coverageText}>Course coverage</Text></Pressable><Text style={s.fine}>Availability updates automatically. Final price and reservation are confirmed on the booking website.</Text></View>
+   <WebFooter/>
   </Animated.ScrollView>
   <BottomFade/>
   {rows.length>0&&scrollSize.content>scrollSize.viewport+8&&!atBottom&&<View pointerEvents="box-none" style={{position:'absolute',bottom:Platform.OS==='web'?16:16,left:0,right:0,alignItems:'center',zIndex:25}}><Pressable accessibilityRole="button" accessibilityLabel="Scroll to next course" onPress={()=>void nextCourse()} style={{width:Platform.OS==='web'?48:36,height:Platform.OS==='web'?48:36,borderRadius:24,backgroundColor:'#175D3D',alignItems:'center',justifyContent:'center',boxShadow:'0 3px 10px rgba(24,60,50,0.24)'}}><SymbolView name={{ios:'arrow.down',android:'arrow_downward',web:'arrow_downward'}} size={Platform.OS==='web'?24:19} tintColor="white"/></Pressable></View>}
