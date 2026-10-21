@@ -33,19 +33,22 @@ export const GlassPanel=forwardRef<View,ViewProps & {interactive?:boolean}>(func
  return <View ref={ref} {...props} style={[style,{backgroundColor:'transparent',boxShadow:'none',shadowOpacity:0,elevation:0,borderWidth:0,borderTopWidth:0,borderBottomWidth:0,borderLeftWidth:0,borderRightWidth:0}]}><GlassView pointerEvents="none" glassEffectStyle="regular" {...appearance(flat)} style={[StyleSheet.absoluteFill,{borderRadius:flat.borderRadius}]} />{children}</View>;
 });
 /** Animate the drawing, not the layout, so selection never shifts neighbouring controls. */
-const AndroidPressable=forwardRef<View,PressableProps>(function AndroidPressable({style,onPressIn,onPressOut,disabled,...props},ref){
+const FeedbackPressable=forwardRef<View,PressableProps>(function FeedbackPressable({style,onPressIn,onPressOut,onHoverIn,onHoverOut,disabled,...props},ref){
  const reducedMotion=useContext(ReducedMotionContext);
  const [scale]=useState(()=>new Animated.Value(1));
  const [pressed,setPressed]=useState(false);
+ const [hovered,setHovered]=useState(false);
  const animate=(pressed:boolean)=>{scale.stopAnimation();Animated.timing(scale,{toValue:pressed&&!reducedMotion ? 0.97 : 1,duration:reducedMotion?0:pressed?90:160,useNativeDriver:true}).start();};
  useEffect(()=>{if(disabled)scale.setValue(1);},[disabled,scale]);
  const base=typeof style==='function'?style({pressed:pressed&&!disabled}):style;
  const flat=StyleSheet.flatten(base)||{};
  const surface=flat.borderRadius&&flat.backgroundColor&&flat.backgroundColor!=='transparent';
  return <AnimatedPressable ref={ref} {...props} disabled={disabled}
+  onHoverIn={event=>{setHovered(true);onHoverIn?.(event);}}
+  onHoverOut={event=>{setHovered(false);onHoverOut?.(event);}}
   onPressIn={event=>{setPressed(true);animate(true);onPressIn?.(event);}}
   onPressOut={event=>{setPressed(false);animate(false);onPressOut?.(event);}}
-  style={[surface?{elevation:pressed&&!disabled?1:4,shadowColor:'#183C32'}:undefined,base,{opacity:(typeof flat.opacity==='number'?flat.opacity:1)*(pressed&&!disabled?0.86:1),transform:[...(Array.isArray(flat.transform)?flat.transform:[]),{scale}]}]}/>;
+  style={[Platform.OS==='android'&&surface?{elevation:pressed&&!disabled?1:4,shadowColor:'#183C32'}:undefined,base,Platform.OS==='web'?{cursor:disabled?'auto':'pointer',filter:!disabled&&hovered?'brightness(1.06)':'none',...(surface&&hovered&&!disabled?{boxShadow:pressed?'0 2px 5px rgba(24,60,50,0.16)':'0 6px 16px rgba(24,60,50,0.22)'}:{})}:undefined,{opacity:(typeof flat.opacity==='number'?flat.opacity:1)*(pressed&&!disabled?0.86:1),transform:[...(Array.isArray(flat.transform)?flat.transform:[]),{scale}]}]}/>;
 });
 export const GlassPressable=forwardRef<View,PressableProps>(function GlassPressable({style,children,onPress,...props},ref){
  const enabled=useGlass();
@@ -53,7 +56,7 @@ export const GlassPressable=forwardRef<View,PressableProps>(function GlassPressa
  // Put the touch target INSIDE the interactive material so UIKit sees the touches.
  const normal=typeof style==='function'?style({pressed:false}):style;
  const flat=StyleSheet.flatten(normal)||{};
- if(Platform.OS==='android')return <AndroidPressable ref={ref} {...props} onPress={onPress?press:undefined} style={style}>{children}</AndroidPressable>;
+ if(Platform.OS==='android'||Platform.OS==='web')return <FeedbackPressable ref={ref} {...props} onPress={onPress?press:undefined} style={style}>{children}</FeedbackPressable>;
  if(!enabled||!flat.borderRadius)return <Pressable ref={ref} {...props} onPress={onPress?press:undefined} style={style}>{children}</Pressable>;
  const {padding,paddingHorizontal,paddingVertical,paddingTop,paddingBottom,paddingLeft,paddingRight,alignItems,justifyContent,flexDirection,gap,...outer}=flat;
  const layout={padding,paddingHorizontal,paddingVertical,paddingTop,paddingBottom,paddingLeft,paddingRight,alignItems,justifyContent,flexDirection,gap};

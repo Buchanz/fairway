@@ -1,3 +1,8 @@
+import {SymbolView} from 'expo-symbols';
+import {MenuOverlay,type MenuAnchor} from '../components/MenuOverlay';
+import {PlayerIdentity} from '../components/PlayerIdentity';
+import {useFocusEffect} from 'expo-router';
+import {authClient} from '../auth/client';
 import {courseHoles} from '../data/hole-layouts';
 import {CoursePhoto} from '../components/CoursePhoto';
 import {coursePhotos} from '../data/course-photos';
@@ -5,8 +10,8 @@ import {listFriends,type Friend} from '../lib/friends';
 import {SearchField} from '../components/SearchField';
 import {useHideTabs} from '../components/GlassTabs';
 import {GlassInput as TextInput,GlassPressable as Pressable,GlassPanel} from '../components/Glass';
-import {useEffect,useRef,useState} from 'react';
-import {ScrollView,View,Text,StyleSheet,Platform,Alert,Linking,Modal,KeyboardAvoidingView,Keyboard} from 'react-native';
+import {useCallback,useEffect,useRef,useState} from 'react';
+import {Pressable as PlainPressable,ScrollView,View,Text,StyleSheet,Platform,Alert,Linking,Modal,KeyboardAvoidingView,Keyboard} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import * as Location from 'expo-location';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -25,18 +30,20 @@ function newRoundId(){return Date.now().toString()+Math.random().toString(36).sl
 export default function Play(){
  const {session,ready}=useAuth();
  if(!ready)return <SafeAreaView edges={['top','left','right']} style={s.screen}><Text>Opening your account…</Text></SafeAreaView>;
- return <PlaySetup key={session?.user.id||'guest'} userId={session?.user.id||null}/>;
+ return <PlaySetup key={session?.user.id||'guest'} userId={session?.user.id||null} accountName={session?.user.user_metadata.display_name||session?.user.user_metadata.username||'You'}/>;
 }
-function PlaySetup({userId}:{userId:string|null}){
+function PlaySetup({userId,accountName}:{userId:string|null;accountName:string}){
+ const {session}=useAuth();
  const roundCourses=courses;
  const [rounds,setRounds]=useState<Round[]>(()=>cachedCloudRounds(userId)||[]),[ready,setReady]=useState(false),[saveError,setSaveError]=useState('');
- const [active,setActive]=useState<string|null>(null),[courseId,setCourse]=useState('cedar-hill'),[count,setCount]=useState(1),[holes,setHoles]=useState(18),[names,setNames]=useState(['You','Player 2','Player 3','Player 4']),[hole,setHole]=useState(0);
+ const [active,setActive]=useState<string|null>(null),[courseId,setCourse]=useState('cedar-hill'),[count,setCount]=useState(1),[holes,setHoles]=useState(18),[names,setNames]=useState([accountName,'','','']),[hole,setHole]=useState(0);
  const [teeSelection,setTeeSelection]=useState<Record<string,string>>({});
  const [customTees,setCustomTees]=useState<Record<string,string>>({});
  const [friends,setFriends]=useState<Friend[]>([]),[playerIds,setPlayerIds]=useState<(string|null)[]>([userId,null,null,null]);
 
- const [panel,setPanel]=useState<'history'|'players'|null>(null),[query,setQuery]=useState('');
- useEffect(()=>{if(panel!=='players'||!userId)return;let alive=true;void listFriends(userId).then(rows=>{if(alive)setFriends(rows.filter(f=>f.accepted));}).catch(()=>{if(alive)setSaveError('Friends could not be loaded. Try opening Players again.');});return()=>{alive=false;};},[panel,userId]);
+ const [panel,setPanel]=useState<'history'|null>(null),[query,setQuery]=useState('');
+ useFocusEffect(useCallback(()=>{if(!userId)return;let alive=true;void listFriends(userId).then(rows=>{if(alive)setFriends(rows.filter(f=>f.accepted));}).catch(()=>{if(alive)setSaveError('Friends could not be loaded. Try adding the player again.');});return()=>{alive=false;};},[userId]));
+ useEffect(()=>{let alive=true;async function identify(){let name=accountName;if(userId&&authClient){const {data}=await authClient.from('player_profiles').select('username').eq('user_id',userId).maybeSingle();if(data?.username)name=data.username;}if(alive)setNames(old=>[name,...old.slice(1)]);}void identify();return()=>{alive=false;};},[userId,accountName]);
  const [searching,setSearching]=useState(false);
  const [position,setPosition]=useState<{latitude:number;longitude:number}|null>(null);
  const [locationMessage,setLocationMessage]=useState('Finding your nearest course…');
@@ -93,7 +100,7 @@ function PlaySetup({userId}:{userId:string|null}){
  function deleteRound(id:string){Alert.alert('Delete this round?', 'This removes its scores from this device.', [{text:'Cancel',style:'cancel'},{text:'Delete',style:'destructive',onPress:()=>update(rounds.filter(r=>r.id!==id))}]);}
  const selectedCourseId=roundCourses.some(c=>c.id===courseId)?courseId:roundCourses[0]?.id;
  const round=rounds.find(r=>r.id===active),course=courses.find(c=>c.id===(round?.courseId||selectedCourseId))||courses[0];
- function start(){if(!ready||!selectedCourseId||!courseConfirmed)return;const tee=teeForRound(selectedCourseId,teeSelection[selectedCourseId]||courseTees[selectedCourseId]?.[0]?.id);const r:Round={playerIds:playerIds.slice(0,count),teeId:tee?.id,teeName:tee?.name||customTees[selectedCourseId]?.trim()||undefined,id:newRoundId(),courseId:selectedCourseId,date:new Date().toISOString(),names:names.slice(0,count).map((n,i)=>n.trim()||`Player ${i+1}`),scores:Array.from({length:count},()=>Array(holes).fill(null)),finished:false};update([r,...rounds]);setActive(r.id);setHole(0);}
+ function start(){if(!ready||!selectedCourseId||!courseConfirmed)return;if(names.slice(1,count).some(n=>!n.trim())){Alert.alert('Add your players','Choose a username or enter a guest name for each player.');return;}const tee=teeForRound(selectedCourseId,teeSelection[selectedCourseId]||courseTees[selectedCourseId]?.[0]?.id);const r:Round={playerIds:playerIds.slice(0,count),teeId:tee?.id,teeName:tee?.name||customTees[selectedCourseId]?.trim()||undefined,id:newRoundId(),courseId:selectedCourseId,date:new Date().toISOString(),names:names.slice(0,count).map((n,i)=>n.trim()||`Player ${i+1}`),scores:Array.from({length:count},()=>Array(holes).fill(null)),finished:false};update([r,...rounds]);setActive(r.id);setHole(0);}
  function change(player:number,delta:number){if(!round)return;const next={...round,scores:round.scores.map((scores,i)=>i===player?scores.map((v,h)=>h===hole?delta===0?null:Math.min(30,Math.max(1,(v??(delta>0?0:2))+delta)):v):scores)};update(rounds.map(r=>r.id===round.id?next:r));}
  useHideTabs(!!round);
  if(round && Platform.OS!=='web') return <MobileRound round={round} course={course} hole={hole} onHole={setHole} onScore={change} onClose={()=>setActive(null)} onFinish={async()=>{if(finishing)return false;setFinishing(true);try{await update(endRound(rounds,round.id));return true;}catch{return false;}finally{setFinishing(false);}}} saving={finishing} saveError={saveError}/>;
@@ -128,20 +135,48 @@ function PlaySetup({userId}:{userId:string|null}){
     {tees.length?<View style={s.options}>{tees.map(tee=><Pressable key={tee.id} accessibilityRole="button" accessibilityLabel={`${tee.name} tees`} accessibilityState={{selected:selectedTee===tee.id}} onPress={()=>setTeeSelection(p=>({...p,[course.id]:tee.id}))} style={[s.teeButton,{backgroundColor:teeAppearance(tee.id).background},selectedTee!==tee.id&&{opacity:0.55}]}><Text style={[s.teeText,{color:teeAppearance(tee.id).text}]}>{tee.name}</Text></Pressable>)}</View>:<TextInput accessibilityLabel="Tee name or colour" placeholder="Tee name or colour (optional)" maxLength={40} value={customTees[course.id]||''} onChangeText={v=>setCustomTees(p=>({...p,[course.id]:v}))} style={[s.input,{width:240}]}/>}
 
    </View>
-   <View style={s.selectionGroup}><Pressable accessibilityRole="button" accessibilityLabel="Edit players and add friends" style={{minHeight:36,justifyContent:'center'}} onPress={()=>setPanel('players')}><Text style={s.heading}>Players <Text style={s.link}>· Edit / Add friends</Text></Text></Pressable><GlassPanel interactive style={[s.row,{backgroundColor:'#E8EEDD',borderRadius:26,padding:4,gap:16}]}><Pressable accessibilityRole="button" accessibilityLabel="Remove player" disabled={count===1} onPress={()=>setCount(n=>Math.max(1,n-1))} style={{width:40,height:40,alignItems:'center',justifyContent:'center',opacity:count===1?0.35:1}}><Text style={s.heading}>−</Text></Pressable><Text accessibilityLiveRegion="polite" style={s.heading}>{count}</Text><Pressable accessibilityRole="button" accessibilityLabel="Add player" disabled={count===4} onPress={()=>setCount(n=>Math.min(4,n+1))} style={{width:40,height:40,alignItems:'center',justifyContent:'center',opacity:count===4?0.35:1}}><Text style={s.heading}>＋</Text></Pressable></GlassPanel></View>
+   <View style={[s.row,{width:'100%'}]}><Text style={s.heading}>Players</Text><View style={{flexDirection:'row',alignItems:'center',gap:8}}><PlainPressable accessibilityRole="button" accessibilityLabel="Remove player" disabled={count===1} onPress={()=>setCount(n=>Math.max(1,n-1))} style={{width:44,height:44,alignItems:'center',justifyContent:'center',opacity:count===1?0.35:1}}><Text style={[s.heading,{fontSize:24}]}>−</Text></PlainPressable><Text accessibilityLiveRegion="polite" style={s.heading}>{count}</Text><PlainPressable accessibilityRole="button" accessibilityLabel="Add player" disabled={count===4} onPress={()=>setCount(n=>Math.min(4,n+1))} style={{width:44,height:44,alignItems:'center',justifyContent:'center',opacity:count===4?0.35:1}}><Text style={[s.heading,{fontSize:24}]}>＋</Text></PlainPressable></View></View>
+   {names.slice(0,count).map((name,i)=>i===0?<GlassPanel key={i} interactive style={{paddingHorizontal:18,paddingVertical:14,borderRadius:28,backgroundColor:'#E8EEDD'}}><PlayerIdentity name={session?.user.user_metadata.display_name||name} username={userId&&name!=='You'?name:undefined} avatarPath={session?.user.user_metadata.avatar_path}/></GlassPanel>:<PlayerRow key={`${i}:${playerIds[i]||'guest'}`} index={i} name={name} playerId={playerIds[i]} friends={friends.filter(f=>!playerIds.includes(f.id)||playerIds[i]===f.id)} onRemove={()=>{setNames(old=>[...old.filter((_,j)=>j!==i),''].slice(0,4));setPlayerIds(old=>[...old.filter((_,j)=>j!==i),null].slice(0,4));setCount(old=>Math.max(1,old-1));}} onChange={(next,id)=>{setNames(old=>old.map((v,j)=>j===i?next:v));setPlayerIds(old=>old.map((v,j)=>j===i?id:v));}}/>)}
    <View style={{flex:1,minHeight:4}}/>
    <Pressable accessibilityRole="button" disabled={starting||!ready||!selectedCourseId||!courseConfirmed} onPress={()=>void enterRound(start)} style={[s.primary,(!ready||!selectedCourseId||!courseConfirmed)&&{opacity:0.4}]}><Text style={s.white}>{starting?'Opening round…':!ready?'Opening saved rounds…':!courseConfirmed?'Select a course above':'Start Round'}</Text></Pressable>
   </ScrollView>
   
-  <Modal allowSwipeDismissal onDismiss={()=>setPanel(null)} visible={panel!==null} transparent={panel!=='history'} presentationStyle={panel==='history'?'pageSheet':'overFullScreen'} animationType="slide" onRequestClose={()=>setPanel(null)}>
-   <KeyboardAvoidingView behavior={Platform.OS==='ios'?'padding':undefined} style={[s.modal,panel==='history'&&{justifyContent:'flex-start',backgroundColor:'#f5f6f2'}]}>
-    {panel!=='history'&&<Pressable style={StyleSheet.absoluteFill} accessibilityRole="button" accessibilityLabel="Close panel" onPress={()=>setPanel(null)}/>}
-    <GlassPanel style={[s.sheet,{borderRadius:24},panel==='history'&&{flex:1,maxHeight:'100%',width:'100%'}]}><SafeAreaView style={{gap:14,flex:1}}><View style={s.row}><Pressable accessibilityRole="button" accessibilityLabel="Close sheet" onPress={()=>setPanel(null)} style={[s.close,{width:44,height:44,alignItems:'center'}]}><Text style={[s.link,{fontSize:26}]}>×</Text></Pressable><Text style={[s.heading,{flex:1,textAlign:'center'}]}>{panel==='history'?`${course.name} history`:'Your players'}</Text><View style={{width:44}}/></View>
+  <Modal allowSwipeDismissal onDismiss={()=>setPanel(null)} visible={panel!==null} presentationStyle="pageSheet" animationType="slide" onRequestClose={()=>setPanel(null)}>
+   <KeyboardAvoidingView behavior={Platform.OS==='ios'?'padding':undefined} style={[s.modal,{justifyContent:'flex-start',backgroundColor:'#f5f6f2'}]}>
+    <GlassPanel style={[s.sheet,{borderRadius:24},{flex:1,maxHeight:'100%',width:'100%'}]}><SafeAreaView style={{gap:14,flex:1}}><View style={s.row}><Pressable accessibilityRole="button" accessibilityLabel="Close sheet" onPress={()=>setPanel(null)} style={[s.close,{width:44,height:44,alignItems:'center'}]}><Text style={[s.link,{fontSize:26}]}>×</Text></Pressable><Text style={[s.heading,{flex:1,textAlign:'center'}]}>{`${course.name} history`}</Text><View style={{width:44}}/></View>
      {panel==='history'&&<ScrollView>{!history.length&&<Text style={s.muted}>No completed rounds at this course yet.</Text>}{!!history.length&&<Text style={s.muted}>Swipe left on a round to delete it.</Text>}{history.map(r=><SwipeRound key={r.id} onDelete={()=>deleteRound(r.id)}><Pressable accessibilityRole="button" style={s.result} onPress={()=>void enterRound(()=>{setPanel(null);setActive(r.id);setHole(0);})}><Text style={s.heading}>{new Date(r.date).toLocaleDateString()}</Text><Text style={s.muted}>{r.scores[0].length} holes{r.teeName?` · ${r.teeName}`:''}</Text><Text style={s.muted}>{r.names.map((n,i)=>`${n}: ${scoreTotal(r.scores[i]).total}`).join(' · ')}</Text></Pressable></SwipeRound>)}</ScrollView>}
-     {panel==='players'&&<ScrollView keyboardShouldPersistTaps="handled" keyboardDismissMode="on-drag"><View style={s.options}>{[1,2,3,4].map(n=><Chip key={n} label={String(n)} selected={count===n} onPress={()=>setCount(n)}/>)}</View>{names.slice(0,count).map((n,i)=><View key={i}><TextInput accessibilityLabel={`Player ${i+1} name`} value={n} maxLength={30} onChangeText={v=>{setNames(old=>old.map((x,j)=>i===j?v:x));if(i>0)setPlayerIds(old=>old.map((id,j)=>i===j?null:id));}} style={[s.input,{marginTop:12}]}/>{i>0&&<View style={s.options}>{friends.filter(f=>!playerIds.includes(f.id)||playerIds[i]===f.id).map(f=><Chip key={f.id} label={f.name} selected={playerIds[i]===f.id} onPress={()=>{setPlayerIds(old=>old.map((id,j)=>j===i?f.id:id));setNames(old=>old.map((name,j)=>j===i?f.name:name));}}/>)}</View>}</View>)}</ScrollView>}
+
     </SafeAreaView></GlassPanel>
    </KeyboardAvoidingView>
   </Modal>
  </SafeAreaView>;
+}
+function PlayerRow({index,name,playerId,friends,onChange,onRemove}:{index:number;name:string;playerId:string|null;friends:Friend[];onChange:(name:string,id:string|null)=>void;onRemove:()=>void}){
+ const [mode,setMode]=useState<'username'|'guest'>(playerId?'username':'guest');
+ const [search,setSearch]=useState('');
+ const trigger=useRef<View>(null);
+ const [anchor,setAnchor]=useState<MenuAnchor|null>(null),[open,setOpen]=useState(false);
+ const removing=useRef(false);
+ const close=useCallback(()=>setOpen(false),[]);
+ const exited=useCallback(()=>{setAnchor(null);if(removing.current)onRemove();},[onRemove]);
+ const selected=friends.find(f=>f.id===playerId);
+ const matches=friends.filter(f=>f.name.toLowerCase().includes(search.trim().replace(/^@/,'').toLowerCase()));
+ const icon=<SymbolView name={{ios:'ellipsis',android:'more_horiz',web:'more_horiz'}} size={23} tintColor="#183C32"/>;
+ if(playerId)return <View>
+  <GlassPanel style={{paddingHorizontal:18,paddingVertical:14,borderRadius:28,backgroundColor:'#E8EEDD',flexDirection:'row',alignItems:'center',gap:12}}>
+   <PlayerIdentity name={selected?.displayName||selected?.name||name} username={selected?.name||name} avatarPath={selected?.avatarPath}/>
+   <Pressable ref={trigger} accessibilityRole="button" accessibilityLabel={`Options for ${name}`} accessibilityState={{expanded:open}} onPress={()=>{Keyboard.dismiss();trigger.current?.measureInWindow((x,y,width,height)=>{setAnchor({x,y,width,height});setOpen(true);});}} style={{width:44,height:44,borderRadius:22,backgroundColor:'#E8EEDD',alignItems:'center',justifyContent:'center',opacity:anchor?0:1}}>{icon}</Pressable>
+  </GlassPanel>
+  {anchor&&<MenuOverlay open={open} anchor={anchor} onClose={close} onExited={exited} label="Player options" preferredWidth={260} headerContent={<View style={{width:44,height:44,alignItems:'center',justifyContent:'center'}}>{icon}</View>}>
+   <View style={{padding:12}}><Pressable accessibilityRole="button" onPress={()=>{removing.current=true;close();}} style={{padding:14,borderRadius:24,backgroundColor:'#E8EEDD',alignItems:'center'}}><Text style={{color:'#B83232',fontWeight:'600'}}>Remove from round</Text></Pressable></View>
+  </MenuOverlay>}
+ </View>;
+ return <GlassPanel style={{padding:12,borderRadius:24,backgroundColor:'#E8EEDD',gap:10}}>
+  <View style={s.row}>{selected?<PlayerIdentity name={selected.displayName||selected.name} username={selected.name} avatarPath={selected.avatarPath}/>:<Text style={s.heading}>Player {index+1}</Text>}<View style={s.options}>{(['username','guest'] as const).map(option=><Chip key={option} label={option==='username'?'Username':'Guest'} selected={mode===option} onPress={()=>{setMode(option);setSearch('');onChange('',null);}}/>)}</View></View>
+  {mode==='guest'?<TextInput accessibilityLabel={`Player ${index+1} guest name`} placeholder="Guest name" maxLength={30} value={name} onChangeText={value=>onChange(value,null)} style={[s.input,{borderRadius:24}]}/>:<>
+   <SearchField accessibilityLabel={`Player ${index+1} username`} placeholder="Search friend username" value={playerId?`@${name}`:search} onChangeText={value=>{setSearch(value);onChange('',null);}} autoCapitalize="none" autoCorrect={false}/>
+   {playerId?<Text style={s.muted}>Account linked</Text>:<>{matches.slice(0,5).map(friend=><Pressable key={friend.id} accessibilityLabel={`Add ${friend.name} to round`} onPress={()=>onChange(friend.name,friend.id)} style={{padding:12,borderRadius:20,backgroundColor:'#C5EB65'}}><PlayerIdentity name={friend.displayName||friend.name} username={friend.name} avatarPath={friend.avatarPath}/></Pressable>)}{!matches.length&&<Text style={s.muted}>No matching friends. Manage friends in Account to link their scorecard, or add them as a guest.</Text>}</>}
+  </>}
+ </GlassPanel>;
 }
 const s=StyleSheet.create({fixedHeader:{flexShrink:0,zIndex:30,backgroundColor:'#F5F6F2',width:'100%',maxWidth:600,alignSelf:'center',paddingHorizontal:20,paddingTop:8,paddingBottom:12,gap:8},photoText:{color:'#fff'},photoCopy:{backgroundColor:'#12231eb0',paddingHorizontal:10,paddingVertical:6,borderRadius:12,maxWidth:'100%'},searchResults:{position:'absolute',top:54,left:0,right:0,maxHeight:280,backgroundColor:'#E8EEDD',borderRadius:22,overflow:'hidden'},searchResultsContent:{padding:14,gap:10},resultShadow:{borderRadius:16,boxShadow:'0 3px 7px rgba(24,60,50,0.14)'},courseResult:{backgroundColor:'#fff',borderRadius:16,padding:8,flexDirection:'row',alignItems:'center',gap:12,minHeight:76},thumbnail:{width:64,height:60,borderRadius:10,flexShrink:0},resultCopy:{flex:1,gap:4,alignItems:'flex-start'},selectionGroup:{alignItems:'flex-start',gap:6},teeButton:{minHeight:44,paddingHorizontal:14,paddingVertical:8,borderRadius:24,borderWidth:2,borderColor:'#d5ddd1',justifyContent:'center'},teeText:{color:'#ffffff',fontWeight:'600',paddingHorizontal:5,paddingVertical:3},whiteTeeText:{color:'#000000'},screen:{flex:1,backgroundColor:'#F5F6F2'},page:{flexGrow:1,paddingHorizontal:20,paddingVertical:8,gap:8,maxWidth:600,width:'100%',alignSelf:'center'},row:{flexDirection:'row',alignItems:'center',justifyContent:'space-between',gap:8},brand:{fontSize:20,fontWeight:'700',color:colors.green},title:{fontSize:28,fontWeight:'700',color:colors.ink},heading:{fontSize:16,fontWeight:'600',color:colors.ink},courseName:{fontSize:24,fontWeight:'700',color:colors.ink},eyebrow:{fontSize:11,color:colors.green},muted:{fontSize:12,color:colors.muted,lineHeight:17},link:{color:colors.green,fontSize:14},options:{flexDirection:'row',flexWrap:'wrap',gap:8},search:{backgroundColor:'white',borderRadius:28,padding:14},card:{minHeight:176,paddingVertical:16,paddingHorizontal:20,gap:5,justifyContent:'space-between',backgroundColor:'#E8EEDD',borderRadius:24},history:{minHeight:36,justifyContent:'center'},input:{backgroundColor:'white',borderWidth:1,borderColor:'#dce3d9',borderRadius:12,padding:12,fontSize:16},playersButton:{minHeight:52,paddingHorizontal:16,paddingVertical:8,borderRadius:26,backgroundColor:colors.lime,borderWidth:1,borderColor:colors.green},playersLabel:{fontSize:15,fontWeight:'600',color:'#fff'},playerCount:{paddingHorizontal:4,paddingVertical:6},primary:{backgroundColor:colors.lime,padding:16,borderRadius:28,alignItems:'center',minHeight:52},white:{color:colors.ink,fontWeight:'600',fontSize:16},modal:{flex:1,justifyContent:'flex-end',backgroundColor:'#06110d88'},sheet:{backgroundColor:'#f5f6f2',borderTopLeftRadius:24,borderTopRightRadius:24,padding:20,gap:14,maxHeight:'85%',minHeight:280},close:{borderRadius:22,backgroundColor:'#ffffff',paddingHorizontal:12,minHeight:44,minWidth:44,justifyContent:'center'},result:{backgroundColor:'#ffffff',borderRadius:14,paddingHorizontal:12,marginVertical:4,paddingVertical:16,gap:5,borderBottomWidth:1,borderBottomColor:'#dce3d9'},error:{color:'#9b4824',fontSize:12}});

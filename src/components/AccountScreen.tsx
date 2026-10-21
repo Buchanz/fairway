@@ -1,8 +1,10 @@
+import {SymbolView} from 'expo-symbols';
+import {MenuOverlay,type MenuAnchor} from './MenuOverlay';
 import {usernamePattern,normalizeUsername,validNewPassword,passwordHint} from '../auth/validation';
 import {ProfileDashboard} from './ProfileDashboard';
 
 import {GlassPanel,GlassInput as TextInput,GlassPressable as Pressable} from './Glass';
-import {useEffect,useRef,useState} from 'react';
+import {useCallback,useEffect,useRef,useState} from 'react';
 import * as Linking from 'expo-linking';
 import {parseEmailLink} from '../auth/email-link';
 import {ScrollView,Text,StyleSheet,View,Platform,KeyboardAvoidingView,ActivityIndicator,Animated,Pressable as PlainPressable} from 'react-native';
@@ -21,7 +23,10 @@ export default function AccountScreen({embedded=false,onClose}:{embedded?:boolea
  const redirectTo=(Platform.OS!=='web'&&process.env.EXPO_PUBLIC_AUTH_REDIRECT_URL)||Linking.createURL('account');
  const handledLink=useRef<string|null>(null);
  const [showCode,setShowCode]=useState(false),[showPassword,setShowPassword]=useState(false);
+ const actionButton=useRef<View>(null);
+ const [actionAnchor,setActionAnchor]=useState<MenuAnchor|null>(null),[actionsOpen,setActionsOpen]=useState(false);
  const [mode,setMode]=useState<Mode>('login'),[email,setEmail]=useState(''),[password,setPassword]=useState(''),[name,setName]=useState(''),[code,setCode]=useState(''),[busy,setBusy]=useState(false),[message,setMessage]=useState(''),[confirmDelete,setConfirmDelete]=useState(false);
+ const closeActions=useCallback(()=>setActionsOpen(false),[]),exitActions=useCallback(()=>{setActionAnchor(null);setConfirmDelete(false);},[]);
  useEffect(()=>{
   void Promise.resolve().then(()=>{
   if(!link||!authClient||handledLink.current===link)return;
@@ -73,13 +78,13 @@ export default function AccountScreen({embedded=false,onClose}:{embedded?:boolea
   {Platform.OS==='web'&&!embedded&&<Link href="/" style={{padding:20,color:colors.green,fontWeight:'600'}}>← Home</Link>}
   <KeyboardAvoidingView style={{flex:1}} behavior={Platform.OS==='ios'?'padding':undefined}>
    {ready&&session&&mode!=='password'?<View style={s.signedIn}>
-    <Text style={s.pageTitle}>Account</Text>
+    <View style={{height:44,justifyContent:'center'}}><Text style={s.pageTitle}>Account</Text><Pressable ref={actionButton} accessibilityLabel="Account actions" accessibilityRole="button" onPress={()=>actionButton.current?.measureInWindow((x,y,width,height)=>{setActionAnchor({x,y,width,height});setActionsOpen(true);})} style={{position:'absolute',right:0,width:44,height:44,borderRadius:22,alignItems:'center',justifyContent:'center',backgroundColor:'#E8EEDD',opacity:actionAnchor?0:1}}><SymbolView name={{ios:'rectangle.portrait.and.arrow.right',android:'logout',web:'logout'}} size={22} tintColor="#B83232"/></Pressable></View>
     <ProfileDashboard key={session.user.id}/>
-    <View style={s.accountActions}>
-     <Pressable accessibilityRole="button" disabled={busy} onPress={()=>void signOut()} style={s.secondary}><Text style={s.link}>Sign out</Text></Pressable>
-     {confirmDelete?<GlassPanel style={s.card}><Text style={s.label}>Delete your account and all cloud-saved rounds permanently?</Text><Pressable disabled={busy} onPress={()=>void removeAccount()} style={s.secondary}><Text style={s.danger}>Delete my account</Text></Pressable><Pressable disabled={busy} onPress={()=>setConfirmDelete(false)} style={s.textButton}><Text style={s.link}>Cancel</Text></Pressable></GlassPanel>:<Pressable disabled={busy} onPress={()=>setConfirmDelete(true)} style={s.textButton}><Text style={s.danger}>Delete account</Text></Pressable>}
+    {actionAnchor&&<MenuOverlay open={actionsOpen} anchor={actionAnchor} onClose={closeActions} onExited={exitActions} preferredWidth={280} label="Account actions" headerContent={<View style={{width:44,height:44,alignItems:'center',justifyContent:'center'}}><SymbolView name={{ios:'rectangle.portrait.and.arrow.right',android:'logout',web:'logout'}} size={22} tintColor="#B83232"/></View>}><View style={s.accountActions}>
+     <Pressable accessibilityRole="button" disabled={busy} onPress={()=>void signOut()} style={s.accountAction}><Text style={s.link}>Sign out</Text></Pressable>
+     {confirmDelete?<GlassPanel style={s.card}><Text style={s.label}>Delete your account and all cloud-saved rounds permanently?</Text><Pressable disabled={busy} onPress={()=>void removeAccount()} style={s.accountAction}><Text style={s.danger}>Delete my account</Text></Pressable><Pressable disabled={busy} onPress={()=>setConfirmDelete(false)} style={s.accountAction}><Text style={s.link}>Cancel</Text></Pressable></GlassPanel>:<Pressable disabled={busy} onPress={()=>setConfirmDelete(true)} style={s.accountAction}><Text style={s.danger}>Delete account</Text></Pressable>}
      {!!(message||sessionError)&&<Text accessibilityRole="alert" style={s.notice}>{message||sessionError}</Text>}
-    </View>
+    </View></MenuOverlay>}
    </View>:
    <ScrollView keyboardShouldPersistTaps="handled" keyboardDismissMode="on-drag" contentContainerStyle={[s.content,!session&&s.authContent]}>
     {!ready?<View style={s.loading}><ActivityIndicator color={colors.green}/><Text style={s.subtitle}>Opening your account…</Text></View>:<>
@@ -110,7 +115,7 @@ export default function AccountScreen({embedded=false,onClose}:{embedded?:boolea
  </SafeAreaView>;
 }
 const s=StyleSheet.create({
- signedIn:{flex:1,minHeight:0,width:'100%',maxWidth:480,alignSelf:'center',paddingHorizontal:20,paddingTop:16,gap:12},accountActions:{flexShrink:0,gap:4,paddingTop:8,paddingBottom:8},
+ signedIn:{flex:1,minHeight:0,width:'100%',maxWidth:480,alignSelf:'center',paddingHorizontal:20,paddingTop:16,gap:12},accountAction:{height:48,borderRadius:24,paddingHorizontal:18,backgroundColor:'#E8EEDD',alignItems:'center',justifyContent:'center'},accountActions:{flexShrink:0,gap:12,paddingHorizontal:12,paddingTop:8,paddingBottom:12},
  page:{flex:1,backgroundColor:colors.paper},content:{paddingHorizontal:20,paddingTop:24,paddingBottom:40,flexGrow:1,gap:20,width:'100%',maxWidth:480,alignSelf:'center'},authContent:{justifyContent:'flex-start',paddingTop:48},
  loading:{alignItems:'center',gap:16},pageTitle:{fontSize:16,fontWeight:'600',textAlign:'center',color:colors.ink},brand:{alignItems:'center',gap:4,marginBottom:8},logo:{fontSize:44,lineHeight:56,paddingHorizontal:5,paddingTop:2,fontWeight:'800',letterSpacing:-2,color:colors.ink},tagline:{fontSize:13,color:colors.muted},
  card:{padding:24,borderRadius:28,backgroundColor:'#ffffff',gap:20,boxShadow:'0 8px 30px rgba(24,60,50,0.07)'},title:{fontSize:26,fontWeight:'700',letterSpacing:-0.6,color:colors.ink},subtitle:{fontSize:14,lineHeight:21,color:colors.muted},

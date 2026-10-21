@@ -1,0 +1,25 @@
+const {PGlite}=await import(process.env.PGLITE_MODULE||'@electric-sql/pglite');
+import fs from 'node:fs';
+import assert from 'node:assert/strict';
+const db=new PGlite();
+await db.exec(`create role anon; create role authenticated; create schema auth; create table auth.users(id uuid primary key,raw_user_meta_data jsonb default '{}'::jsonb);create function auth.uid() returns uuid language sql stable as $$select nullif(current_setting('app.uid',true),'')::uuid$$;`);
+for(const f of ['202610100001_rounds.sql','202610140001_friends.sql','202610180001_round_groups.sql','202610190001_live_round_roster.sql'])await db.exec(fs.readFileSync('supabase/migrations/'+f,'utf8'));
+const a='11111111-1111-4111-8111-111111111111',b='22222222-2222-4222-8222-222222222222',c='33333333-3333-4333-8333-333333333333';
+await db.query(`insert into auth.users(id) values($1),($2),($3)`,[a,b,c]);
+await db.query(`insert into public.friendships(sender,recipient,status) values($1,$2,'accepted')`,[a,b]);
+const r={id:'live',courseId:'cedar-hill',date:new Date().toISOString(),names:['A','B','Guest'],playerIds:[a,b,null],scores:[Array(9).fill(4),Array(9).fill(5),Array(9).fill(6)],finished:false};
+await db.query(`insert into public.rounds(user_id,id,data) values($1,'live',$2)`,[a,JSON.stringify(r)]);
+const as=async id=>db.query(`select set_config('app.uid',$1,false)`,[id]);
+await as(b);assert.equal((await db.query('select public.my_live_round() as live')).rows[0].live,null);
+await assert.rejects(db.query(`select public.live_round_ping('live',0)`),/not active/);
+await as(a);await assert.rejects(db.query(`select public.live_round_ping('live',18)`),/Invalid hole/);await db.query(`select public.live_round_ping('live',2)`);
+await as(c);assert.equal((await db.query('select public.my_live_round() as live')).rows[0].live,null);await assert.rejects(db.query(`select public.live_round_flip($1,'live',true)`,[a]),/Not a player/);
+await as(b);const shared=(await db.query('select public.my_live_round() as live')).rows[0].live;assert.equal(shared.hole,2);assert.deepEqual(shared.round,r);await assert.rejects(db.query(`select public.live_round_flip($1,'live',true)`,[a]),/scorekeeper/);
+await as(a);let sawGuest=false;
+for(let i=0;i<60;i++){await db.exec(`update public.live_round_sessions set flip_result=null`);const result=(await db.query(`select public.live_round_flip($1,'live',true) as result`,[a])).rows[0].result;assert.equal(result.name,r.names[result.playerIndex]);sawGuest ||= result.playerIndex===2;await as(b);assert.deepEqual((await db.query(`select public.live_round_flip($1,'live') as result`,[a])).rows[0].result,result);await as(a);}
+assert.ok(sawGuest,'guest participates in tee flip');
+await db.exec(`update public.live_round_sessions set seen_at=now()-interval '2 minutes'`);await as(b);assert.equal((await db.query('select public.my_live_round() as live')).rows[0].live,null);
+await as(a);await db.query(`update public.rounds set data=$1 where user_id=$2 and id='live'`,[JSON.stringify({...r,finished:true}),a]);
+const saved=await db.query(`select data from public.rounds where user_id=$1`,[b]);assert.equal(saved.rows.length,1);assert.deepEqual(saved.rows[0].data.scores,[Array(9).fill(5)]);
+await as(b);assert.equal((await db.query('select public.my_live_round() as live')).rows[0].live,null);
+console.log('PASS: roster authorization, no stale rounds, synced hole/course/scores, guests in flips, same result on both accounts, completed score copy without joining');await db.close();

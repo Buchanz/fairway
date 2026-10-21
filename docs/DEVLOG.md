@@ -361,3 +361,8 @@ Added photo headers with course names over a blurred dark strip for four courses
 - Confirmed public Auth restrictions. Full authenticated two-user acceptance remains pending.
 - Found Olympic View HTTP 502, missing production EAS configuration, 31 dependency advisories and the existing Ridge mapping gap. Updated CAPSTONE-READINESS.md with honest gates and device tests.
 - Submitted current iOS preview 30874353-24e6-4f19-84eb-366e7bc082e8 so the latest layout changes can be tested.
+
+## October 18 — live roster and release audit
+- Replaced separate tee-flip joining with the scorecard roster, including guests. Added foreground detection of a friend’s live round and host-controlled hole/score syncing. Applied the tested Supabase migration and verified all three RPCs and the session table.
+- Local PostgreSQL tests checked unauthorized access, stale-session exclusion, shared flip results, guest eligibility and completed-score copying. All 83 unit tests passed; typecheck/lint passed after the white Finish Hole label change. Physical two-device acceptance is still pending.
+- Updated capstone readiness and store listing draft; instructor approval for PostgreSQL confirmed by student. Public contact supplied; Google Play account remains outstanding. No production store submission has been made.

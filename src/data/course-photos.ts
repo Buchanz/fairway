@@ -2,6 +2,7 @@ import type {ImageSourcePropType} from 'react-native';
 // Development references from official course pages. Replace with licensed,
 // hosted assets before store/public release; no generic photo impersonates a course.
 export const coursePhotos:Record<string,{image:ImageSourcePropType;source:string;contentAspectRatio?:number}>={
+ 'olympic-view':{image:require('../../assets/course-photos/olympic-view.jpg'),source:'https://olympicviewgolf.com/golf_course'},
  'highland-pacific':{image:require('../../assets/course-photos/highland-pacific.jpg'),source:'https://www.highlandpacificgolf.com/'},
  'duncan-meadows':{image:require('../../assets/course-photos/duncan-meadows.jpg'),source:'https://www.duncanmeadows.com/'},
  'cordova-bay':{image:require('../../assets/course-photos/cordova-bay.jpg'),source:'https://www.cordovabaygolf.com/golf/'},

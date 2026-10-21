@@ -1,7 +1,8 @@
+import {FriendsPanel} from './FriendsPanel';
 import {avatarUrl,cachedAvatar,invalidateAvatar} from '../lib/avatar-cache';
 import {normalizeUsername,usernamePattern} from '../auth/validation';
 import {useCallback,useState} from 'react';
-import {Image,Text,View,StyleSheet,ScrollView} from 'react-native';
+import {Image,Text,View,StyleSheet,ScrollView,Modal,KeyboardAvoidingView,Platform} from 'react-native';
 import {useFocusEffect} from 'expo-router';
 import {SymbolView} from 'expo-symbols';
 import * as ImagePicker from 'expo-image-picker';
@@ -15,6 +16,9 @@ import {courses} from '../data/courses';
 
 export function ProfileDashboard(){
  const {session}=useAuth(),user=session?.user;
+ const [friendsOpen,setFriendsOpen]=useState(false),[requestCount,setRequestCount]=useState(0);
+ const refreshRequests=useCallback(async()=>{if(!user||!authClient)return;const {count,error}=await authClient.from('friendships').select('id',{count:'exact',head:true}).eq('recipient',user.id).eq('status','pending');if(!error)setRequestCount(count||0);},[user]);
+ useFocusEffect(useCallback(()=>{void refreshRequests();const timer=setInterval(()=>void refreshRequests(),30000);return()=>clearInterval(timer);},[refreshRequests]));
  const [username,setUsername]=useState(''),[savedUsername,setSavedUsername]=useState('');
  const [favorites,setFavorites]=useState<string[]>([]),[photo,setPhoto]=useState<string|null>(()=>cachedAvatar(user?.user_metadata.avatar_path)),[message,setMessage]=useState(''),[busy,setBusy]=useState(false),[email,setEmail]=useState(''),[editEmail,setEditEmail]=useState(false),[favoriteQuery,setFavoriteQuery]=useState(''),[editProfile,setEditProfile]=useState(false),[displayName,setDisplayName]=useState('');
  useFocusEffect(useCallback(()=>{let alive=true;
@@ -48,7 +52,7 @@ export function ProfileDashboard(){
  return <View style={{flex:1,minHeight:0,gap:12}}>
   <View style={s.profile}>
    <View style={{width:92,height:92,marginBottom:4}}>
-    <GlassPressable accessibilityRole="button" accessibilityLabel="Upload profile photo" disabled={busy} onPress={()=>void uploadPhoto()} style={s.avatar}>{photo?<Image source={{uri:photo}} style={s.photo}/>:<SymbolView name="person.crop.circle.fill" size={72} tintColor="#557568"/>}</GlassPressable>
+    <GlassPressable accessibilityRole="button" accessibilityLabel="Upload profile photo" disabled={busy} onPress={()=>void uploadPhoto()} style={s.avatar}>{photo?<Image source={{uri:photo}} style={s.photo}/>:<SymbolView name={{ios:'person.crop.circle.fill',android:'account_circle',web:'account_circle'}} size={72} tintColor="#557568"/>}</GlassPressable>
     <View style={{position:'absolute',right:-3,bottom:-3}}><GlassPressable accessibilityRole="button" accessibilityLabel="Edit profile photo, name, email and username" accessibilityState={{expanded:editProfile}} disabled={busy} hitSlop={8} onPress={()=>{setEditProfile(v=>!v);setEditEmail(false);}} style={s.editCircle}><SymbolView name="pencil" size={14} tintColor="#183C32" fallback={<Text>✎</Text>}/></GlassPressable></View>
    </View>
    <View style={s.identity}><Text style={[s.title,{textAlign:'center'}]}>{displayName||'Your Profile'}</Text><Text style={[s.muted,{textAlign:'center'}]}>{user?.email||'Guest golfer'}</Text></View>
@@ -58,6 +62,8 @@ export function ProfileDashboard(){
    {user&&<GlassPressable accessibilityRole="button" onPress={()=>setEditEmail(v=>!v)}><Text style={s.link}>Edit email address</Text></GlassPressable>}
    {editEmail&&<><GlassInput accessibilityLabel="New email address" placeholder="New email address" value={email} onChangeText={setEmail} autoCapitalize="none" keyboardType="email-address" style={s.input}/><GlassPressable disabled={busy} onPress={()=>void changeEmail()} style={s.button}><Text style={s.white}>Send confirmation</Text></GlassPressable></>}
   </GlassPanel>}
+  <GlassPressable accessibilityRole="button" accessibilityLabel={`Friends${requestCount?`, ${requestCount} pending requests`:''}`} onPress={()=>setFriendsOpen(true)} style={[s.card,{flexDirection:'row',alignItems:'center',gap:12}]}><SymbolView name={{ios:'person.2',android:'group',web:'group'}} size={24} tintColor="#183C32"/><Text style={[s.heading,{flex:1}]}>Friends</Text>{requestCount>0&&<View style={{flexDirection:'row',alignItems:'center',gap:4,backgroundColor:'#B83232',paddingHorizontal:8,paddingVertical:5,borderRadius:14}}><SymbolView name={{ios:'bell.fill',android:'notifications',web:'notifications'}} size={15} tintColor="white"/><Text style={{color:'white',fontWeight:'600'}}>{requestCount}</Text></View>}<SymbolView name={{ios:'chevron.right',android:'chevron_right',web:'chevron_right'}} size={18} tintColor="#557568"/></GlassPressable>
+  <Modal visible={friendsOpen} presentationStyle="pageSheet" animationType="slide" allowSwipeDismissal onDismiss={()=>{setFriendsOpen(false);void refreshRequests();}} onRequestClose={()=>{setFriendsOpen(false);void refreshRequests();}}><KeyboardAvoidingView style={{flex:1,backgroundColor:'#F5F6F2',paddingTop:24}} behavior={Platform.OS==='ios'?'padding':undefined}><View style={{flexDirection:'row',alignItems:'center',paddingHorizontal:20,paddingBottom:12}}><GlassPressable accessibilityLabel="Close friends" onPress={()=>{setFriendsOpen(false);void refreshRequests();}} style={{width:44,height:44,borderRadius:22,backgroundColor:'#E8EEDD',justifyContent:'center',alignItems:'center'}}><Text style={{fontSize:26,color:'#183C32'}}>×</Text></GlassPressable><Text style={[s.heading,{flex:1,textAlign:'center'}]}>Friends & Requests</Text><View style={{width:44}}/></View><ScrollView keyboardShouldPersistTaps="handled" keyboardDismissMode="on-drag" contentContainerStyle={{padding:20,paddingBottom:40}}>{friendsOpen&&<FriendsPanel/>}</ScrollView></KeyboardAvoidingView></Modal>
   <View style={{gap:12}}><Text style={s.heading}>Favourite Courses</Text><SearchField placeholder="Search Courses" accessibilityLabel="Search favourite courses or add a course" value={favoriteQuery} onChangeText={setFavoriteQuery} autoCorrect={false}/>
    {courses.filter(c=>favoriteQuery.trim()?`${c.name} ${c.municipality}`.toLowerCase().includes(favoriteQuery.trim().toLowerCase()):favorites.includes(c.id)).map(c=><View key={c.id} style={s.favorite}><GlassPanel interactive style={{width:76,height:76,padding:5,borderRadius:20,backgroundColor:'#E8EEDD'}}><CoursePhoto courseId={c.id} style={{width:66,height:66,borderRadius:15}}/></GlassPanel><Text style={{flex:1,color:'#183C32',fontWeight:'600'}}>{c.name}</Text><GlassPressable accessibilityRole="button" accessibilityLabel={`${favorites.includes(c.id)?'Remove':'Add'} ${c.name} ${favorites.includes(c.id)?'from':'to'} favourites`} accessibilityState={{selected:favorites.includes(c.id)}} disabled={busy} onPress={()=>void toggleFavorite(c.id)} style={{width:44,height:44,borderRadius:22,backgroundColor:'#E8EEDD',alignItems:'center',justifyContent:'center'}}><SymbolView name={{ios:favorites.includes(c.id)?'star.fill':'star',android:favorites.includes(c.id)?'star':'star_border',web:favorites.includes(c.id)?'star':'star_border'}} tintColor="#557568" size={22} fallback={<Text>{favorites.includes(c.id)?'★':'☆'}</Text>}/></GlassPressable></View>)}
    {!favoriteQuery.trim()&&!favorites.length&&<Text style={s.muted}>Search for a course and tap its star to add a favourite.</Text>}
