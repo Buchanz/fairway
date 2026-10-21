@@ -11,7 +11,7 @@ export default function Support(){
     <GlassPanel style={s.panel}>
       <Text style={s.heading}>Need help?</Text>
       <Text style={s.body}>For account, privacy, tee-time or rangefinder questions, contact us and include the device model, app version and a short description of what happened. Please do not send your password.</Text>
-      <Pressable accessibilityRole="link" onPress={()=>void Linking.openURL('mailto:tyler.buchanan.a@gmail.com?subject=Fairway%20support')} style={s.button}><Text style={s.buttonText}>Email Fairway support</Text></Pressable>
+      <Pressable accessibilityRole="link" onPress={()=>void Linking.openURL('mailto:info@fairwaygps.com?subject=Fairway%20support')} style={s.button}><Text style={s.buttonText}>Email Fairway support</Text></Pressable>
       <Text style={s.heading}>Common fixes</Text>
       <Text style={s.body}>If tee times are slow, refresh once and allow the hosted service time to wake. If GPS is unavailable, enable Location Services and allow Fairway while using the app. Booking is completed on the course&apos;s official website.</Text>
     </GlassPanel>

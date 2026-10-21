@@ -12,7 +12,7 @@ export default function DeleteAccount(){
       <Text style={s.heading}>From the app</Text>
       <Text style={s.body}>Sign in, open Account, open the menu in the top-right corner, choose Delete account, and confirm. This permanently removes your Fairway account and cloud data, including your profile, avatar, favourites, friendships and account-owned rounds.</Text>
       <Text style={s.heading}>If you cannot sign in</Text>
-      <Text style={s.body}>Email tyler.buchanan.a@gmail.com from the address on the account and request deletion. We may ask you to verify ownership before processing the request.</Text>
+      <Text style={s.body}>Email info@fairwaygps.com from the address on the account and request deletion. We may ask you to verify ownership before processing the request.</Text>
       <Text style={s.heading}>Device-only data</Text>
       <Text style={s.body}>Guest rounds and local caches are stored on the device and are not imported into an account. Remove them from the app where available, or uninstall Fairway to clear device-only data.</Text>
     </GlassPanel>
