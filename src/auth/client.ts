@@ -1,10 +1,9 @@
 import {createClient,processLock} from '@supabase/supabase-js';
-import {Platform} from 'react-native';
-import * as SecureStore from 'expo-secure-store';
 const url=process.env.EXPO_PUBLIC_SUPABASE_URL;
 const key=process.env.EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
-// Native tokens stay in Keychain/Keystore; web sessions persist in browser storage.
+// Require an explicit sign-in each time the app starts. A session created after
+// sign-in still remains available in memory for the current app session, but a
+// previous user's token is never restored automatically on a shared device.
 export const authClient=url&&key?createClient(url,key,{auth:{
-  storage:Platform.OS==='web'?undefined:{getItem:SecureStore.getItemAsync,setItem:SecureStore.setItemAsync,removeItem:SecureStore.deleteItemAsync},
-  persistSession:true,autoRefreshToken:true,detectSessionInUrl:false,lock:processLock,
+  persistSession:false,autoRefreshToken:true,detectSessionInUrl:false,lock:processLock,
 }}):null;

@@ -11,9 +11,12 @@ app.disable('x-powered-by');
 app.get('/api/health',(_req,res)=>res.set('Cache-Control','no-store').json({status:'ok',service:'fairway-api'}));
 const cache=new Map(),pending=new Map();
 const snapshot=createMarketSnapshot();
-void snapshot.refresh();
+// Warm all provider adapters before the first mobile request. Without this,
+// a cold server could return an empty snapshot and make the app display an
+// empty state until its next polling interval.
+const initialSnapshot= snapshot.refresh();
 setInterval(()=>void snapshot.refresh(),30000).unref();
-app.get('/api/availability-snapshot',(_req,res)=>{res.set('Cache-Control','no-store');res.json(snapshot.read());});
+app.get('/api/availability-snapshot',async(_req,res)=>{await initialSnapshot;res.set('Cache-Control','no-store');res.json(snapshot.read());});
 app.get('/',async(_req,res)=>{
  try{
   const html=await readFile(fileURLToPath(new URL('../dist/index.html',import.meta.url)),'utf8');

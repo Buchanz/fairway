@@ -63,6 +63,7 @@ export default function Explore(){
   if(Object.keys(cached).length||Platform.OS!=='web'||typeof document==='undefined')return cached;
   try{return decodeInventory(JSON.parse(document.getElementById('fairway-availability')?.textContent||'{}'));}catch{return {};}
  });
+ const [availabilityReady,setAvailabilityReady]=useState(()=>Object.keys(inventory).length>0);
  useEffect(()=>{let active=true;void restoreAvailabilityCache().then(cached=>{if(active)setInventory(current=>Object.keys(current).length?current:cached);});return()=>{active=false;};},[]);
  const [refreshing,setRefreshing]=useState(false);
  const [spin]=useState(()=>new Animated.Value(0));
@@ -80,15 +81,20 @@ export default function Explore(){
   } finally {setRefreshing(false);Animated.timing(fade,{toValue:1,duration:300,useNativeDriver:true}).start();}
  }
 
+ const refreshPending=useRef(false);
  const refresh=useCallback(async(signal?:AbortSignal)=>{
+  if(refreshPending.current)return;
+  refreshPending.current=true;
   try{
-   const base=Platform.OS==='web'?'':process.env.EXPO_PUBLIC_API_URL||null;
+   // Keep production builds functional if an EAS environment variable was
+   // omitted; this is a public read-only endpoint and can still be overridden.
+   const base=Platform.OS==='web'?'':process.env.EXPO_PUBLIC_API_URL||'https://fairway-bcsq.onrender.com';
    if(base===null)throw new Error();
-   const response=await fetch(`${base}/api/availability-snapshot`,{signal:signal?AbortSignal.any([signal,AbortSignal.timeout(10000)]):AbortSignal.timeout(10000)});
+   const response=await fetch(`${base}/api/availability-snapshot`,{signal:signal?AbortSignal.any([signal,AbortSignal.timeout(90000)]):AbortSignal.timeout(90000)});
    if(!response.ok)throw new Error();
    const next=decodeInventory(await response.json());
    if(!signal?.aborted){setInventory(next);saveAvailabilityCache(next);setClock(Date.now());setError('');}
-  }catch{if(!signal?.aborted)setError('Live updates are unavailable. Recent confirmed times remain visible briefly.');}
+  }catch{if(!signal?.aborted)setError('Tee times are still being refreshed. Tap reload to try again.');}finally{if(!signal?.aborted)setAvailabilityReady(true);refreshPending.current=false;}
  },[]);
  useEffect(()=>{const controller=new AbortController();const start=setTimeout(()=>void refresh(controller.signal),0);const timer=setInterval(()=>void refresh(controller.signal),30000);return()=>{controller.abort();clearTimeout(start);clearInterval(timer);};},[refresh]);
  useEffect(()=>{const timer=setInterval(()=>setClock(Date.now()),15000);return()=>clearInterval(timer);},[]);
@@ -159,7 +165,7 @@ export default function Explore(){
    {olympicRestricted&&<Text style={s.notice}>Olympic View has times for larger groups, but its booking page currently does not offer those times for one player.</Text>}
    {!!error&&<Text accessibilityLiveRegion="polite" style={s.notice}>{error}</Text>}
    <Animated.View onLayout={event=>{courseGroupTop.current=event.nativeEvent.layout.y;}} style={{opacity:fade,gap:26,paddingHorizontal:8,marginHorizontal:-8,paddingVertical:8}}>{rows.map(course=><View key={course.id} onLayout={event=>{coursePositions.current[course.id]=event.nativeEvent.layout.y;}}><CourseCarousel key={`${course.id}-${players}-${holes}-${chosenDate}-${time}-${maxPrice}`} course={course} slots={course.slots} players={players} now={clock} onSelect={slot=>setSelection({course,slot,players})}/></View>)}</Animated.View>
-   {!rows.length&&<GlassPanel style={s.empty}><Text style={s.emptyTitle}>{hasFreshData?'No rounds match just yet.':'Availability is temporarily unavailable.'}</Text><Text style={s.emptyText}>{hasFreshData?'Try fewer players, a different round length or broader filters.':'Please try again shortly. We only show recently confirmed times.'}</Text><Pressable accessibilityRole="button" onPress={()=>{setChosenDate(null);setTime('any');setMaxPrice(null);setRadius(null);setQuery('');toggle('players');}} style={s.smallButton}><Text style={s.link}>Adjust your search →</Text></Pressable></GlassPanel>}
+   {!rows.length&&<GlassPanel style={s.empty}><Text style={s.emptyTitle}>{!availabilityReady?'Loading tee times…':hasFreshData?'No rounds match just yet.':'Tee times are being refreshed.'}</Text><Text style={s.emptyText}>{!availabilityReady?'Checking connected courses now.':hasFreshData?'Try fewer players, a different round length or broader filters.':'Tap reload to check the connected courses again.'}</Text><Pressable accessibilityRole="button" onPress={()=>{if(!availabilityReady)return;setChosenDate(null);setTime('any');setMaxPrice(null);setRadius(null);setQuery('');toggle('players');}} style={[s.smallButton,!availabilityReady&&{opacity:.45}]}><Text style={s.link}>{hasFreshData?'Adjust your search →':'Reload tee times →'}</Text></Pressable></GlassPanel>}
    <View style={s.footer}><Link href="/account?view=profile" style={s.link}>Your account</Link><Pressable accessibilityRole="button" ref={node=>{menuButtons.current.coverage=node;}} accessibilityLabel="View course coverage" onPress={()=>toggle('coverage')} style={s.coverage}><View style={s.dot}/><Text style={s.coverageText}>Course coverage</Text></Pressable><Text style={s.fine}>Availability updates automatically. Final price and reservation are confirmed on the booking website.</Text></View>
   </Animated.ScrollView>
   <BottomFade/>
