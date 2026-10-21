@@ -10,7 +10,7 @@ More golf. Less searching.
 
 Browse available tee times from connected courses, compare dates and group sizes, and continue to the course's booking provider to reserve your round.
 
-On the course, use satellite maps and your device's location to estimate distances. Track strokes for up to four players, choose your tees, and save completed rounds to your account. Add friends by username and join a shared round. When linked players are together with the app open and location enabled, Flip a Tee randomly chooses who goes first.
+On the course, use satellite maps and your device's location to estimate distances. Track strokes for up to four players, choose your tees, and save completed rounds to your account. Add friends by username and include them in a round. Flip a Tee randomly chooses who goes first from the round’s player list, including guests.
 
 Course availability and mapped-hole coverage vary. Fairway currently focuses on supported British Columbia courses. GPS distances are estimates; individual pin positions are not live. Booking is completed with the external provider, which controls availability and final prices.
 
@@ -19,14 +19,14 @@ Course availability and mapped-hole coverage vary. Fairway currently focuses on 
 - Supply a dedicated reviewer username/email and password through the store's private review fields, never this repository.
 - Play: search for Mount Douglas, select the course, tees and holes, then Start Round. GPS denial must leave map preview usable.
 - Enter a score for every hole; Finish & Save Round records completed history. Incomplete rounds may be discarded.
-- Shared rounds require accepted friends and opt-in group joining. Tee flip requires two active accounts within 200m; provide a short demonstration recording for reviewers.
+- Shared rounds require accepted friends added to the scorecard. With the updated app open, added friends enter the live round automatically. The scorekeeper updates scores and hole progression. Tee flip includes the roster without a separate join or location requirement. Verify this on two devices before submission.
 - Account deletion is available from Account → Delete account.
 
 ## Required release assets and information
-- Replace default Expo app icons with approved Fairway artwork.
+- Fairway app icons are now included in `assets/icon.png` and the Android adaptive icon files; capture the final store screenshots using the current build.
 - Capture current iPhone and Android screenshots; capture iPad screenshots if tablet support remains enabled.
-- Stable support URL, privacy-policy URL and external account-deletion page.
-- Owner-selected public support email and legal privacy contact.
+- Stable support URL, privacy-policy URL and external account-deletion page: `https://fairway-bcsq.onrender.com/support`, `/privacy` and `/delete-account`.
+- Public support/privacy email: tyler.buchanan.a@gmail.com (approved October 18).
 - Actual data-safety answers after auditing SDK/network behavior and provider retention.
 - Stable backend, email delivery and all account acceptance checks must pass before submission.
 

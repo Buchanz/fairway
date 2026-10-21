@@ -49,7 +49,7 @@ For browser UI development, use `npm run web` with an appropriate same-origin AP
 - SecureStore for native sessions; AsyncStorage for guest scores and caches.
 - Node's test runner, TypeScript and ESLint for automated checks.
 
-The database is PostgreSQL through Supabase, not MongoDB. Confirm with the instructor whether PostgreSQL is an acceptable substitution for the technology named in the brief.
+The database is PostgreSQL through Supabase. The student confirmed instructor approval for this database choice on October 18, 2026.
 
 ## Testing and Debugging
 ```sh
@@ -64,7 +64,7 @@ Tests cover parsing, capacity restrictions, booking windows, date rollover, pagi
 ## Security and Deployment
 Keep provider credentials server-side. `.env` files and signing credentials are ignored; `.env.example` contains placeholders only. `EXPO_PUBLIC_*` values are bundled into clients and must never contain secrets. Native map keys require platform restrictions even when supplied through environment configuration.
 
-A temporary desktop tunnel is a development preview, not the final deployment. Production needs an always-on backend, HTTPS, monitoring, restricted keys and a stable app URL. Source: https://github.com/Buchanz/fairway. Permanent deployment is pending.
+A temporary desktop tunnel is a development preview. The current web/API deployment is `https://fairway-bcsq.onrender.com` on Render Free; it provides HTTPS and a stable URL but may sleep when idle. A paid always-on service, monitoring and restricted production keys remain release improvements. Source: https://github.com/Buchanz/fairway.
 
 ## Future Improvements
 - Verified course geometry, green distances and on-course accuracy validation.
