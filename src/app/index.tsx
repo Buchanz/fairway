@@ -20,6 +20,7 @@ import {nearbyCourses} from '../lib/geo';
 import {decodeInventory,filterCourse,type Inventory,type SearchFilters} from '../lib/search';
 import {WebFooter} from '../components/WebFooter';
 import {CourseGridCard} from '../components/CourseGridCard';
+import {WebInfoSheet} from '../components/WebInfoSheet';
 
 type Panel='players'|'holes'|'calendar'|'filters'|'coverage'|null;
 export default function Explore(){
@@ -41,6 +42,7 @@ export default function Explore(){
  const [locationMessage,setLocationMessage]=useState(''),[locating,setLocating]=useState(false);
  const [requestOpen,setRequestOpen]=useState(false),[requestName,setRequestName]=useState(''),[requestCity,setRequestCity]=useState(''),[requestNotes,setRequestNotes]=useState('');
  const [requestState,setRequestState]=useState<'idle'|'sending'|'sent'|'error'>('idle');
+ const [webSheet,setWebSheet]=useState<'privacy'|'support'|null>(null);
  const locationRequest=useRef(0);
  // Ask on mobile for nearest-first results; web can enable location through Filters.
  useEffect(()=>{
@@ -198,7 +200,7 @@ export default function Explore(){
     </GlassPanel>}
    </View>}
    {!rows.length&&<GlassPanel style={s.empty}><Text style={s.emptyTitle}>{!availabilityReady?'Loading tee times…':hasFreshData?'No rounds match just yet.':'Tee times are being refreshed.'}</Text><Text style={s.emptyText}>{!availabilityReady?'Checking connected courses now.':hasFreshData?'Try fewer players, a different round length or broader filters.':'Tap reload to check the connected courses again.'}</Text><Pressable accessibilityRole="button" onPress={()=>{if(!availabilityReady)return;setChosenDate(null);setTime('any');setMaxPrice(null);setRadius(null);setQuery('');toggle('players');}} style={[s.smallButton,!availabilityReady&&{opacity:.45}]}><Text style={s.link}>{hasFreshData?'Adjust your search →':'Reload tee times →'}</Text></Pressable></GlassPanel>}
-   <WebFooter/>
+   <WebFooter onPrivacy={()=>setWebSheet('privacy')} onSupport={()=>setWebSheet('support')}/>
   </Animated.ScrollView>
   <BottomFade/>
   {rows.length>0&&scrollSize.content>scrollSize.viewport+8&&!atBottom&&<View pointerEvents="box-none" style={{position:'absolute',bottom:Platform.OS==='web'?16:16,left:0,right:0,alignItems:'center',zIndex:25}}><Pressable accessibilityRole="button" accessibilityLabel="Scroll to next course" onPress={()=>void nextCourse()} style={{width:Platform.OS==='web'?48:36,height:Platform.OS==='web'?48:36,borderRadius:24,backgroundColor:'#175D3D',alignItems:'center',justifyContent:'center',boxShadow:'0 3px 10px rgba(24,60,50,0.24)'}}><SymbolView name={{ios:'arrow.down',android:'arrow_downward',web:'arrow_downward'}} size={Platform.OS==='web'?24:19} tintColor="white"/></Pressable></View>}
@@ -218,6 +220,7 @@ export default function Explore(){
    {panel==='coverage'&&<View style={s.panel}><Text style={s.label}>GROWING ACROSS BC</Text><Text style={s.coverageBody}>Royalwood · Public tee times and prices across its booking window.</Text><Text style={s.coverageBody}>Langley Golf Centre · Public 9 &amp; 18-hole times. Prices confirmed by the course.</Text><Text style={s.coverageBody}>Ardmore · Public 9 &amp; 18-hole rounds across its booking window.</Text><Text style={s.coverageBody}>Cedar Hill · Upcoming public 9 & 18-hole rounds.</Text><Text style={s.coverageBody}>Olympic View · Upcoming dates from its public booking calendar.</Text><Text style={s.coverageBody}>Mount Douglas · Public 9 &amp; 18-hole rounds across its booking window.</Text><Text style={s.coverageBody}>Duncan Meadows · Connection under development; automated live requests are blocked.</Text><Text style={s.hint}>Cordova Bay, Highland Pacific and Bear Mountain need supported feed access. Metchosin is being evaluated. They aren’t connected yet. Courses appear below only when matching times are available.</Text></View>}
   </MenuOverlay>}
   <BookingSheet selection={selection} valid={selectionValid} onClose={()=>setSelection(null)} onError={setError}/>
+  <WebInfoSheet kind={webSheet} onClose={()=>setWebSheet(null)}/>
  
  </SafeAreaView>;
 }
