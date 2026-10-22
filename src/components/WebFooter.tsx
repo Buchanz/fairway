@@ -8,29 +8,22 @@ export function WebFooter(){
   if(Platform.OS!=='web')return null;
   return <View accessibilityLabel="Fairway site footer" style={s.footer}>
     <View style={s.inner}>
-      <Text style={s.brand}>fairway<Text style={s.dot}>.</Text></Text>
-      <Text style={s.tagline}>More golf. Less searching.</Text>
-      <View style={s.links}>
+      <View style={s.topLine}><View><Text style={s.brand}>fairway<Text style={s.dot}>.</Text></Text><Text style={s.tagline}>More golf. Less searching.</Text></View><View style={s.links}>
         <Link href="/privacy" style={s.link}>Privacy</Link>
         <Link href="/support" style={s.link}>Support</Link>
         <Link href="/delete-account" style={s.link}>Delete account</Link>
-      </View>
-      <View style={s.downloads}>
-        <Pressable accessibilityRole="button" accessibilityState={{disabled:true}} disabled style={s.storeButton}>
-          <Text style={s.storeTitle}>Download on iOS</Text>
-          <Text style={s.storeNote}>Coming soon</Text>
-        </Pressable>
-      </View>
+      </View><Pressable accessibilityRole="button" accessibilityState={{disabled:true}} disabled style={s.storeButton}><View style={s.appleMark}><Text style={s.appleGlyph}></Text><View><Text style={s.storeEyebrow}>Download on the</Text><Text style={s.storeTitle}>App Store</Text></View></View></Pressable></View>
       <Text style={s.fine}>© {new Date().getFullYear()} Fairway · Course and tee-time information is provided for planning.</Text>
     </View>
   </View>;
 }
 
 const s=StyleSheet.create({
-  footer:{width:'100%',borderTopWidth:1,borderTopColor:'#dfe7df',backgroundColor:'#edf2ea'},
-  inner:{width:'100%',maxWidth:1000,alignSelf:'center',paddingHorizontal:20,paddingVertical:14,gap:4},
-  brand:{fontSize:18,fontWeight:'800',letterSpacing:-.6,color:'#183c32'},dot:{color:'#799544'},tagline:{fontSize:10,color:'#708078'},
-  links:{flexDirection:'row',flexWrap:'wrap',gap:14,marginTop:4},link:{fontSize:11,fontWeight:'600',color:'#276447',textDecorationLine:'none'},
-  downloads:{marginTop:4,alignItems:'flex-start'},storeButton:{minWidth:140,minHeight:34,paddingHorizontal:13,paddingVertical:5,borderRadius:18,backgroundColor:'#d9e3d7',opacity:.76},storeTitle:{fontSize:11,fontWeight:'700',color:'#183c32'},storeNote:{fontSize:9,color:'#708078',marginTop:1},
-  fine:{fontSize:9,color:'#708078',marginTop:4},
+  footer:{width:'100vw',marginLeft:'calc(50% - 50vw)',borderTopWidth:1,borderTopColor:'#dfe7df',backgroundColor:'#edf2ea'},
+  inner:{width:'100%',maxWidth:1100,alignSelf:'center',paddingHorizontal:20,paddingVertical:9,gap:4},
+  topLine:{flexDirection:'row',alignItems:'center',justifyContent:'space-between',gap:14,flexWrap:'wrap'},
+  brand:{fontSize:16,fontWeight:'800',letterSpacing:-.6,color:'#183c32'},dot:{color:'#799544'},tagline:{fontSize:9,color:'#708078',marginTop:1},
+  links:{flexDirection:'row',flexWrap:'wrap',gap:12,alignItems:'center'},link:{fontSize:10,fontWeight:'600',color:'#276447',textDecorationLine:'none'},
+  storeButton:{minWidth:132,minHeight:34,paddingHorizontal:10,paddingVertical:5,borderRadius:7,backgroundColor:'#050505',opacity:.92},appleMark:{flexDirection:'row',alignItems:'center',gap:7},appleGlyph:{fontSize:20,lineHeight:21,color:'#fff'},storeEyebrow:{fontSize:8,lineHeight:9,color:'#fff'},storeTitle:{fontSize:13,lineHeight:14,fontWeight:'700',color:'#fff'},
+  fine:{fontSize:8,color:'#708078',marginTop:2},
 });
