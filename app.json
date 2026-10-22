@@ -27,7 +27,8 @@
       ]
     },
     "web": {
-      "bundler": "metro"
+      "bundler": "metro",
+      "favicon": "./assets/fairway-app-logo.png"
     },
     "plugins": [
       "expo-router",
