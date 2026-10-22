@@ -17,6 +17,11 @@ export const courses: Course[] = [
   {id:'mount-douglas',name:'Mount Douglas',municipality:'Saanich',region:'vancouver-island',holes:9,location:{latitude:48.48088,longitude:-123.3529043},bookingUrl:'https://www.tee-on.com/PubGolf/servlet/com.teeon.teesheet.servlets.trail.TrailSearch?CourseCode=MTDG&CourseGroupID=11763&FromCourseWebsite=true',sourceUrl:'https://mountdouggolf.ca/tee-times/',provider:'Tee-On',availability:'live'},
   // Public booking-provider clubhouse coordinates, verified 2026-10-02.
   {id:'duncan-meadows',name:'Duncan Meadows',municipality:'Duncan',region:'vancouver-island',holes:18,location:{latitude:48.8077293,longitude:-123.7539486},bookingUrl:'https://chrono.golf/en/club/duncan-meadows',sourceUrl:'https://www.duncanmeadows.com/',provider:'Chronogolf',availability:'not-connected'},
+  // Lower Mainland courses added from their published course pages and scorecards.
+  {id:'poppy-estate',name:'Poppy Estate Golf Course',municipality:'Aldergrove',region:'lower-mainland',holes:18,location:{latitude:49.0700,longitude:-122.5319},bookingUrl:'https://www.poppygolf.ca/',sourceUrl:'https://www.poppygolf.ca/contact',provider:'Not connected',availability:'not-connected'},
+  {id:'belmont',name:'Belmont Golf Course',municipality:'Langley',region:'lower-mainland',holes:18,location:{latitude:49.1560,longitude:-122.5947},bookingUrl:'https://www.belmontgolf.com/',sourceUrl:'https://www.belmontgolf.com/',provider:'Not connected',availability:'not-connected'},
+  {id:'delta-golf',name:'Delta Golf Course',municipality:'Delta',region:'lower-mainland',holes:18,location:{latitude:49.100899,longitude:-122.896202},bookingUrl:'https://deltagolfcourse.com/book/',sourceUrl:'https://deltagolfcourse.com/our-facility/',provider:'Not connected',availability:'not-connected'},
+  {id:'sandpiper',name:'Sandpiper Golf Course',municipality:'Harrison Mills',region:'fraser-valley',holes:18,location:{latitude:49.2573,longitude:-121.9463},bookingUrl:'https://sandpiperresort.ca/bc-golf-trip/',sourceUrl:'https://sandpiperresort.ca/bc-golf-trip/',provider:'Not connected',availability:'not-connected'},
   // Approximate clubhouse location: https://www.where2golf.com/canada-bc-alberta/olympic-view-golf-club/
   { id: 'olympic-view', name: 'Olympic View', municipality: 'Greater Victoria', region: 'vancouver-island', holes: 18, location: { latitude: 48.404039, longitude: -123.518975 }, bookingUrl: 'https://olympicviewgolf.totaleintegrated.com/Book-a-Tee-Time', sourceUrl: 'https://www.olympicviewgolf.com/about/location', provider: 'Total e Integrated', availability: 'live' },
   { id: 'highland-pacific', name: 'Highland Pacific', municipality: 'View Royal', region: 'vancouver-island', holes: 18, location: { latitude: 48.4659624, longitude: -123.4524042 }, bookingUrl: 'https://www.highlandpacificgolf.com/golf/book-online/', sourceUrl: 'https://www.highlandpacificgolf.com/contact/', provider: 'Tee-On', availability: 'not-connected' },
@@ -32,4 +37,7 @@ export const cities = [
   { name: 'Vancouver', latitude:49.2827, longitude:-123.1207 },
   { name: 'Nanaimo', latitude:49.1659, longitude:-123.9401 },
   { name: 'Sidney', latitude: 48.6500, longitude: -123.3980 },
+  { name: 'Aldergrove', latitude: 49.0580, longitude: -122.4920 },
+  { name: 'Delta', latitude: 49.0847, longitude: -123.0586 },
+  { name: 'Harrison Mills', latitude: 49.2573, longitude: -121.9463 },
 ];

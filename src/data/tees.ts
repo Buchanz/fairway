@@ -19,6 +19,33 @@ export const courseTees:Record<string,TeeSet[]>={
  ],
  'duncan-meadows':namedTees(['Blue','White','Green'],'https://www.duncanmeadows.com/the-course'),
  'royalwood':namedTees(['Gold','Blue','Blue/White','White','White/Green','Green','Green/Orange','Orange'],'https://royalwoodgolf.com/wp-content/uploads/2024/02/IMG_20240221_0001-2048x800.jpg'),
+ // Published scorecard distances; GPS tee/green geometry is intentionally not
+ // enabled until the course layout has been independently checked.
+ 'poppy-estate':[
+  {id:'championship',name:'Championship',yardages:[398,141,287,287,202,186,190,125,350,313,328,166,290,207,173,275,199,386],sourceUrl:'https://www.golfify.io/courses/poppy-estate-golf-course'},
+  {id:'regular',name:'Regular',yardages:[387,141,278,280,189,176,160,116,336,298,317,156,255,207,150,255,170,356],sourceUrl:'https://www.golfify.io/courses/poppy-estate-golf-course'},
+  {id:'forward',name:'Forward',yardages:[373,126,245,249,165,140,136,108,314,285,299,147,234,194,141,237,134,342],sourceUrl:'https://www.golfify.io/courses/poppy-estate-golf-course'},
+ ],
+ 'belmont':[
+  {id:'blue',name:'Blue',yardages:[302,369,202,357,214,555,207,544,386,352,443,211,504,207,384,384,167,521],sourceUrl:'https://yardsgolfbook.com/courses/british-columbia/belmont-golf-course'},
+  {id:'white',name:'White',yardages:[277,352,175,341,193,539,187,527,361,331,414,188,482,171,358,362,142,497],sourceUrl:'https://yardsgolfbook.com/courses/british-columbia/belmont-golf-course'},
+  {id:'white-red',name:'White/Red',yardages:[277,334,147,341,193,494,163,527,361,331,388,158,454,171,358,333,115,497],sourceUrl:'https://yardsgolfbook.com/courses/british-columbia/belmont-golf-course'},
+  {id:'red',name:'Red',yardages:[282,334,147,315,146,494,163,493,343,304,388,158,454,123,335,333,115,465],sourceUrl:'https://yardsgolfbook.com/courses/british-columbia/belmont-golf-course'},
+  {id:'gold',name:'Gold',yardages:[242,318,124,287,118,477,137,462,320,279,359,139,432,112,313,289,98,445],sourceUrl:'https://yardsgolfbook.com/courses/british-columbia/belmont-golf-course'},
+ ],
+ 'delta-golf':[
+  {id:'blue',name:'Blue',yardages:[442,285,168,105,431,202,257,121,340,298,146,467,154,107,375,322,388,325],sourceUrl:'https://www.golfify.io/courses/delta-golf-course'},
+  {id:'silver',name:'Silver',yardages:[442,285,168,105,431,153,257,121,340,298,146,467,154,107,375,322,388,325],sourceUrl:'https://www.golfify.io/courses/delta-golf-course'},
+  {id:'bronze',name:'Bronze',yardages:[422,270,150,95,421,145,237,110,331,287,130,442,141,95,366,309,374,322],sourceUrl:'https://www.golfify.io/courses/delta-golf-course'},
+  {id:'blue-ladies',name:'Blue (Ladies)',yardages:[442,285,168,105,431,202,257,121,340,298,146,467,154,107,375,322,388,325],sourceUrl:'https://www.golfify.io/courses/delta-golf-course'},
+  {id:'silver-ladies',name:'Silver (Ladies)',yardages:[442,285,168,105,431,153,257,121,340,298,146,467,154,107,375,322,388,325],sourceUrl:'https://www.golfify.io/courses/delta-golf-course'},
+ ],
+ 'sandpiper':[
+  {id:'black',name:'Black',yardages:[530,471,430,258,513,195,394,399,420,390,228,347,532,445,602,395,429,181],sourceUrl:'https://yardsgolfbook.com/courses/british-columbia/sandpiper-golf-course'},
+  {id:'gold',name:'Gold',yardages:[511,447,407,226,495,173,368,370,401,345,202,325,455,425,582,373,374,167],sourceUrl:'https://yardsgolfbook.com/courses/british-columbia/sandpiper-golf-course'},
+  {id:'silver',name:'Silver',yardages:[495,402,387,196,483,155,357,362,393,321,172,306,405,385,540,348,353,136],sourceUrl:'https://yardsgolfbook.com/courses/british-columbia/sandpiper-golf-course'},
+  {id:'copper',name:'Copper',yardages:[454,376,353,165,430,125,357,350,368,315,148,252,392,330,471,337,304,99],sourceUrl:'https://yardsgolfbook.com/courses/british-columbia/sandpiper-golf-course'},
+ ],
  'highland-pacific':namedTees(['Gold','Blue','White','Green Combo','Silver','Family'],'https://www.highlandpacificgolf.com/golf/score-card/'),
  'cordova-bay':namedTees(['Black','Blue','Silver','White','Gold','Copper'],'https://www.cordovabaygolf.com/wp-content/uploads/2022/06/2022-SCORECARD.pdf'),
  'ardmore':namedTees(['Red','White'],'https://www.ardmoregolfcourse.com/hole-by-hole.html'),
@@ -37,8 +64,8 @@ export function teeForRound(courseId:string,teeId?:string){return courseTees[cou
 const teePalette:Record<string,{background:string;text:string}>={
  blue:{background:'#2460ae',text:'#ffffff'},red:{background:'#b52d36',text:'#ffffff'},white:{background:'#ffffff',text:'#17241e'},
  black:{background:'#25282b',text:'#ffffff'},gold:{background:'#d3b354',text:'#17241e'},golden:{background:'#d3b354',text:'#17241e'},
- silver:{background:'#c3cbd0',text:'#17241e'},green:{background:'#28734c',text:'#ffffff'},copper:{background:'#a9673e',text:'#ffffff'},
- bronze:{background:'#ad6429',text:'#ffffff'},orange:{background:'#cf6b16',text:'#ffffff'},brown:{background:'#795039',text:'#ffffff'},
+ silver:{background:'#c3cbd0',text:'#17241e'},green:{background:'#28734c',text:'#ffffff'},copper:{background:'#a9673e',text:'#ffffff'},championship:{background:'#2460ae',text:'#ffffff'},regular:{background:'#ffffff',text:'#17241e'},forward:{background:'#c44a4a',text:'#ffffff'},bronze:{background:'#ad6429',text:'#ffffff'},
+ orange:{background:'#cf6b16',text:'#ffffff'},brown:{background:'#795039',text:'#ffffff'},
 };
 /** Named/non-colour tees retain their published name with a neutral treatment. */
 export function teeAppearance(id?:string){return teePalette[id?.split('-')[0]||'']||{background:'#526459',text:'#ffffff'};}
