@@ -132,6 +132,15 @@ export default function Explore(){
    setRequestName('');setRequestCity('');setRequestNotes('');setRequestState('sent');
   }catch{setRequestState('error');}
  }
+ async function submitTestFlightRequest(email:string){
+  if(!authClient)return false;
+  try{
+   let requesterId:string|null=null;
+   try{requesterId=(await authClient.auth.getUser()).data.user?.id??null;}catch{/* Anonymous access requests are allowed. */}
+   const {error:insertError}=await authClient.from('course_requests').insert({course_name:'Fairway TestFlight access',notes:`Invite email: ${email}`,requester_id:requesterId});
+   return !insertError;
+  }catch{return false;}
+ }
  async function nextCourse(){
   const positions=rows.map(course=>coursePositions.current[course.id]).filter((y):y is number=>typeof y==='number').map(y=>y+courseGroupTop.current);
   let current=0;
@@ -219,7 +228,7 @@ export default function Explore(){
   </MenuOverlay>}
   <BookingSheet selection={selection} valid={selectionValid} onClose={()=>setSelection(null)} onError={setError}/>
   <WebInfoSheet kind={webSheet} onClose={()=>setWebSheet(null)}/>
-  <WebMobileSheet open={mobileSheet} onClose={()=>setMobileSheet(false)}/>
+  <WebMobileSheet open={mobileSheet} onClose={()=>setMobileSheet(false)} onRequestAccess={submitTestFlightRequest}/>
   <WebCourseRequestSheet open={requestOpen} onClose={()=>setRequestOpen(false)} name={requestName} city={requestCity} notes={requestNotes} onNameChange={setRequestName} onCityChange={setRequestCity} onNotesChange={setRequestNotes} onSubmit={()=>void submitCourseRequest()} state={requestState}/>
  
  </SafeAreaView>;
