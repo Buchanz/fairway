@@ -1,7 +1,7 @@
 import {SymbolView} from 'expo-symbols';
 import {MenuOverlay,type MenuAnchor} from '../components/MenuOverlay';
 import {PlayerIdentity} from '../components/PlayerIdentity';
-import {useFocusEffect} from 'expo-router';
+import {useFocusEffect,useLocalSearchParams} from 'expo-router';
 import {authClient} from '../auth/client';
 import {courseHoles} from '../data/hole-layouts';
 import {CoursePhoto} from '../components/CoursePhoto';
@@ -29,14 +29,16 @@ import {loadRounds,saveRounds,stageRoundChanges,pendingRoundChanges,clearPending
 function newRoundId(){return Date.now().toString()+Math.random().toString(36).slice(2);}
 export default function Play(){
  const {session,ready}=useAuth();
+ const params=useLocalSearchParams<{course?:string}>();
+ const initialCourseId=typeof params.course==='string'&&courses.some(course=>course.id===params.course)?params.course:null;
  if(!ready)return <SafeAreaView edges={['top','left','right']} style={s.screen}><Text>Opening your account…</Text></SafeAreaView>;
- return <PlaySetup key={session?.user.id||'guest'} userId={session?.user.id||null} accountName={session?.user.user_metadata.display_name||session?.user.user_metadata.username||'You'}/>;
+ return <PlaySetup key={`${session?.user.id||'guest'}:${initialCourseId||'nearest'}`} userId={session?.user.id||null} accountName={session?.user.user_metadata.display_name||session?.user.user_metadata.username||'You'} initialCourseId={initialCourseId}/>;
 }
-function PlaySetup({userId,accountName}:{userId:string|null;accountName:string}){
+function PlaySetup({userId,accountName,initialCourseId}:{userId:string|null;accountName:string;initialCourseId:string|null}){
  const {session}=useAuth();
  const roundCourses=courses;
  const [rounds,setRounds]=useState<Round[]>(()=>cachedCloudRounds(userId)||[]),[ready,setReady]=useState(false),[saveError,setSaveError]=useState('');
- const [active,setActive]=useState<string|null>(null),[courseId,setCourse]=useState('cedar-hill'),[count,setCount]=useState(1),[holes,setHoles]=useState(18),[names,setNames]=useState([accountName,'','','']),[hole,setHole]=useState(0);
+ const [active,setActive]=useState<string|null>(null),[courseId,setCourse]=useState(initialCourseId||'cedar-hill'),[count,setCount]=useState(1),[holes,setHoles]=useState(initialCourseId&&courses.find(course=>course.id===initialCourseId)?.holes===9?9:18),[names,setNames]=useState([accountName,'','','']),[hole,setHole]=useState(0);
  const [teeSelection,setTeeSelection]=useState<Record<string,string>>({});
  const [customTees,setCustomTees]=useState<Record<string,string>>({});
  const [friends,setFriends]=useState<Friend[]>([]),[playerIds,setPlayerIds]=useState<(string|null)[]>([userId,null,null,null]);
@@ -47,8 +49,8 @@ function PlaySetup({userId,accountName}:{userId:string|null;accountName:string})
  const [searching,setSearching]=useState(false);
  const [position,setPosition]=useState<{latitude:number;longitude:number}|null>(null);
  const [locationMessage,setLocationMessage]=useState('Finding your nearest course…');
- const [courseConfirmed,setCourseConfirmed]=useState(false);
- const choseCourse=useRef(false);
+ const [courseConfirmed,setCourseConfirmed]=useState(Boolean(initialCourseId));
+ const choseCourse=useRef(Boolean(initialCourseId));
  useEffect(()=>{let alive=true;let timer:ReturnType<typeof setTimeout>|undefined;
   void (async()=>{try{
    let permission=await Location.getForegroundPermissionsAsync();

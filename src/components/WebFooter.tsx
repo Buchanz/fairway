@@ -4,11 +4,12 @@ import {Platform,Pressable,StyleSheet,Text,View} from 'react-native';
 /** Shared web-only footer. Store links stay intentionally disabled until the
  * corresponding public listings exist, so the site never points visitors at
  * a fake download page. */
-export function WebFooter({onPrivacy,onSupport}:{onPrivacy?:()=>void;onSupport?:()=>void}={}){
+export function WebFooter({onPrivacy,onSupport,onMobile}:{onPrivacy?:()=>void;onSupport?:()=>void;onMobile?:()=>void}={}){
   if(Platform.OS!=='web')return null;
   return <View accessibilityLabel="Fairway site footer" style={s.footer}>
     <View style={s.inner}>
       <View style={s.topLine}><View><Text style={s.brand}>fairway<Text style={s.dot}>.</Text></Text><Text style={s.tagline}>More golf. Less searching.</Text></View><View style={s.links}>
+        {onMobile&&<Pressable accessibilityRole="button" onPress={onMobile} style={s.linkButton}><Text style={s.link}>Mobile</Text></Pressable>}
         {onPrivacy?<Pressable accessibilityRole="button" onPress={onPrivacy} style={s.linkButton}><Text style={s.link}>Privacy</Text></Pressable>:<Link href="/privacy" style={s.link}>Privacy</Link>}
         {onSupport?<Pressable accessibilityRole="button" onPress={onSupport} style={s.linkButton}><Text style={s.link}>Support</Text></Pressable>:<Link href="/support" style={s.link}>Support</Link>}
       </View><Pressable accessibilityRole="button" accessibilityState={{disabled:true}} disabled style={s.storeButton}><View style={s.appleMark}><Text style={s.appleGlyph}></Text><View><Text style={s.storeEyebrow}>Download on the</Text><Text style={s.storeTitle}>App Store</Text></View></View></Pressable></View>

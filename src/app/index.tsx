@@ -20,7 +20,9 @@ import {nearbyCourses} from '../lib/geo';
 import {decodeInventory,filterCourse,type Inventory,type SearchFilters} from '../lib/search';
 import {WebFooter} from '../components/WebFooter';
 import {WebInfoSheet} from '../components/WebInfoSheet';
+import {WebMobileSheet} from '../components/WebMobileSheet';
 import {WebCourseRequestSheet} from '../components/WebCourseRequestSheet';
+import {router} from 'expo-router';
 
 type Panel='players'|'holes'|'calendar'|'filters'|'coverage'|null;
 export default function Explore(){
@@ -42,7 +44,11 @@ export default function Explore(){
  const [locationMessage,setLocationMessage]=useState(''),[locating,setLocating]=useState(false);
  const [requestOpen,setRequestOpen]=useState(false),[requestName,setRequestName]=useState(''),[requestCity,setRequestCity]=useState(''),[requestNotes,setRequestNotes]=useState('');
  const [requestState,setRequestState]=useState<'idle'|'sending'|'sent'|'error'>('idle');
- const [webSheet,setWebSheet]=useState<'privacy'|'support'|null>(null);
+ const [webSheet,setWebSheet]=useState<'privacy'|'support'|null>(null),[mobileSheet,setMobileSheet]=useState(false);
+ const playCatalogCourse=useCallback((courseId:string)=>{
+  if(Platform.OS==='web'){setMobileSheet(true);return;}
+  router.push({pathname:'/play',params:{course:courseId}});
+ },[]);
  const locationRequest=useRef(0);
  // Ask on mobile for nearest-first results; web can enable location through Filters.
  useEffect(()=>{
@@ -187,13 +193,13 @@ export default function Explore(){
    <View style={s.resultsBar}><View><Text style={s.results}>{total} tee times<Text style={s.resultLight}> · {rows.length} {rows.length===1?'course':'courses'}</Text></Text><Text style={s.hint}>{sort==='distance'?`Nearest to ${originName} first`:'Courses A–Z'}{radius===null?' · All distances':` · Within ${radius} km`}</Text></View><Pressable accessibilityRole="button" accessibilityLabel="Refresh availability" disabled={refreshing} onPress={()=>void manualRefresh()} style={{width:46,height:46,borderRadius:23,backgroundColor:Platform.OS==='web'?'#ffffff':'#E8EEDD',boxShadow:Platform.OS==='web'?'0 3px 12px rgba(24,60,50,0.12)':'none',alignItems:'center',justifyContent:'center'}}><Animated.View style={{transform:[{rotate:spin.interpolate({inputRange:[0,1],outputRange:['0deg','360deg']})}]}}><SymbolView name={{ios:'arrow.clockwise',android:'refresh',web:'refresh'}} size={23} tintColor={colors.ink}/></Animated.View></Pressable></View>
    {olympicRestricted&&<Text style={s.notice}>Olympic View has times for larger groups, but its booking page currently does not offer those times for one player.</Text>}
    {!!error&&<Text accessibilityLiveRegion="polite" style={s.notice}>{error}</Text>}
-   <Animated.View onLayout={event=>{courseGroupTop.current=event.nativeEvent.layout.y;}} style={{opacity:fade,gap:26,paddingHorizontal:8,marginHorizontal:-8,paddingVertical:8}}>{viewMode==='list'?<>{rows.map(course=><View key={course.id} onLayout={event=>{coursePositions.current[course.id]=event.nativeEvent.layout.y;}}><CourseCarousel key={`${course.id}-${players}-${holes}-${chosenDate}-${time}-${maxPrice}`} course={course} slots={course.slots} players={players} now={clock} onSelect={slot=>setSelection({course,slot,players})}/></View>)}{catalogCourses.map(course=><View key={`catalog-${course.id}`} accessibilityLabel={`${course.name}, ${course.municipality}`}><CourseCarousel course={course} slots={[]} players={players} now={clock} onSelect={()=>{}}/></View>)}</>:<View style={s.catalogGrid} accessibilityLabel="Course grid">{rows.map(course=><View key={`grid-live-${course.id}`} style={{width:gridCardWidth}}><CourseCarousel course={course} slots={course.slots} players={players} now={clock} onSelect={slot=>setSelection({course,slot,players})}/></View>)}{catalogCourses.map(course=><View key={`grid-catalog-${course.id}`} style={{width:gridCardWidth}} accessibilityLabel={`${course.name}, ${course.municipality}`}><CourseCarousel course={course} slots={[]} players={players} now={clock} onSelect={()=>{}}/></View>)}</View>}</Animated.View>
+   <Animated.View onLayout={event=>{courseGroupTop.current=event.nativeEvent.layout.y;}} style={{opacity:fade,gap:26,paddingHorizontal:8,marginHorizontal:-8,paddingVertical:8}}>{viewMode==='list'?<>{rows.map(course=><View key={course.id} onLayout={event=>{coursePositions.current[course.id]=event.nativeEvent.layout.y;}}><CourseCarousel key={`${course.id}-${players}-${holes}-${chosenDate}-${time}-${maxPrice}`} course={course} slots={course.slots} players={players} now={clock} onSelect={slot=>setSelection({course,slot,players})}/></View>)}{catalogCourses.map(course=><View key={`catalog-${course.id}`} accessibilityLabel={`${course.name}, ${course.municipality}`}><CourseCarousel course={course} slots={[]} players={players} now={clock} onPlayCourse={()=>playCatalogCourse(course.id)} onSelect={()=>{}}/></View>)}</>:<View style={s.catalogGrid} accessibilityLabel="Course grid">{rows.map(course=><View key={`grid-live-${course.id}`} style={{width:gridCardWidth}}><CourseCarousel course={course} slots={course.slots} players={players} now={clock} onSelect={slot=>setSelection({course,slot,players})}/></View>)}{catalogCourses.map(course=><View key={`grid-catalog-${course.id}`} style={{width:gridCardWidth}} accessibilityLabel={`${course.name}, ${course.municipality}`}><CourseCarousel course={course} slots={[]} players={players} now={clock} onPlayCourse={()=>playCatalogCourse(course.id)} onSelect={()=>{}}/></View>)}</View>}</Animated.View>
    {!!catalogCourses.length&&<View style={s.requestSection} accessibilityLabel="Request a course">
     <View style={s.requestCollapsed}><Text style={s.results}>Don’t see your course?</Text><Text style={s.hint}>Tell us which course you want added and we’ll review it for Fairway.</Text><Pressable accessibilityRole="button" onPress={()=>{setRequestOpen(true);setRequestState('idle');}} style={s.requestButton}><Text style={s.requestButtonText}>Request a course</Text></Pressable></View>
    </View>}
    {!rows.length&&<GlassPanel style={s.empty}><Text style={s.emptyTitle}>{!availabilityReady?'Loading tee times…':hasFreshData?'No rounds match just yet.':'Tee times are being refreshed.'}</Text><Text style={s.emptyText}>{!availabilityReady?'Checking connected courses now.':hasFreshData?'Try fewer players, a different round length or broader filters.':'Tap reload to check the connected courses again.'}</Text><Pressable accessibilityRole="button" onPress={()=>{if(!availabilityReady)return;setChosenDate(null);setTime('any');setMaxPrice(null);setRadius(null);setQuery('');toggle('players');}} style={[s.smallButton,!availabilityReady&&{opacity:.45}]}><Text style={s.link}>{hasFreshData?'Adjust your search →':'Reload tee times →'}</Text></Pressable></GlassPanel>}
   </Animated.ScrollView>
-  <WebFooter onPrivacy={()=>setWebSheet('privacy')} onSupport={()=>setWebSheet('support')}/>
+  <WebFooter onMobile={()=>setMobileSheet(true)} onPrivacy={()=>setWebSheet('privacy')} onSupport={()=>setWebSheet('support')}/>
   <BottomFade/>
   {rows.length>0&&scrollSize.content>scrollSize.viewport+8&&!atBottom&&<View pointerEvents="box-none" style={{position:'absolute',bottom:Platform.OS==='web'?62:16,left:0,right:0,alignItems:'center',zIndex:45}}><Pressable accessibilityRole="button" accessibilityLabel="Scroll to next course" onPress={()=>void nextCourse()} style={{width:Platform.OS==='web'?36:34,height:Platform.OS==='web'?36:34,borderRadius:20,backgroundColor:'#175D3D',alignItems:'center',justifyContent:'center',boxShadow:'0 3px 10px rgba(24,60,50,0.24)'}}><SymbolView name={{ios:'arrow.down',android:'arrow_downward',web:'arrow_downward'}} size={18} tintColor="white"/></Pressable></View>}
   {panel!==null&&<MenuOverlay open={menuOpen} anchor={menuAnchor} onClose={closeMenu} onExited={exitMenu} label={menuLabel} headerContent={panel==='coverage'?undefined:filterFace(panel)} preferredWidth={panel==='players'?248:panel==='holes'?232:panel==='calendar'?320:360} tinted={panel==='filters'} footer={panel==='filters'?<Pressable accessibilityRole="button" onPress={closeMenu} style={s.apply}><Text style={s.applyText}>Show {total} tee times</Text></Pressable>:undefined}>
@@ -213,6 +219,7 @@ export default function Explore(){
   </MenuOverlay>}
   <BookingSheet selection={selection} valid={selectionValid} onClose={()=>setSelection(null)} onError={setError}/>
   <WebInfoSheet kind={webSheet} onClose={()=>setWebSheet(null)}/>
+  <WebMobileSheet open={mobileSheet} onClose={()=>setMobileSheet(false)}/>
   <WebCourseRequestSheet open={requestOpen} onClose={()=>setRequestOpen(false)} name={requestName} city={requestCity} notes={requestNotes} onNameChange={setRequestName} onCityChange={setRequestCity} onNotesChange={setRequestNotes} onSubmit={()=>void submitCourseRequest()} state={requestState}/>
  
  </SafeAreaView>;
