@@ -18,11 +18,11 @@ export function WebFooter({onPrivacy,onSupport}:{onPrivacy?:()=>void;onSupport?:
 }
 
 const s=StyleSheet.create({
-  footer:{width:'100vw' as any,marginLeft:'calc(50% - 50vw)' as any,borderTopWidth:1,borderTopColor:'#dfe7df',backgroundColor:'#edf2ea'},
-  inner:{width:'100%',maxWidth:1100,alignSelf:'center',paddingHorizontal:20,paddingVertical:9,gap:4},
+  footer:{position:'absolute',left:0,right:0,bottom:0,zIndex:40,width:'100%' as any,borderTopWidth:1,borderTopColor:'#dfe7df',backgroundColor:'#edf2ea'},
+  inner:{width:'100%',maxWidth:1100,alignSelf:'center',paddingHorizontal:20,paddingVertical:6,gap:2},
   topLine:{flexDirection:'row',alignItems:'center',justifyContent:'space-between',gap:14,flexWrap:'wrap'},
   brand:{fontSize:16,fontWeight:'800',letterSpacing:-.6,color:'#183c32'},dot:{color:'#799544'},tagline:{fontSize:9,color:'#708078',marginTop:1},
   links:{flexDirection:'row',flexWrap:'wrap',gap:12,alignItems:'center'},linkButton:{padding:0},link:{fontSize:10,fontWeight:'600',color:'#276447',textDecorationLine:'none'},
-  storeButton:{minWidth:132,minHeight:34,paddingHorizontal:10,paddingVertical:5,borderRadius:7,backgroundColor:'#050505',opacity:.92},appleMark:{flexDirection:'row',alignItems:'center',gap:7},appleGlyph:{fontSize:20,lineHeight:21,color:'#fff'},storeEyebrow:{fontSize:8,lineHeight:9,color:'#fff'},storeTitle:{fontSize:13,lineHeight:14,fontWeight:'700',color:'#fff'},
+  storeButton:{minWidth:116,minHeight:30,paddingHorizontal:8,paddingVertical:4,borderRadius:7,backgroundColor:'#050505',opacity:.92},appleMark:{flexDirection:'row',alignItems:'center',gap:6},appleGlyph:{fontSize:18,lineHeight:19,color:'#fff'},storeEyebrow:{fontSize:7,lineHeight:8,color:'#fff'},storeTitle:{fontSize:12,lineHeight:13,fontWeight:'700',color:'#fff'},
   fine:{fontSize:8,color:'#708078',marginTop:2},
 });
