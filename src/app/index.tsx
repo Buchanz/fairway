@@ -7,7 +7,7 @@ import {GlassPressable as Pressable,GlassPanel} from '../components/Glass';
 import {authClient} from '../auth/client';
 import {Brand} from '../components/Brand';
 import {useCallback,useEffect,useMemo,useRef,useState} from 'react';
-import {Animated,Easing,Platform,Pressable as NativePressable,StyleSheet,Text,TextInput,useWindowDimensions,View,ScrollView,AccessibilityInfo} from 'react-native';
+import {Animated,Easing,Platform,Pressable as NativePressable,StyleSheet,Text,useWindowDimensions,View,ScrollView,AccessibilityInfo} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import * as Location from 'expo-location';
 import {Chip,colors} from '../components/ui';

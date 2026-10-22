@@ -14,13 +14,18 @@ export function WebMobileSheet({open,onClose,onRequestAccess}:{open:boolean;onCl
  const [requestState,setRequestState]=useState<RequestState>('idle');
  useEffect(()=>{
   if(open){
-   setMounted(true);setRequestState('idle');
+   // These updates mount the animated modal and reset the form for each opening.
+   // eslint-disable-next-line react-hooks/set-state-in-effect
+   setMounted(true);
+   setRequestState('idle');
    progress.setValue(0);
    Animated.spring(progress,{toValue:1,damping:24,stiffness:260,mass:.85,useNativeDriver:true}).start();
    return;
   }
   if(!mounted)return;
   Animated.timing(progress,{toValue:0,duration:180,easing:value=>value,useNativeDriver:true}).start(({finished})=>{if(finished)setMounted(false);});
+ // `mounted` is intentionally read as the previous render state while the close animation runs.
+ // eslint-disable-next-line react-hooks/exhaustive-deps
  },[open,progress]);
  async function requestAccess(){
   const address=email.trim().toLowerCase();
