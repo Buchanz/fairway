@@ -8,7 +8,7 @@ import {authClient} from '../auth/client';
 import {Link} from 'expo-router';
 import {Brand} from '../components/Brand';
 import {useCallback,useEffect,useMemo,useRef,useState} from 'react';
-import {Animated,Easing,Platform,StyleSheet,Text,TextInput,useWindowDimensions,View,ScrollView,AccessibilityInfo} from 'react-native';
+import {Animated,Easing,Platform,Pressable as NativePressable,StyleSheet,Text,TextInput,useWindowDimensions,View,ScrollView,AccessibilityInfo} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import * as Location from 'expo-location';
 import {Chip,colors} from '../components/ui';
@@ -160,7 +160,7 @@ export default function Explore(){
    <View style={{gap:10,width:'100%',maxWidth:560,alignSelf:'center'}}>
    <SearchField value={query} onChangeText={setQuery} autoCorrect={false} returnKeyType="search"/>
    <View style={[s.toolbar,small&&s.compactToolbar,screenWidth<500&&{gap:5}]}>
-    {Platform.OS==='web'&&<Pressable accessibilityRole="button" accessibilityLabel={viewMode==='list'?'Show courses as a grid':'Show courses as a list'} accessibilityState={{selected:viewMode==='grid'}} onPress={()=>setViewMode(mode=>mode==='list'?'grid':'list')} style={[s.viewToggle,small&&s.compactControl]}><SymbolView name={{ios:viewMode==='list'?'square.grid.2x2':'list.bullet',android:viewMode==='list'?'grid_view':'view_list',web:viewMode==='list'?'grid_view':'view_list'}} size={21} tintColor={colors.ink}/></Pressable>}
+    {Platform.OS==='web'&&<NativePressable accessibilityRole="button" accessibilityLabel={viewMode==='list'?'Show courses as a grid':'Show courses as a list'} accessibilityState={{selected:viewMode==='grid'}} onPress={()=>setViewMode(mode=>mode==='list'?'grid':'list')} style={({pressed})=>[s.viewToggle,small&&s.compactControl,pressed&&{opacity:.72,transform:[{scale:.97}]}]}><SymbolView name={{ios:viewMode==='list'?'square.grid.2x2':'list.bullet',android:viewMode==='list'?'grid_view':'view_list',web:viewMode==='list'?'grid_view':'view_list'}} size={21} tintColor={colors.ink}/></NativePressable>}
     <Pressable accessibilityRole="button" ref={node=>{menuButtons.current.players=node;}} accessibilityLabel="Number of players" accessibilityState={{expanded:panel==='players'}} onPress={()=>toggle('players')} style={[s.control,small&&s.compactControl,screenWidth<500&&{paddingHorizontal:7,flexShrink:1},panel==='players'&&{opacity:Platform.OS==='ios'?0.01:0}]}>{filterFace('players')}</Pressable>
     <Pressable accessibilityRole="button" ref={node=>{menuButtons.current.holes=node;}} accessibilityLabel="Number of holes" accessibilityState={{expanded:panel==='holes'}} onPress={()=>toggle('holes')} style={[s.control,small&&s.compactControl,screenWidth<500&&{paddingHorizontal:7,flexShrink:1},panel==='holes'&&{opacity:Platform.OS==='ios'?0.01:0}]}>{filterFace('holes')}</Pressable>
     <Pressable accessibilityRole="button" accessibilityLabel="Choose a date" ref={node=>{menuButtons.current.calendar=node;}} accessibilityState={{expanded:panel==='calendar'}} onPress={()=>toggle('calendar')} style={[s.control,small&&s.compactControl,screenWidth<500&&{paddingHorizontal:7,flexShrink:1},panel==='calendar'&&{opacity:Platform.OS==='ios'?0.01:0}]}>{filterFace('calendar')}</Pressable>

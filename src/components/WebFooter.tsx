@@ -19,7 +19,7 @@ export function WebFooter(){
 }
 
 const s=StyleSheet.create({
-  footer:{width:'100vw',marginLeft:'calc(50% - 50vw)',borderTopWidth:1,borderTopColor:'#dfe7df',backgroundColor:'#edf2ea'},
+  footer:{width:'100vw' as any,marginLeft:'calc(50% - 50vw)' as any,borderTopWidth:1,borderTopColor:'#dfe7df',backgroundColor:'#edf2ea'},
   inner:{width:'100%',maxWidth:1100,alignSelf:'center',paddingHorizontal:20,paddingVertical:9,gap:4},
   topLine:{flexDirection:'row',alignItems:'center',justifyContent:'space-between',gap:14,flexWrap:'wrap'},
   brand:{fontSize:16,fontWeight:'800',letterSpacing:-.6,color:'#183c32'},dot:{color:'#799544'},tagline:{fontSize:9,color:'#708078',marginTop:1},
