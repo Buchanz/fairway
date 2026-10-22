@@ -31,7 +31,7 @@ export default function WebPreview(){
    <View style={s.navWrap}><View style={[s.nav,{maxWidth:sectionWidth}]}>
     <Link href="/" style={s.wordmark}>fairway<span style={s.wordmarkDot}>.</span></Link>
     {!compact&&<View style={s.navLinks}><Link href="#experience" style={s.navLink}>Experience</Link><Link href="#how-it-works" style={s.navLink}>How it works</Link><Link href="#questions" style={s.navLink}>Questions</Link></View>}
-    <Pressable accessibilityRole="button" onPress={()=>router.push('/')} style={({pressed})=>[s.navCta,pressed&&s.pressed]}><Text style={s.navCtaText}>{ctaLabel}</Text><Text style={s.arrow}>↗</Text></Pressable>
+    <Pressable accessibilityRole="button" onPress={()=>router.push('/explore')} style={({pressed})=>[s.navCta,pressed&&s.pressed]}><Text style={s.navCtaText}>{ctaLabel}</Text><Text style={s.arrow}>↗</Text></Pressable>
    </View></View>
 
    <View style={s.hero}>
@@ -41,23 +41,23 @@ export default function WebPreview(){
       <Text style={s.kicker}>FAIRWAY / GOLF GPS</Text>
       <Text style={s.heroTitle}>More golf.{"\n"}Less searching.</Text>
       <Text style={s.heroBody}>Find a time. Find your line. Make more room for the part of golf that matters.</Text>
-      <View style={s.heroActions}><Pressable accessibilityRole="button" onPress={()=>router.push('/')} style={({pressed})=>[s.primary,pressed&&s.pressed]}><Text style={s.primaryText}>Find a tee time</Text><Text style={s.primaryArrow}>→</Text></Pressable><Link href="#experience" style={s.heroTextLink}>See how it works <Text>↓</Text></Link></View>
+      <View style={s.heroActions}><Pressable accessibilityRole="button" onPress={()=>router.push('/explore')} style={({pressed})=>[s.primary,pressed&&s.pressed]}><Text style={s.primaryText}>Find a tee time</Text><Text style={s.primaryArrow}>→</Text></Pressable><Link href="#experience" style={s.heroTextLink}>See how it works <Text>↓</Text></Link></View>
     </Animated.View>
    </View>
 
    <View style={[s.intro,{maxWidth:sectionWidth}]}><Text style={s.introKicker}>A calmer way to play</Text><Text style={s.introTitle}>Everything you need to get from “where should we play?” to “great round.”</Text><Text style={s.introBody}>Fairway brings tee times, course discovery and live round tools into one focused experience for golfers who want to spend less time searching and more time on the course.</Text></View>
 
    <View id="experience" style={s.section}>
-    {features.map((feature,index)=><FeatureRow key={feature.eyebrow} feature={feature} index={index} compact={compact} />)}
+   {features.map((feature,index)=><FeatureRow key={feature.eyebrow} feature={feature} index={index} compact={compact} />)}
    </View>
 
    <View id="how-it-works" style={[s.darkBand,{paddingHorizontal:20}]}><View style={[s.bandInner,{maxWidth:sectionWidth}]}><Text style={s.bandKicker}>ONE APP. EVERY ROUND.</Text><Text style={s.bandTitle}>Made for the way your group actually plays.</Text><View style={[s.steps,compact&&{flexDirection:'column'}]}>{[['01','Search nearby','Start with courses, cities or your current location.'],['02','Choose your time','Compare the live slots that work for everyone.'],['03','Play the round','Open the rangefinder and keep score as you go.']].map(([number,title,body])=><View key={number} style={s.step}><Text style={s.stepNumber}>{number}</Text><Text style={s.stepTitle}>{title}</Text><Text style={s.stepBody}>{body}</Text></View>)}</View></View></View>
 
-   <View style={[s.planSection,{maxWidth:sectionWidth}]}><View style={s.planCopy}><Text style={s.introKicker}>Built around your round</Text><Text style={s.planTitle}>Simple on the first tee. Useful on the eighteenth.</Text><Text style={s.planBody}>Browse without friction, bring your friends along and keep your scores where you can find them later.</Text><Pressable accessibilityRole="button" onPress={()=>router.push('/')} style={({pressed})=>[s.outline,pressed&&s.pressed]}><Text style={s.outlineText}>Explore Fairway</Text><Text style={s.outlineArrow}>↗</Text></Pressable></View><View style={s.planCards}>{[['01','Tee times','Live availability where it matters.'],['02','Rangefinder','Yardages and scores in one view.'],['03','Your rounds','A history you can come back to.']].map(item=><View key={item[0]} style={s.planCard}><Text style={s.planCardNumber}>{item[0]}</Text><Text style={s.planCardTitle}>{item[1]}</Text><Text style={s.planCardBody}>{item[2]}</Text></View>)}</View></View>
+   <View style={[s.planSection,{maxWidth:sectionWidth}]}><View style={s.planCopy}><Text style={s.introKicker}>Built around your round</Text><Text style={s.planTitle}>Simple on the first tee. Useful on the eighteenth.</Text><Text style={s.planBody}>Browse without friction, bring your friends along and keep your scores where you can find them later.</Text><Pressable accessibilityRole="button" onPress={()=>router.push('/explore')} style={({pressed})=>[s.outline,pressed&&s.pressed]}><Text style={s.outlineText}>Explore Fairway</Text><Text style={s.outlineArrow}>↗</Text></Pressable></View><View style={s.planCards}>{[['01','Tee times','Live availability where it matters.'],['02','Rangefinder','Yardages and scores in one view.'],['03','Your rounds','A history you can come back to.']].map(item=><View key={item[0]} style={s.planCard}><Text style={s.planCardNumber}>{item[0]}</Text><Text style={s.planCardTitle}>{item[1]}</Text><Text style={s.planCardBody}>{item[2]}</Text></View>)}</View></View>
 
    <View id="questions" style={[s.faqSection,{maxWidth:sectionWidth}]}><Text style={s.introKicker}>Questions, answered</Text><Text style={s.faqTitle}>Start with the basics.</Text><View style={s.faqList}>{faqs.map(([question,answer],index)=><Pressable accessibilityRole="button" key={question} onPress={()=>setOpenFaq(openFaq===index?null:index)} style={({pressed})=>[s.faqRow,pressed&&{backgroundColor:'#f5f8f1'}]}><View style={s.faqTop}><Text style={s.faqQuestion}>{question}</Text><Text style={s.faqPlus}>{openFaq===index?'−':'+'}</Text></View>{openFaq===index&&<Text style={s.faqAnswer}>{answer}</Text>}</Pressable>)}</View></View>
 
-   <View style={s.finalCta}><View style={[s.finalInner,{maxWidth:sectionWidth}]}><Text style={s.finalKicker}>YOUR NEXT ROUND STARTS HERE</Text><Text style={s.finalTitle}>Less searching.{"\n"}More golf.</Text><Pressable accessibilityRole="button" onPress={()=>router.push('/')} style={({pressed})=>[s.primary,s.finalButton,pressed&&s.pressed]}><Text style={s.primaryText}>Open Fairway</Text><Text style={s.primaryArrow}>→</Text></Pressable></View></View>
+   <View style={s.finalCta}><View style={[s.finalInner,{maxWidth:sectionWidth}]}><Text style={s.finalKicker}>YOUR NEXT ROUND STARTS HERE</Text><Text style={s.finalTitle}>Less searching.{"\n"}More golf.</Text><Pressable accessibilityRole="button" onPress={()=>router.push('/explore')} style={({pressed})=>[s.primary,s.finalButton,pressed&&s.pressed]}><Text style={s.primaryText}>Open Fairway</Text><Text style={s.primaryArrow}>→</Text></Pressable></View></View>
    <View style={s.footerSpace}><WebFooter/></View>
   </Animated.ScrollView>
  </View>;
@@ -65,7 +65,7 @@ export default function WebPreview(){
 
 function FeatureRow({feature,index,compact}:{feature:typeof features[number];index:number;compact:boolean}){
  const reverse=index%2===1;
- return <View style={[s.featureRow,compact&&s.featureRowCompact,reverse&&s.featureReverse]}><View style={[s.featureCopy,feature.tone==='dark'&&s.featureCopyDark,feature.tone==='mint'&&s.featureCopyMint]}><Text style={s.featureEyebrow}>{feature.eyebrow}</Text><Text style={s.featureTitle}>{feature.title}</Text><Text style={s.featureBody}>{feature.body}</Text><Pressable accessibilityRole="button" onPress={()=>router.push('/')} style={({pressed})=>[s.inlineLink,pressed&&s.pressed]}><Text style={s.inlineText}>Explore {feature.eyebrow.toLowerCase()}</Text><Text style={s.inlineArrow}>↗</Text></Pressable></View><View style={[s.featureVisual,feature.tone==='dark'&&s.featureVisualDark,feature.tone==='mint'&&s.featureVisualMint]}><Image source={feature.image} contentFit="contain" style={s.featureImage}/><View style={s.visualGlow}/></View></View>;
+ return <View style={[s.featureRow,compact&&s.featureRowCompact,reverse&&s.featureReverse]}><View style={[s.featureCopy,feature.tone==='dark'&&s.featureCopyDark,feature.tone==='mint'&&s.featureCopyMint]}><Text style={s.featureEyebrow}>{feature.eyebrow}</Text><Text style={s.featureTitle}>{feature.title}</Text><Text style={s.featureBody}>{feature.body}</Text><Pressable accessibilityRole="button" onPress={()=>router.push('/explore')} style={({pressed})=>[s.inlineLink,pressed&&s.pressed]}><Text style={s.inlineText}>Explore {feature.eyebrow.toLowerCase()}</Text><Text style={s.inlineArrow}>↗</Text></Pressable></View><View style={[s.featureVisual,feature.tone==='dark'&&s.featureVisualDark,feature.tone==='mint'&&s.featureVisualMint]}><Image source={feature.image} contentFit="contain" style={s.featureImage}/><View style={s.visualGlow}/></View></View>;
 }
 
 const s=StyleSheet.create({
