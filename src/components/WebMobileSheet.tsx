@@ -51,7 +51,7 @@ export function WebMobileSheet({open,onClose,onRequestAccess}:{open:boolean;onCl
       </View>
       <View style={s.accessCard}>
        <View style={s.accessHeader}>
-        <Image source={require('../../assets/fairway-app-logo.png')} contentFit="contain" style={s.accessLogo}/>
+        <Image source={require('../../assets/testflight-logo.png')} contentFit="contain" style={s.accessLogo}/>
         <View style={s.accessHeading}><Text style={s.accessTitle}>Request TestFlight access</Text><Text style={s.accessBody}>Leave your email and we’ll send an invite when the next build is ready.</Text></View>
        </View>
        <View style={s.form}><TextInput accessibilityLabel="Email for TestFlight access" value={email} onChangeText={value=>{setEmail(value);if(requestState!=='idle')setRequestState('idle');}} placeholder="you@example.com" placeholderTextColor="#789087" autoCapitalize="none" autoCorrect={false} keyboardType="email-address" style={s.input}/><Pressable accessibilityRole="button" disabled={requestState==='sending'} onPress={()=>void requestAccess()} style={[s.requestButton,requestState==='sending'&&{opacity:.6}]}>{requestState==='sending'?<ActivityIndicator color="#F8FBF5"/>:<Text style={s.requestText}>Request access</Text>}</Pressable></View>

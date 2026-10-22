@@ -9,7 +9,7 @@ export function WebFooter({onPrivacy,onSupport,onMobile}:{onPrivacy?:()=>void;on
   if(Platform.OS!=='web')return null;
   return <View accessibilityLabel="Fairway site footer" style={s.footer}>
     <View style={s.inner}>
-      <View style={s.topLine}><View style={s.brandBlock}><Image source={require('../../assets/fairway-app-logo.png')} contentFit="contain" style={s.footerIcon}/><View><Text style={s.brand}>fairway<Text style={s.dot}>.</Text></Text><Text style={s.tagline}>More golf. Less searching.</Text></View></View><View style={s.links}>
+      <View style={s.topLine}><View style={s.brandBlock}><Image source={require('../../assets/icon.png')} contentFit="cover" style={s.footerIcon}/><View><Text style={s.brand}>fairway<Text style={s.dot}>.</Text></Text><Text style={s.tagline}>More golf. Less searching.</Text></View></View><View style={s.links}>
         {onMobile&&<Pressable accessibilityRole="button" onPress={onMobile} style={s.linkButton}><Text style={s.link}>Mobile</Text></Pressable>}
         {onPrivacy?<Pressable accessibilityRole="button" onPress={onPrivacy} style={s.linkButton}><Text style={s.link}>Privacy</Text></Pressable>:<Link href="/privacy" style={s.link}>Privacy</Link>}
         {onSupport?<Pressable accessibilityRole="button" onPress={onSupport} style={s.linkButton}><Text style={s.link}>Support</Text></Pressable>:<Link href="/support" style={s.link}>Support</Link>}
