@@ -7,13 +7,19 @@ import {colors} from './ui';
 /** Web-only product sheet for the Fairway mobile experience. */
 export function WebMobileSheet({open,onClose}:{open:boolean;onClose:()=>void}){
  const [progress]=useState(()=>new Animated.Value(0));
+ const [mounted,setMounted]=useState(open);
  useEffect(()=>{
-  if(!open)return;
-  progress.setValue(0);
-  Animated.spring(progress,{toValue:1,damping:24,stiffness:260,mass:.85,useNativeDriver:true}).start();
+  if(open){
+   setMounted(true);
+   progress.setValue(0);
+   Animated.spring(progress,{toValue:1,damping:24,stiffness:260,mass:.85,useNativeDriver:true}).start();
+   return;
+  }
+  if(!mounted)return;
+  Animated.timing(progress,{toValue:0,duration:180,easing:(value)=>value,useNativeDriver:true}).start(({finished})=>{if(finished)setMounted(false);});
  },[open,progress]);
- if(!open)return null;
- return <Modal transparent visible animationType="none" onRequestClose={onClose}>
+ if(!mounted)return null;
+ return <Modal transparent visible={mounted} animationType="none" onRequestClose={onClose}>
   <View style={s.backdrop}>
    <Pressable accessibilityRole="button" accessibilityLabel="Close mobile information" onPress={onClose} style={StyleSheet.absoluteFill}/>
    <Animated.View accessibilityViewIsModal style={[s.sheet,{opacity:progress,transform:[{scale:progress.interpolate({inputRange:[0,1],outputRange:[.94,1]})}]}]}>
@@ -41,9 +47,9 @@ export function WebMobileSheet({open,onClose}:{open:boolean;onClose:()=>void}){
 }
 
 const s=StyleSheet.create({
- backdrop:{flex:1,backgroundColor:'rgba(13,31,24,.42)',alignItems:'center',justifyContent:'center',padding:18},
- sheet:{width:'100%',maxWidth:860,maxHeight:'92%',borderRadius:32,boxShadow:'0 20px 60px rgba(10,35,25,.28)'},
+ backdrop:{flex:1,backgroundColor:'rgba(13,31,24,.42)',alignItems:'center',justifyContent:'center',padding:16},
+ sheet:{width:'100%',maxWidth:860,maxHeight:'84%',borderRadius:32,boxShadow:'0 20px 60px rgba(10,35,25,.28)'},
  panel:{padding:0,borderRadius:32,backgroundColor:'#F7FAF3',overflow:'hidden'},
- hero:{minHeight:285,flexDirection:'row',alignItems:'center',paddingHorizontal:30,paddingVertical:26,backgroundColor:'#183C32',position:'relative',overflow:'hidden'},heroCopy:{flex:1,maxWidth:510,gap:10,paddingRight:14},kickerHero:{fontSize:10,letterSpacing:1.5,color:'#C5EB65',fontWeight:'800'},heroTitle:{fontSize:36,lineHeight:40,fontWeight:'800',color:'#F8FBF5',letterSpacing:-1},heroSubtitle:{fontSize:15,lineHeight:22,color:'#D9E7D9',maxWidth:470},heroPill:{alignSelf:'flex-start',paddingHorizontal:13,paddingVertical:8,borderRadius:18,backgroundColor:'#2B5E4A',marginTop:4},heroPillText:{fontSize:11,fontWeight:'700',color:'#F8FBF5',letterSpacing:.2},heroPhone:{width:150,height:245,marginRight:28,borderRadius:25,padding:5,backgroundColor:'#0C241B',boxShadow:'0 10px 22px rgba(0,0,0,.24)',transform:[{rotate:'4deg'}]},heroImage:{width:'100%',height:'100%',borderRadius:20},close:{position:'absolute',right:18,top:18,width:38,height:38,borderRadius:19,backgroundColor:'#2B5E4A',alignItems:'center',justifyContent:'center'},closeText:{fontSize:27,lineHeight:28,color:'#F8FBF5'},
- content:{paddingHorizontal:30,paddingVertical:28,paddingBottom:32,gap:24},sectionIntro:{gap:5},sectionLabel:{fontSize:10,letterSpacing:1.4,fontWeight:'800',color:colors.green},sectionTitle:{fontSize:22,lineHeight:28,fontWeight:'700',color:colors.ink,maxWidth:610},features:{flexDirection:'row',flexWrap:'wrap',gap:12},feature:{flex:1,minWidth:215,flexDirection:'row',alignItems:'flex-start',gap:11,padding:16,borderRadius:18,backgroundColor:'#E8EEDD',boxShadow:'0 3px 10px rgba(24,60,50,.07)'},featureCopy:{flex:1},featureIcon:{width:32,height:32,borderRadius:16,backgroundColor:'#C5EB65',color:'#183C32',fontSize:19,lineHeight:32,textAlign:'center',fontWeight:'800'},heading:{fontSize:15,fontWeight:'700',color:colors.ink},body:{fontSize:13,lineHeight:19,color:colors.ink,marginTop:4},galleryHeader:{gap:4},galleryTitle:{fontSize:20,fontWeight:'700',color:colors.ink},gallery:{flexDirection:'row',gap:14,flexWrap:'wrap'},shot:{flex:1,minWidth:250,maxWidth:400,gap:5},shotImage:{height:210,borderRadius:20,overflow:'hidden',backgroundColor:'#E8EEDD',boxShadow:'0 5px 14px rgba(24,60,50,.12)'},image:{width:'100%',height:'100%'},captionTitle:{fontSize:14,fontWeight:'700',color:colors.ink,marginTop:4},caption:{fontSize:12,lineHeight:17,color:colors.muted},bottomNote:{padding:16,borderRadius:18,backgroundColor:'#183C32',gap:3},bottomNoteTitle:{fontSize:15,fontWeight:'700',color:'#F8FBF5'},bottomNoteText:{fontSize:12,lineHeight:18,color:'#D9E7D9'}
+ hero:{minHeight:220,flexDirection:'row',alignItems:'center',paddingHorizontal:24,paddingVertical:20,backgroundColor:'#183C32',position:'relative',overflow:'hidden'},heroCopy:{flex:1,maxWidth:510,gap:7,paddingRight:12},kickerHero:{fontSize:10,letterSpacing:1.5,color:'#C5EB65',fontWeight:'800'},heroTitle:{fontSize:30,lineHeight:34,fontWeight:'800',color:'#F8FBF5',letterSpacing:-.7},heroSubtitle:{fontSize:13,lineHeight:19,color:'#D9E7D9',maxWidth:470},heroPill:{alignSelf:'flex-start',paddingHorizontal:11,paddingVertical:6,borderRadius:16,backgroundColor:'#2B5E4A',marginTop:2},heroPillText:{fontSize:10,fontWeight:'700',color:'#F8FBF5',letterSpacing:.2},heroPhone:{width:122,height:198,marginRight:26,borderRadius:22,padding:4,backgroundColor:'#0C241B',boxShadow:'0 10px 22px rgba(0,0,0,.24)',transform:[{rotate:'4deg'}]},heroImage:{width:'100%',height:'100%',borderRadius:18},close:{position:'absolute',right:16,top:16,width:36,height:36,borderRadius:18,backgroundColor:'#2B5E4A',alignItems:'center',justifyContent:'center'},closeText:{fontSize:25,lineHeight:26,color:'#F8FBF5'},
+ content:{paddingHorizontal:22,paddingVertical:20,paddingBottom:22,gap:17},sectionIntro:{gap:4},sectionLabel:{fontSize:9,letterSpacing:1.4,fontWeight:'800',color:colors.green},sectionTitle:{fontSize:19,lineHeight:24,fontWeight:'700',color:colors.ink,maxWidth:610},features:{flexDirection:'row',flexWrap:'wrap',gap:9},feature:{flex:1,minWidth:205,flexDirection:'row',alignItems:'flex-start',gap:9,padding:12,borderRadius:16,backgroundColor:'#E8EEDD',boxShadow:'0 3px 10px rgba(24,60,50,.07)'},featureCopy:{flex:1},featureIcon:{width:28,height:28,borderRadius:14,backgroundColor:'#C5EB65',color:'#183C32',fontSize:17,lineHeight:28,textAlign:'center',fontWeight:'800'},heading:{fontSize:14,fontWeight:'700',color:colors.ink},body:{fontSize:12,lineHeight:17,color:colors.ink,marginTop:3},galleryHeader:{gap:3},galleryTitle:{fontSize:18,fontWeight:'700',color:colors.ink},gallery:{flexDirection:'row',gap:12,flexWrap:'wrap'},shot:{flex:1,minWidth:235,maxWidth:400,gap:4},shotImage:{height:150,borderRadius:16,overflow:'hidden',backgroundColor:'#E8EEDD',boxShadow:'0 5px 14px rgba(24,60,50,.12)'},image:{width:'100%',height:'100%'},captionTitle:{fontSize:13,fontWeight:'700',color:colors.ink,marginTop:3},caption:{fontSize:11,lineHeight:15,color:colors.muted},bottomNote:{padding:12,borderRadius:16,backgroundColor:'#183C32',gap:2},bottomNoteTitle:{fontSize:14,fontWeight:'700',color:'#F8FBF5'},bottomNoteText:{fontSize:11,lineHeight:16,color:'#D9E7D9'}
 });
