@@ -45,5 +45,5 @@ app.get('/api/availability/:course',async(req,res)=>{
 // Metro fingerprints exported assets, so browsers can safely retain these files.
 app.use('/assets',express.static(fileURLToPath(new URL('../dist/assets/',import.meta.url)),{maxAge:'1y',immutable:true}));
 app.use(express.static(fileURLToPath(new URL('../dist/',import.meta.url))));
-app.get(['/course','/play','/games','/account','/privacy','/support','/delete-account'],(req,res)=>res.sendFile(fileURLToPath(new URL('../dist/index.html',import.meta.url))));
+app.get(['/course','/play','/games','/account','/privacy','/support','/delete-account','/explore','/web-preview'],(req,res)=>res.sendFile(fileURLToPath(new URL('../dist/index.html',import.meta.url))));
 app.listen(Number(process.env.PORT||8787),process.env.HOST||'127.0.0.1',()=>console.log(`Fairway live preview: http://127.0.0.1:${process.env.PORT||8787}`));
