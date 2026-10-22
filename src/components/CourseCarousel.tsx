@@ -19,7 +19,7 @@ export function CourseCarousel({course,slots,players,now,onSelect}:{course:Cours
  // additional cropping; mobile cover already crops those gutters away.
  const photoScale=photo?.contentAspectRatio?Math.max(1,headerWidth/(photoHeight*photo.contentAspectRatio)):1;
  const showPhoto=!!photo&&!photoFailed;
- const [activeDate,setActiveDate]=useState(slots[0].date);
+ const [activeDate,setActiveDate]=useState(slots[0]?.date??'');
  const [highlighted,setHighlighted]=useState<string|null>(null);
  const scroll=useRef<FlatList<LiveSlot>>(null);
  const offset=useRef(0);
@@ -54,7 +54,7 @@ export function CourseCarousel({course,slots,players,now,onSelect}:{course:Cours
  const dates=[...new Set(slots.map(s=>s.date))];
  const lengths=[...new Set(slots.map(slot=>slot.holes))].sort((a,b)=>a-b);
  const mixedLengths=lengths.length>1;
- const date=dates.includes(activeDate)?activeDate:dates[0];
+ const date=dates.includes(activeDate)?activeDate:dates[0]||'';
  const {layouts,starts}=useMemo(()=>{
   let x=20;const starts:[string,number][]=[];
   const layouts=[];
@@ -71,10 +71,11 @@ export function CourseCarousel({course,slots,players,now,onSelect}:{course:Cours
    <View style={[{alignItems:'flex-end',gap:4},showPhoto&&{position:'absolute',top:10,right:12}]}><View style={s.arrows}>
    <Pressable accessibilityRole="button" accessibilityLabel={`Earlier tee times at ${course.name}`} onPress={()=>scroll.current?.scrollToOffset({offset:Math.max(0,offset.current-320),animated:true})} style={s.arrow}><SymbolView name={{ios:'chevron.left',android:'chevron_left',web:'chevron_left'}} size={20} tintColor={colors.ink}/></Pressable>
    <Pressable accessibilityRole="button" accessibilityLabel={`Later tee times at ${course.name}`} onPress={()=>scroll.current?.scrollToOffset({offset:offset.current+320,animated:true})} style={s.arrow}><SymbolView name={{ios:'chevron.right',android:'chevron_right',web:'chevron_right'}} size={20} tintColor={colors.ink}/></Pressable>
-  </View><GlassPanel style={s.badge}><Text style={s.badgeText}>{lengths.join(' / ')} Holes</Text></GlassPanel></View></View>
+   </View><GlassPanel style={s.badge}><Text style={s.badgeText}>{lengths.length?`${lengths.join(' / ')} Holes`:'Tee times'}</Text></GlassPanel></View></View>
   {showPhoto&&<Text accessibilityRole="link" onPress={()=>void Linking.openURL(photo.source)} style={{alignSelf:'flex-end',fontSize:9,color:colors.muted,paddingHorizontal:12,paddingTop:3}}>Photo: {course.name}</Text>}
-  <View style={s.dayBar}><View><Text accessibilityLiveRegion="polite" style={s.day}>{labelDate(date,true)}</Text></View></View>
+  <View style={s.dayBar}><View><Text accessibilityLiveRegion="polite" style={s.day}>{date?labelDate(date,true):'Tee times'}</Text></View></View>
   <View ref={dragSurface} style={s.carousel}>
+  {!slots.length?<View style={s.unavailable}><Text style={s.unavailableTitle}>Tee times aren’t connected yet</Text><Text style={s.unavailableBody}>Use the rangefinder now, or open the course booking page for current availability.</Text>{course.bookingUrl&&<Pressable accessibilityRole="link" onPress={()=>void Linking.openURL(course.bookingUrl)} style={s.bookingLink}><Text style={s.bookingLinkText}>Open course booking ↗</Text></Pressable>}</View>:
   <FlatList ref={scroll} data={slots} keyExtractor={slot=>`${slot.date}-${slot.id}-${slot.holes}`} getItemLayout={(_,index)=>layouts[index]} initialNumToRender={10} maxToRenderPerBatch={12} windowSize={5} extraData={highlighted} horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={s.times} accessibilityLabel={`${course.name} tee times, earliest to latest`} scrollEventThrottle={32} onScroll={e=>{
    const x=e.nativeEvent.contentOffset.x;offset.current=x;
    const entries=starts;
@@ -90,9 +91,10 @@ export function CourseCarousel({course,slots,players,now,onSelect}:{course:Cours
      </Pressable>
     </View>;
    }}/>
+  }
   <CarouselEdges/>
   </View>
 
  </GlassPanel></View>;
 }
-const s=StyleSheet.create({carousel:{position:'relative',borderBottomLeftRadius:22,borderBottomRightRadius:22,overflow:'hidden'},cardShadow:{borderRadius:22,backgroundColor:'#fff',boxShadow:'0 5px 16px rgba(24,60,50,0.14)'},hovered:{boxShadow:'0 6px 14px rgba(24,60,50,0.22)',transform:[{scale:1.045}],zIndex:2},card:{backgroundColor:'#fff',borderWidth:0,borderRadius:22,overflow:'visible'},heading:{paddingHorizontal:20,paddingTop:12,paddingBottom:8,flexDirection:'row',alignItems:'center',gap:12},grow:{flex:1},name:{fontSize:21,fontWeight:'700',color:colors.ink,letterSpacing:-.5},meta:{fontSize:12,color:colors.muted,marginTop:5},badge:{paddingHorizontal:10,paddingVertical:5,backgroundColor:'#C5EB65',borderRadius:20},badgeText:{fontSize:10,fontWeight:'700',color:colors.green,letterSpacing:.7},dayBar:{paddingHorizontal:20,flexDirection:'row',justifyContent:'space-between',alignItems:'center',gap:10},day:{fontSize:14,fontWeight:'600',color:colors.ink},count:{fontSize:12,color:colors.muted,marginTop:4},arrows:{flexDirection:'row',gap:6},arrow:{backgroundColor:'#C5EB65',width:40,height:40,alignItems:'center',justifyContent:'center',borderRadius:20},arrowText:{fontSize:25,color:colors.green},times:{paddingHorizontal:20,paddingTop:8,paddingBottom:Platform.OS==='web'?24:12},slotWrap:{width:132,marginRight:10},newDay:{marginLeft:30,borderLeftWidth:1,borderColor:'#CDD8CE',paddingLeft:20,width:152},dateLabel:{fontSize:9,fontWeight:'700',letterSpacing:.7,color:colors.muted,height:22},slot:{boxShadow:Platform.OS==='web'?'0 3px 8px rgba(24,60,50,0.16)':'none',borderRadius:12,borderWidth:Platform.OS==='web'?0:1,borderColor:'#C9D9CB',backgroundColor:'#F3F7EF',padding:11,gap:5},pressed:{backgroundColor:'#DFEACD'},time:{fontSize:17,fontWeight:'700',color:colors.ink},price:{fontSize:12,color:colors.green},spaces:{fontSize:10,color:colors.muted,marginTop:3},bottom:{paddingHorizontal:20,paddingBottom:17,color:colors.muted,fontSize:10}});
+const s=StyleSheet.create({carousel:{position:'relative',borderBottomLeftRadius:22,borderBottomRightRadius:22,overflow:'hidden'},cardShadow:{borderRadius:22,backgroundColor:'#fff',boxShadow:'0 5px 16px rgba(24,60,50,0.14)'},hovered:{boxShadow:'0 6px 14px rgba(24,60,50,0.22)',transform:[{scale:1.045}],zIndex:2},card:{backgroundColor:'#fff',borderWidth:0,borderRadius:22,overflow:'visible'},heading:{paddingHorizontal:20,paddingTop:12,paddingBottom:8,flexDirection:'row',alignItems:'center',gap:12},grow:{flex:1},name:{fontSize:21,fontWeight:'700',color:colors.ink,letterSpacing:-.5},meta:{fontSize:12,color:colors.muted,marginTop:5},badge:{paddingHorizontal:10,paddingVertical:5,backgroundColor:'#C5EB65',borderRadius:20},badgeText:{fontSize:10,fontWeight:'700',color:colors.green,letterSpacing:.7},dayBar:{paddingHorizontal:20,flexDirection:'row',justifyContent:'space-between',alignItems:'center',gap:10},day:{fontSize:14,fontWeight:'600',color:colors.ink},count:{fontSize:12,color:colors.muted,marginTop:4},arrows:{flexDirection:'row',gap:6},arrow:{backgroundColor:'#C5EB65',width:40,height:40,alignItems:'center',justifyContent:'center',borderRadius:20},arrowText:{fontSize:25,color:colors.green},times:{paddingHorizontal:20,paddingTop:8,paddingBottom:Platform.OS==='web'?24:12},slotWrap:{width:132,marginRight:10},newDay:{marginLeft:30,borderLeftWidth:1,borderColor:'#CDD8CE',paddingLeft:20,width:152},dateLabel:{fontSize:9,fontWeight:'700',letterSpacing:.7,color:colors.muted,height:22},slot:{boxShadow:Platform.OS==='web'?'0 3px 8px rgba(24,60,50,0.16)':'none',borderRadius:12,borderWidth:Platform.OS==='web'?0:1,borderColor:'#C9D9CB',backgroundColor:'#F3F7EF',padding:11,gap:5},pressed:{backgroundColor:'#DFEACD'},time:{fontSize:17,fontWeight:'700',color:colors.ink},price:{fontSize:12,color:colors.green},spaces:{fontSize:10,color:colors.muted,marginTop:3},unavailable:{paddingHorizontal:20,paddingTop:13,paddingBottom:18,gap:5},unavailableTitle:{fontSize:15,fontWeight:'700',color:colors.ink},unavailableBody:{fontSize:12,lineHeight:18,color:colors.muted,maxWidth:520},bookingLink:{alignSelf:'flex-start',marginTop:3,paddingVertical:5},bookingLinkText:{fontSize:12,fontWeight:'700',color:colors.green},bottom:{paddingHorizontal:20,paddingBottom:17,color:colors.muted,fontSize:10}});
