@@ -14,8 +14,8 @@ export const coursePhotos:Record<string,{image:ImageSourcePropType;source:string
  'ardmore':{image:require('../../assets/course-photos/ardmore.jpg'),source:'https://www.ardmoregolfcourse.com/'},
  'royalwood':{image:require('../../assets/course-photos/royalwood.jpg'),source:'https://royalwoodgolf.com/photo-gallery/'},
  'langley-golf-centre':{image:require('../../assets/course-photos/langley-golf-centre.jpg'),source:'https://www.langleygolfcentre.com/golf-rates-and-online-bookings'},
- 'poppy-estate':{contentAspectRatio:2.11,image:require('../../assets/course-photos/poppy-estate.jpg'),source:'https://www.poppygolf.ca/'},
- 'belmont':{contentAspectRatio:1.67,image:require('../../assets/course-photos/belmont.jpg'),source:'https://wcgg.ca/Belmont/'},
- 'delta-golf':{contentAspectRatio:2.07,image:require('../../assets/course-photos/delta-golf.jpg'),source:'https://deltagolfcourse.com/our-facility/'},
- 'sandpiper':{contentAspectRatio:.8,image:require('../../assets/course-photos/sandpiper.jpg'),source:'https://sandpiperresort.ca/bc-golf-trip/'},
+ 'poppy-estate':{contentAspectRatio:4.6,image:require('../../assets/course-photos/poppy-estate.jpg'),source:'https://www.poppygolf.ca/'},
+ 'belmont':{contentAspectRatio:4.6,image:require('../../assets/course-photos/belmont.jpg'),source:'https://wcgg.ca/Belmont/'},
+ 'delta-golf':{contentAspectRatio:4.6,image:require('../../assets/course-photos/delta-golf.jpg'),source:'https://deltagolfcourse.com/our-facility/'},
+ 'sandpiper':{contentAspectRatio:4.6,image:require('../../assets/course-photos/sandpiper.jpg'),source:'https://sandpiperresort.ca/bc-golf-trip/'},
 };
