@@ -25,9 +25,9 @@ export function WebAccountMenu(){
   window.addEventListener('keydown',key);
   return()=>window.removeEventListener('keydown',key);
  },[anchor,close]);
- const avatar=photo?<Image source={{uri:photo}} style={{width:28,height:28,borderRadius:14}}/>:<SymbolView name={{ios:'person.crop.circle',android:'account_circle',web:'account_circle'}} size={24} tintColor="#183C32"/>;
+ const avatar=photo?<Image source={{uri:photo}} style={{width:34,height:34,borderRadius:17}}/>:<SymbolView name={{ios:'person.crop.circle',android:'account_circle',web:'account_circle'}} size={28} tintColor="#183C32"/>;
  return <View style={{marginLeft:'auto'}}>
-  <GlassPressable ref={button} accessibilityRole="button" accessibilityLabel="Account" accessibilityState={{expanded:open}} onPress={()=>button.current?.measureInWindow((x,y,width,height)=>{setAnchor({x,y,width,height});setOpen(true);})} style={{width:34,height:34,borderRadius:17,backgroundColor:'transparent',borderWidth:0,alignItems:'center',justifyContent:'center',boxShadow:'none',opacity:anchor?0:1}}>{avatar}</GlassPressable>
+  <GlassPressable ref={button} accessibilityRole="button" accessibilityLabel="Account" accessibilityState={{expanded:open}} onPress={()=>button.current?.measureInWindow((x,y,width,height)=>{setAnchor({x,y,width,height});setOpen(true);})} style={{width:46,height:46,borderRadius:23,backgroundColor:'transparent',borderWidth:0,alignItems:'center',justifyContent:'center',boxShadow:'none',opacity:anchor?0:1}}>{avatar}</GlassPressable>
   {anchor&&<MenuOverlay open={open} anchor={anchor} onClose={close} onExited={exited} preferredWidth={460} label="Close account" headerContent={<View style={{width:44,height:44,alignItems:'center',justifyContent:'center'}}>{open?<Text style={{fontSize:26,color:'#183C32'}}>×</Text>:avatar}</View>}><AccountScreen embedded onClose={close}/></MenuOverlay>}
  </View>;
 }
