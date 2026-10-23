@@ -21,11 +21,11 @@ export function WebFooter({onPrivacy,onSupport,onMobile}:{onPrivacy?:()=>void;on
 
 const s=StyleSheet.create({
   footer:{position:'absolute',left:0,right:0,bottom:0,zIndex:40,width:'100%' as any,borderTopWidth:1,borderTopColor:'#dfe7df',backgroundColor:'#edf2ea'},
-  inner:{width:'100%',maxWidth:1100,alignSelf:'center',paddingHorizontal:20,paddingVertical:12,gap:6},
-  topLine:{minHeight:52,flexDirection:'row',alignItems:'center',justifyContent:'space-between',gap:14,flexWrap:'wrap'},
-  brandBlock:{flexDirection:'row',alignItems:'center',gap:8},footerIcon:{width:30,height:30,borderRadius:7},
+  inner:{width:'100%',maxWidth:1100,alignSelf:'center',paddingHorizontal:20,paddingTop:6,paddingBottom:7,gap:3},
+  topLine:{minHeight:36,flexDirection:'row',alignItems:'flex-end',justifyContent:'space-between',gap:14,flexWrap:'wrap'},
+  brandBlock:{flexDirection:'row',alignItems:'flex-end',gap:8},footerIcon:{width:30,height:30,borderRadius:7},
   brand:{fontSize:16,fontWeight:'800',letterSpacing:-.6,color:'#183c32'},dot:{color:'#799544'},tagline:{fontSize:9,color:'#708078',marginTop:1},
   links:{flexDirection:'row',flexWrap:'wrap',gap:12,alignItems:'center'},linkButton:{padding:0},link:{fontSize:10,fontWeight:'600',color:'#276447',textDecorationLine:'none'},
-  storeButton:{width:112,minWidth:112,minHeight:34,paddingHorizontal:6,paddingVertical:4,borderRadius:8,backgroundColor:'#050505',opacity:.96,boxShadow:'0 4px 12px rgba(10,25,18,.18)'},pressed:{opacity:.78,transform:[{scale:.97}]},testflightMark:{width:'100%',flexDirection:'row',alignItems:'center',gap:6},testflightIcon:{width:26,height:26,borderRadius:6},storeEyebrow:{fontSize:7,lineHeight:8,color:'#fff'},storeTitle:{fontSize:12,lineHeight:13,fontWeight:'700',color:'#fff'},
+  storeButton:{alignSelf:'flex-end',width:112,minWidth:112,minHeight:34,paddingHorizontal:6,paddingVertical:4,borderRadius:8,backgroundColor:'#050505',opacity:.96,boxShadow:'0 4px 12px rgba(10,25,18,.18)'},pressed:{opacity:.78,transform:[{scale:.97}]},testflightMark:{width:'100%',flexDirection:'row',alignItems:'center',gap:6},testflightIcon:{width:26,height:26,borderRadius:6},storeEyebrow:{fontSize:7,lineHeight:8,color:'#fff'},storeTitle:{fontSize:12,lineHeight:13,fontWeight:'700',color:'#fff'},
   fine:{width:'100%',fontSize:8,color:'#708078',marginTop:4,textAlign:'center'},
 });
