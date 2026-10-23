@@ -174,17 +174,17 @@ export function Explore(){
    {kind==='players'?<><Text style={textStyle}>{players}</Text><SymbolView name={{ios:'person.2.fill',android:'group',web:'group'}} size={22} tintColor={colors.ink}/></>:kind==='holes'?<><Text style={textStyle}>{holes==='any'?'Any':holes}</Text><SymbolView name={{ios:'flag.fill',android:'flag',web:'flag'}} size={22} tintColor={colors.ink}/></>:kind==='calendar'?<><SymbolView name={{ios:'calendar',android:'calendar_month',web:'calendar_month'}} size={21} tintColor={colors.ink}/><Text numberOfLines={1} style={textStyle}>{chosenDate?labelDate(chosenDate):(screenWidth<500?'Next':'Next available')} ▾</Text></>:<><SymbolView name={{ios:'line.3.horizontal.decrease',android:'tune',web:'tune'}} size={21} tintColor={colors.ink}/><Text style={textStyle}>Filters{time!=='any'||maxPrice!==null?' •':''}</Text></>}
   </View>;
  };
- const renderControls=(small:boolean,showSearch=true,showGrid=true)=>(
+ const renderControls=(small:boolean,showSearch=true,showGrid=true,showFilters=true)=>(
    <View style={{gap:10,width:'100%',maxWidth:560,alignSelf:'center'}}>
    {showSearch&&<SearchField value={query} onChangeText={setQuery} autoCorrect={false} returnKeyType="search"/>}
-   <View style={[s.toolbar,small&&s.compactToolbar,screenWidth<500&&{gap:5}]}>
+   {showFilters&&<View style={[s.toolbar,small&&s.compactToolbar,screenWidth<500&&{gap:5}]}>
     {showGrid&&Platform.OS==='web'&&<NativePressable accessibilityRole="button" accessibilityLabel={viewMode==='list'?'Show courses as a grid':'Show courses as a list'} accessibilityState={{selected:viewMode==='grid'}} onPress={()=>setViewMode(mode=>mode==='list'?'grid':'list')} style={({pressed})=>[s.viewToggle,small&&s.compactControl,pressed&&{opacity:.72,transform:[{scale:.97}]}]}><SymbolView name={{ios:viewMode==='list'?'square.grid.2x2':'list.bullet',android:viewMode==='list'?'grid_view':'view_list',web:viewMode==='list'?'grid_view':'view_list'}} size={21} tintColor={colors.ink}/></NativePressable>}
     <Pressable accessibilityRole="button" ref={node=>{menuButtons.current.players=node;}} accessibilityLabel="Number of players" accessibilityState={{expanded:panel==='players'}} onPress={()=>toggle('players')} style={[s.control,small&&s.compactControl,screenWidth<500&&{paddingHorizontal:7,flexShrink:1},panel==='players'&&{opacity:Platform.OS==='ios'?0.01:0}]}>{filterFace('players')}</Pressable>
     <Pressable accessibilityRole="button" ref={node=>{menuButtons.current.holes=node;}} accessibilityLabel="Number of holes" accessibilityState={{expanded:panel==='holes'}} onPress={()=>toggle('holes')} style={[s.control,small&&s.compactControl,screenWidth<500&&{paddingHorizontal:7,flexShrink:1},panel==='holes'&&{opacity:Platform.OS==='ios'?0.01:0}]}>{filterFace('holes')}</Pressable>
     <Pressable accessibilityRole="button" accessibilityLabel="Choose a date" ref={node=>{menuButtons.current.calendar=node;}} accessibilityState={{expanded:panel==='calendar'}} onPress={()=>toggle('calendar')} style={[s.control,small&&s.compactControl,screenWidth<500&&{paddingHorizontal:7,flexShrink:1},panel==='calendar'&&{opacity:Platform.OS==='ios'?0.01:0}]}>{filterFace('calendar')}</Pressable>
     <Pressable accessibilityRole="button" accessibilityLabel="Filter and sort" ref={node=>{menuButtons.current.filters=node;}} accessibilityState={{expanded:panel==='filters'}} onPress={()=>toggle('filters')} style={[s.control,s.filterButton,small&&s.compactControl,screenWidth<500&&{paddingHorizontal:7,flexShrink:1},panel==='filters'&&{opacity:Platform.OS==='ios'?0.01:0}]}>{filterFace('filters')}</Pressable>
 
-   </View>
+   </View>}
    </View>
  );
  return <SafeAreaView edges={['top','left','right']} style={s.safe}>
@@ -192,9 +192,9 @@ export function Explore(){
    {Platform.OS==='web'?<View style={s.webExploreHeader}>
     <View style={s.webExploreNav}>
      <NativePressable accessibilityRole="link" onPress={()=>router.push('/')} style={s.webExploreWordmark}><Text style={s.webExploreWordmarkText}>fairway<Text style={s.webExploreWordmarkDot}>.</Text></Text></NativePressable>
-     {screenWidth>=850&&<View style={s.webExploreControls}>{renderControls(false,true,false)}</View>}
+     {screenWidth>=850&&<View style={s.webExploreControls}>{renderControls(false,true,false,false)}</View>}
      <WebAccountMenu/>
-     {screenWidth<850&&<View style={s.webExploreMobileControls}>{renderControls(false,true,false)}</View>}
+     {screenWidth<850&&<View style={s.webExploreMobileControls}>{renderControls(false,true,false,false)}</View>}
     </View>
    </View>:<View style={{gap:8,backgroundColor:'#F7F8F2',paddingBottom:12,zIndex:20,borderBottomWidth:1,borderBottomColor:'#E2E7DD'}}>
     <View style={s.nav}><Brand small/></View>
