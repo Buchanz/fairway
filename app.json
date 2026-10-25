@@ -7,7 +7,7 @@
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "ios": {
-      "supportsTablet": true,
+      "supportsTablet": false,
       "bundleIdentifier": "com.buchanzsteam.fairway",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
