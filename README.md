@@ -8,7 +8,7 @@ Fairway helps golfers compare live tee times across supported BC courses and tra
 ## Visual identity and mobile experience
 
 <p align="center">
-  <img src="assets/fairway-app-logo.png" alt="Fairway app icon" width="112" />
+  <img src="assets/icon.png" alt="Fairway app icon" width="112" />
 </p>
 
 <p align="center"><strong>Fairway</strong><br><em>More golf. Less searching.</em></p>
@@ -19,18 +19,16 @@ The mobile experience is designed around quick course discovery, a focused Play 
   <tr>
     <td align="center"><img src="assets/mobile-home-mockup.png" alt="Fairway tee-time search screen" width="220" /></td>
     <td align="center"><img src="assets/mobile-game-mockup.png" alt="Fairway Play and rangefinder screen" width="220" /></td>
-    <td align="center"><img src="assets/mobile-account-preview.jpg" alt="Fairway account screen" width="180" /></td>
   </tr>
   <tr>
     <td align="center"><sub>Tee-time search</sub></td>
     <td align="center"><sub>Play and rangefinder</sub></td>
-    <td align="center"><sub>Account and friends</sub></td>
   </tr>
 </table>
 
 
 ## Features
-- Live tee-time rows for Ardmore, Cedar Hill, Olympic View, Mount Douglas, Langley Golf Centre and Royalwood, subject to provider availability.
+- Live tee-time rows for supported BC courses, subject to provider availability.
 - Default four-player search, chronological multi-day carousels, bookable-date calendar, holes/time/price filters and alphabetical or distance sorting.
 - City or opt-in GPS search; approximate straight-line distances.
 - Provider-specific booking handoff. Some providers require reselecting the time or signing in; Fairway does not process reservations or payments.
@@ -73,8 +71,6 @@ For browser UI development, use `npm run web` with an appropriate same-origin AP
 - SecureStore for native sessions; AsyncStorage for guest scores and caches.
 - Node's test runner, TypeScript and ESLint for automated checks.
 
-The database is PostgreSQL through Supabase. The student confirmed instructor approval for this database choice on October 18, 2026.
-
 ## Testing and Debugging
 ```sh
 npm test
@@ -88,7 +84,7 @@ Tests cover parsing, capacity restrictions, booking windows, date rollover, pagi
 ## Security and Deployment
 Keep provider credentials server-side. `.env` files and signing credentials are ignored; `.env.example` contains placeholders only. `EXPO_PUBLIC_*` values are bundled into clients and must never contain secrets. Native map keys require platform restrictions even when supplied through environment configuration.
 
-A temporary desktop tunnel is a development preview. The current web/API deployment is `https://fairway-bcsq.onrender.com` on Render Free; it provides HTTPS and a stable URL but may sleep when idle. A paid always-on service, monitoring and restricted production keys remain release improvements. Source: https://github.com/Buchanz/fairway.
+The current web/API preview is `https://fairway-bcsq.onrender.com` on Render Free; it provides HTTPS and may sleep when idle. A paid always-on service, monitoring and restricted production keys remain release improvements. Source: https://github.com/Buchanz/fairway.
 
 ## Future Improvements
 - Verified course geometry, green distances and on-course accuracy validation.
