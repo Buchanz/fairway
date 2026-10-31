@@ -5,6 +5,30 @@ Fairway helps golfers compare live tee times across supported BC courses and tra
 
 **Release status:** development prototype. Signed iPhone internal preview builds are available; the web app is live at https://fairway-bcsq.onrender.com on Render Free. Store releases are still pending. Free hosting sleeps when idle and can take 50+ seconds to wake. Native map screens compile but still require device and on-course testing. See [architecture](docs/ARCHITECTURE.md) and [development log](docs/DEVLOG.md).
 
+## Visual identity and mobile experience
+
+<p align="center">
+  <img src="assets/fairway-app-logo.png" alt="Fairway app icon" width="112" />
+</p>
+
+<p align="center"><strong>Fairway</strong><br><em>More golf. Less searching.</em></p>
+
+The mobile experience is designed around quick course discovery, a focused Play flow, and on-course round tracking. These previews show the phone-first interface and the Fairway visual language used throughout the app.
+
+<table>
+  <tr>
+    <td align="center"><img src="assets/mobile-home-mockup.png" alt="Fairway tee-time search screen" width="220" /></td>
+    <td align="center"><img src="assets/mobile-game-mockup.png" alt="Fairway Play and rangefinder screen" width="220" /></td>
+    <td align="center"><img src="assets/mobile-account-preview.jpg" alt="Fairway account screen" width="180" /></td>
+  </tr>
+  <tr>
+    <td align="center"><sub>Tee-time search</sub></td>
+    <td align="center"><sub>Play and rangefinder</sub></td>
+    <td align="center"><sub>Account and friends</sub></td>
+  </tr>
+</table>
+
+
 ## Features
 - Live tee-time rows for Ardmore, Cedar Hill, Olympic View, Mount Douglas, Langley Golf Centre and Royalwood, subject to provider availability.
 - Default four-player search, chronological multi-day carousels, bookable-date calendar, holes/time/price filters and alphabetical or distance sorting.
