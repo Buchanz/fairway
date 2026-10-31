@@ -11,7 +11,7 @@ test('includes mainland courses by distance and sorts nearest first', () => {
  assert.equal(results.length,3); assert.equal(results[0].id,'cedar-hill');
  assert.equal(nearbyCourses(courses,cities.find(c=>c.name==='Sidney'),10)[0].id,'ardmore');
  const mainland=nearbyCourses(courses,cities.find(c=>c.name==='Langley'),50);
- assert.deepEqual(mainland.map(c=>c.id),['langley-golf-centre','belmont','poppy-estate','delta-golf','royalwood']);
+ assert.deepEqual(mainland.map(c=>c.id),['langley-golf-centre','belmont','poppy-estate','guildford','delta-golf','royalwood']);
  assert.equal(nearbyCourses(courses,cities.find(c=>c.name==='Langley'),50).some(c=>c.id==='sandpiper'),false);
 });
 test('search and hole filters combine; radius boundary is inclusive',()=>{
